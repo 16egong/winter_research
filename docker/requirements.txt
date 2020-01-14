@@ -3,7 +3,7 @@ jupyter_contrib_nbextensions
 jupyterthemes
 numpy
 pandas
-Flask
+flask
 Flask-SocketIO
 flask-sqlalchemy
 eventlet

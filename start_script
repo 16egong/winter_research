@@ -3,5 +3,5 @@ if [ $# -lt 2 ]; then
     echo -e "\winter <container name> <jupyter port>"
     exit 1
 fi
-
-docker run --rm -p $2:8888 -it --name $1 -e JUPPORT=8080 -v "$(pwd):/code/" alion_eg
+echo $(pwd)
+docker run --rm -p $2:8888 -p5000:5000 -it --name $1 -e JUPPORT=8080 -v $(pwd):/code:z winter

@@ -1,3 +1,4 @@
+import os
 if __name__ == "__main__":
     from winter import db, app, socketio
     import winter.models
@@ -16,4 +17,13 @@ if __name__ == "__main__":
     
 #     socketio.run(app, debug=True, use_reloader=False, host='0.0.0.0')
 #     app.run(debug=True, host='0.0.0.0')
-    socketio.run(app, debug=True, host='0.0.0.0')
+    if os.environ.get('PORT') is not None:
+        socketio.run(app, debug=True, host='0.0.0.0', port=os.environ.get('PORT'))
+    else:
+        socketio.run(app, debug=True, host='0.0.0.0') 
+
+    # if os.environ.get('PORT') is not None:
+    #     socketio.run(app, debug=True, port=os.environ.get('PORT'))
+    # else:
+    #     socketio.run(app, debug=True) 
+
