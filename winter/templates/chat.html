@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+    <head>
+        <title>Messenger of {{username}}</title>
+        
+        <!-- Custom css for chat pages -->
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/chat_style.css') }}">
+    </head>
+    
+    <body>
+
+        <!-- Main section start -->
+        <main>
+            <!-- Rightside pannel start -->
+            <div id="chat">
+
+                <!-- Display message start-->
+                <div id="messages">
+                    {% for p in posts %} 
+                        <p class="message">{{ p.username }}: {{ p.body }}</p>
+                    {% endfor %}
+                </div>
+                <!-- Display message end -->
+
+                <!-- Type message start -->
+                <div id="inputs">
+                    <input type="text" id="user-message" placeholder="Type here..." autocomplete="off">
+                    <button type="button" id="send-message">SEND</button>
+                </div>
+                <!-- Type message end -->
+            </div>
+            <!-- Rightside pannel end -->
+        </main>
+         <!-- Main section end -->
+                
+        <!-- Custom chat JS -->
+        <script src="{{ url_for('static', filename='scripts/chat_page.js') }}"></script>
+        
+        <!-- Custom SocketIO JS -->
+        <script src="{{url_for('static', filename='scripts/socketio.js')}}"></script>
+        
+        <!-- SocketIO JS -->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
+        
+        <!-- AJAX -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        
+        <!-- Custom SocketIO JS -->
+        <script type="text/javascript">
+            const uid = `{{uid}}`;
+            const username = `{{username}}`;
+            const real_name = `{{real_name}}`;
+            const chat_history = `{{chat_history}}`;
+        </script>
+    </body>
+</html>

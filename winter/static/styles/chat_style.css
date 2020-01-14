@@ -1,0 +1,33 @@
+body {
+    background-color: gray;
+}
+
+main {
+    margin: 0 auto 0 auto;
+    width: 500px;
+    
+    padding: 1em;
+    
+    background-color: white;
+}
+
+#messages {
+    max-height: 80vh;
+    overflow: auto;
+}
+
+#messages .message {
+    padding: 0.25em;
+    margin: 0;
+    
+    font-family: helvetica;
+}
+
+#inputs {
+    display: flex;
+    padding-top: 1em;
+}
+
+#user-message {
+    flex: 1;
+}
