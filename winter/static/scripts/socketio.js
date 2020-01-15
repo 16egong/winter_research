@@ -15,11 +15,33 @@ document.addEventListener('DOMContentLoaded', () => {
 //         var obj = JSON.parse(data)
         if (data.username) {
             const p = document.createElement('p');
-            p.classList.add("message");
-            const br = document.createElement('br');
-            p.innerHTML = data.username + ": " + data.msg;
-    //         p.innerHTML = data;
-            document.querySelector('#messages').append(p)
+            const msgerChat = document.querySelector(".msger-chat")
+            var side = ''
+            if (data.username == username) {
+                side = 'right'
+            } else {
+                side = 'left'
+            }
+            console.log(`side: ${side}`);
+            const msgHTML = `
+                <div class="msg ${side}-msg">
+                  <div class="msg-bubble">
+                    <div class="msg-info">
+                      <div class="msg-info-name">${data.username}</div>
+                      <div class="msg-info-time">${data.timestamp}</div>
+                    </div>
+                    <div class="msg-text">${data.msg}</div>
+                  </div>
+                </div>
+              `;
+            msgerChat.insertAdjacentHTML("beforeend", msgHTML);
+            msgerChat.scrollTop += 500;
+            
+//             p.classList.add("message");
+//             const br = document.createElement('br');
+//             p.innerHTML = data.username + ": " + data.msg;
+//     //         p.innerHTML = data;
+//             document.querySelector('#messages').append(p)
         } else {
             const p = document.createElement('p');
             p.innerHTML = data.msg;

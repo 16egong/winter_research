@@ -1,51 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
     
-    <head>
-        <title>Messenger of {{username}}</title>
-        
-        <!-- Custom css for chat pages -->
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/chat_style.css') }}">
-    </head>
-    
+<!--         <head> -->
+<!--             <title>Messenger of {{username}}</title> -->
+
+            <!-- Custom css for chat pages -->
+<!--             <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/chat_style.css') }}"> -->
+<!--         </head> -->
     <body>
-
-        <!-- Main section start -->
-        <main>
-            <!-- Rightside pannel start -->
-            <div id="chat">
-
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/chat_style.css') }}">
+        <section class="msger">
+            <!-- Header start -->
+            <header class="msger-header">
+                <div class="msger-header-title">
+                    <i class="fas fa-comment-alt"></i> Winter Research
+                </div>
+                <div class="msger-header-options">
+                    <span><i class="fas fa-cog"></i></span>
+                </div>
+            </header>
+            <!-- Header end -->
+            
+            <!-- Main section start -->
+            <main id ="messages" class="msger-chat">
                 <!-- Display message start-->
-                <div id="messages">
                     {% for p in posts %} 
-                        <p class="message">{{ p.username }}: {{ p.body }}</p>
+                        {% if  p.username == username %}
+                            <!-- Right message start-->
+                            <div class="msg right-msg">
+                                <!-- Right message bubble start-->
+                                <div class="msg-bubble">
+                                    <!-- Right message info start -->
+                                    <div class="msg-info">
+                                        <div class="msg-info-name">{{ p.username }}</div>
+                                        <div class="msg-info-time">{{ p.timestamp }}</div>
+                                    </div>
+                                    <!-- Right message info end -->
+                                    <!-- Right message bubble text-start -->
+                                    <div class="msg-text">
+                                        <p class="message">{{ p.body }}</p>
+                                    </div>
+                                    <!-- Right message bubble text end-->
+                                </div>
+                                <!-- Right message bubble end-->
+                            </div>
+                            <!-- Right message end-->
+                        {% else %}
+                            <!-- Left message start-->
+                            <div class="msg left-msg">
+                                <!-- Left message bubble start-->
+                                <div class="msg-bubble">
+                                    <!-- Left message info start -->
+                                    <div class="msg-info">
+                                        <div class="msg-info-name">{{ p.username }}</div>
+                                        <div class="msg-info-time">{{ p.timestamp }}</div>
+                                    </div>
+                                    <!-- Left message info end -->
+                                    <!-- Left message bubble text-start -->
+                                    <div class="msg-text">
+                                        <p class="message">{{ p.body }}</p>
+                                    </div>
+                                    <!-- Right message bubble text end-->
+                                </div>
+                                <!-- Left message bubble end-->
+                            </div>
+                            <!-- Left message end-->
+                        {% endif %}
                     {% endfor %}
-                </div>
                 <!-- Display message end -->
-
-                <!-- Type message start -->
-                <div id="inputs">
-                    <input type="text" id="user-message" placeholder="Type here..." autocomplete="off">
-                    <button type="button" id="send-message">SEND</button>
-                </div>
-                <!-- Type message end -->
+            </main>
+            
+            <!-- Type message start -->
+            <div class="msger-inputarea" id="inputs">
+                <input type="text" id="user-message" placeholder="Type here..." autocomplete="off">
+                <button type="button" id="send-message">SEND</button>
             </div>
-            <!-- Rightside pannel end -->
-        </main>
+        </section>
+        <!-- Type message end -->
+
          <!-- Main section end -->
-                
+
         <!-- Custom chat JS -->
         <script src="{{ url_for('static', filename='scripts/chat_page.js') }}"></script>
-        
+
         <!-- Custom SocketIO JS -->
         <script src="{{url_for('static', filename='scripts/socketio.js')}}"></script>
-        
+
         <!-- SocketIO JS -->
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
-        
+
         <!-- AJAX -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        
+
         <!-- Custom SocketIO JS -->
         <script type="text/javascript">
             const uid = `{{uid}}`;

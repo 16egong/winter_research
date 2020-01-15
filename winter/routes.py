@@ -37,7 +37,6 @@ def chat3():
 
 @socketio.on('message')
 def message(data):
-    
     try:
         print('MESSAGE')
         print(f'\n\n{data}\n\n')
@@ -50,7 +49,7 @@ def message(data):
 #         for p in posts:
 #             print('POST')
 #             print(p.id, p.username, p.body, p.timestamp)
-
+        # add timestamp
         # gets sent to the message bucket on client side
         send(data, broadcast=True)
     except Exception as e:
