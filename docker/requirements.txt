@@ -7,3 +7,5 @@ flask
 Flask-SocketIO
 flask-sqlalchemy
 eventlet
+uwsgi
+gevent
