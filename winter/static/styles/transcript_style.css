@@ -80,7 +80,7 @@ body {
 }
 
 .msg-bubble {
-  max-width: 450px;
+  max-width: 600px;
   padding: 15px;
   border-radius: 15px;
   background: var(--left-msg-bg);
@@ -104,48 +104,6 @@ body {
 
 .left-msg .msg-bubble {
   border-bottom-left-radius: 0;
-}
-
-.right-msg {
-  flex-direction: row-reverse;
-}
-
-.right-msg .msg-bubble {
-  background: var(--right-msg-bg);
-  color: #fff;
-  border-bottom-right-radius: 0;
-}
-
-.msger-inputarea {
-  display: flex;
-  padding: 10px;
-  border-top: var(--border);
-  background: #eee;
-}
-
-.msger-inputarea * {
-  padding: 10px;
-  border: none;
-  border-radius: 3px;
-  font-size: 1em;
-}
-
-.msger-input {
-  flex: 1;
-  background: #ddd;
-}
-
-.msger-send-btn {
-  margin-left: 10px;
-  background: var(--right-msg-bg);
-  color: #fff;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background 0.23s;
-}
-
-.msger-send-btn:hover {
-  background: #3e8cf0;
 }
 
 .msger-chat{

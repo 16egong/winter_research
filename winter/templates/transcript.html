@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+        <head>
+            <title>Transcript</title>
+        </head>
+    <body>
+        <section class="msger">
+            <!-- Header start -->
+            <header class="msger-header">
+                <div class="msger-header-title">
+                    <i class="fas fa-comment-alt"></i> Winter Research
+                </div>
+            </header>
+            <!-- Header end -->
+            
+            <!-- Main section start -->
+            <main id ="messages" class="msger-chat">
+                <!-- Display message start-->
+                    {% for p in posts %} 
+                        <!-- Left message start-->
+                        <div class="msg left-msg">
+                            <!-- Left message bubble start-->
+                            <div class="msg-bubble">
+                                <!-- Left message info start -->
+                                <div class="msg-info">
+                                    <div class="msg-info-name">{{ p.username }}</div>
+                                    <div class="msg-info-time">{{ p.timestamp }}</div>
+                                </div>
+                                <!-- Left message info end -->
+                                <!-- Left message bubble text-start -->
+                                <div class="msg-text">
+                                    <p class="message">{{ p.body }}</p>
+                                </div>
+                                <!-- Right message bubble text end-->
+                            </div>
+                            <!-- Left message bubble end-->
+                        </div>
+                        <!-- Left message end-->
+                    {% endfor %}
+                <!-- Display message end -->
+            </main>
+            
+        </section>
+        <!-- Type message end -->
+
+         <!-- Main section end -->
+        
+        <!-- Custom css for chat pages -->
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/transcript_style.css') }}">
+        
+        <!-- Custom chat JS -->
+
+        <!-- Custom SocketIO JS -->
+        <script src="{{url_for('static', filename='scripts/socketio.js')}}"></script>
+
+        <!-- SocketIO JS -->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
+
+        <!-- AJAX -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+        <!-- Custom SocketIO JS -->
+        <script type="text/javascript">
+            const uid = `{{uid}}`;
+            const username = `{{username}}`;
+            const real_name = `{{real_name}}`;
+            const chat_history = `{{chat_history}}`;
+            const usernames = `{{usernames}}`
+        </script>
+    </body>
+</html>
