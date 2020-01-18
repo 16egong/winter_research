@@ -22,7 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 side = 'left'
             }
-            console.log(`side: ${side}`);
             const msgHTML = `
                 <div class="msg ${side}-msg">
                   <div class="msg-bubble">
@@ -48,9 +47,6 @@ document.addEventListener('DOMContentLoaded', () => {
             p.classList.add("message");
             document.querySelector('#messages').append(p)
         }
-        
-        
-        
         console.log(`Message recieved: ${data}`);
     })
     

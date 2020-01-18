@@ -1,22 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
     
-<!--         <head> -->
-<!--             <title>Messenger of {{username}}</title> -->
-
-            <!-- Custom css for chat pages -->
-<!--             <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/chat_style.css') }}"> -->
-<!--         </head> -->
+        <head>
+            <title>Messenger of {{username}}</title>
+        </head>
     <body>
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/chat_style.css') }}">
         <section class="msger">
             <!-- Header start -->
             <header class="msger-header">
                 <div class="msger-header-title">
                     <i class="fas fa-comment-alt"></i> Winter Research
-                </div>
-                <div class="msger-header-options">
-                    <span><i class="fas fa-cog"></i></span>
                 </div>
             </header>
             <!-- Header end -->
@@ -72,14 +65,17 @@
             
             <!-- Type message start -->
             <div class="msger-inputarea" id="inputs">
-                <input type="text" id="user-message" placeholder="Type here..." autocomplete="off">
-                <button type="button" id="send-message">SEND</button>
+                <input type="text" class="msger-input" id="user-message" placeholder="Type here..." autocomplete="off">
+                <button type="button" class="msger-send-btn" id="send-message">SEND</button>
             </div>
         </section>
         <!-- Type message end -->
 
          <!-- Main section end -->
-
+        
+        <!-- Custom css for chat pages -->
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/chat_style.css') }}">
+        
         <!-- Custom chat JS -->
         <script src="{{ url_for('static', filename='scripts/chat_page.js') }}"></script>
 
@@ -98,6 +94,7 @@
             const username = `{{username}}`;
             const real_name = `{{real_name}}`;
             const chat_history = `{{chat_history}}`;
+            const usernames = `{{usernames}}`
         </script>
     </body>
 </html>
