@@ -26,7 +26,7 @@
                                     <!-- Right message info start -->
                                     <div class="msg-info">
                                         <div class="msg-info-name">{{ p.username }}</div>
-                                        <div class="msg-info-time">{{ p.timestamp }}</div>
+                                        <div class="msg-info-time">{{ p.time }}</div>
                                     </div>
                                     <!-- Right message info end -->
                                     <!-- Right message bubble text-start -->
@@ -46,7 +46,7 @@
                                     <!-- Left message info start -->
                                     <div class="msg-info">
                                         <div class="msg-info-name">{{ p.username }}</div>
-                                        <div class="msg-info-time">{{ p.timestamp }}</div>
+                                        <div class="msg-info-time">{{ p.time }}</div>
                                     </div>
                                     <!-- Left message info end -->
                                     <!-- Left message bubble text-start -->
@@ -92,9 +92,9 @@
         <script type="text/javascript">
             const uid = `{{uid}}`;
             const username = `{{username}}`;
-            const real_name = `{{real_name}}`;
             const chat_history = `{{chat_history}}`;
             const usernames = `{{usernames}}`
+            var room = `{{room}}`
         </script>
     </body>
 </html>

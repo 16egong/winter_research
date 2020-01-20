@@ -18,25 +18,47 @@
             <main id ="messages" class="msger-chat">
                 <!-- Display message start-->
                     {% for p in posts %} 
-                        <!-- Left message start-->
-                        <div class="msg left-msg">
-                            <!-- Left message bubble start-->
-                            <div class="msg-bubble">
-                                <!-- Left message info start -->
-                                <div class="msg-info">
-                                    <div class="msg-info-name">{{ p.username }}</div>
-                                    <div class="msg-info-time">{{ p.timestamp }}</div>
+                        {% if  (p.uid == 1 or p.uid == 3) %}
+                            <!-- Right message start-->
+                            <div class="msg right-msg">
+                                <!-- Right message bubble start-->
+                                <div class="msg-bubble">
+                                    <!-- Right message info start -->
+                                    <div class="msg-info">
+                                        <div class="msg-info-name">{{ p.username }}</div>
+                                        <div class="msg-info-time">{{ p.timestamp }}</div>
+                                    </div>
+                                    <!-- Right message info end -->
+                                    <!-- Right message bubble text-start -->
+                                    <div class="msg-text">
+                                        <p class="message">{{ p.body }}</p>
+                                    </div>
+                                    <!-- Right message bubble text end-->
                                 </div>
-                                <!-- Left message info end -->
-                                <!-- Left message bubble text-start -->
-                                <div class="msg-text">
-                                    <p class="message">{{ p.body }}</p>
-                                </div>
-                                <!-- Right message bubble text end-->
+                                <!-- Right message bubble end-->
                             </div>
-                            <!-- Left message bubble end-->
-                        </div>
-                        <!-- Left message end-->
+                            <!-- Right message end-->
+                        {% else %}
+                            <!-- Left message start-->
+                            <div class="msg left-msg">
+                                <!-- Left message bubble start-->
+                                <div class="msg-bubble">
+                                    <!-- Left message info start -->
+                                    <div class="msg-info">
+                                        <div class="msg-info-name">{{ p.username }}</div>
+                                        <div class="msg-info-time">{{ p.timestamp }}</div>
+                                    </div>
+                                    <!-- Left message info end -->
+                                    <!-- Left message bubble text-start -->
+                                    <div class="msg-text">
+                                        <p class="message">{{ p.body }}</p>
+                                    </div>
+                                    <!-- Right message bubble text end-->
+                                </div>
+                                <!-- Left message bubble end-->
+                            </div>
+                            <!-- Left message end-->
+                         {% endif %}
                     {% endfor %}
                 <!-- Display message end -->
             </main>
