@@ -39,6 +39,7 @@ def chat2():
     print('Usernames: ', usernames)
     return render_template("chat.html", uid=user.uid, username=user.username, real_name=user.real_name, posts=posts, usernames=usernames)
 
+
 @app.route('/3',methods = ['POST', 'GET'])
 def chat3():
     user = winter.users.User(uid=3, username='Sam', real_name='Elion R.')
