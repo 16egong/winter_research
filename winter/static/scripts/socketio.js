@@ -1,24 +1,56 @@
-// Will later update to jquery
 document.addEventListener('DOMContentLoaded', () => {
     var socket = io.connect('http://' + document.domain + ':' + location.port);
-    
+    let msg = document.getElementById("user-message");
+    var typing = false;
+    var timeout = undefined;
     // Autofocus on textbox
     document.querySelector("#user-message").focus();
     
-//     client connects and sends message to server message bucket
+    
+    // Client Connects
     socket.on('connect', () => {
         socket.emit('join', {'username': username, 'room': room}); 
-//         socket.send(data={'msg': username + ' has joined the chat'}, room=room);
         console.log(`Message recieved: User Connected`);
     });
     
-    // message handler for the 'join_room' channel
+    // Message handler for the 'join_room' channel
     socket.on('join_room', function(msg) {
-        console.log(msg);
+        console.log(`Join room: ${msg}`);
     });
     
+    socket.on('display', data =>{
+        const typing_id = `typing_on${data.uid}`
+        const typing_on = document.getElementById(typing_id);
+        
+        if(data.typing==true){
+            typing_on.innerHTML = '<p><em>' + data.username + ' is typing a message...</em></p>';
+        } else {
+            typing_on.innerHTML = ""
+        }
+    });
+    
+    // End typing status
+    function typingTimeout(){
+        typing=false
+        socket.emit('typing', {'username':username, 'uid': uid, 'typing':false, 'room':room})
+    }
+    
+    // Check typing status
+    function checkTypingStatus(key) {
+        if(key !== 13){
+            typing=true
+            socket.emit('typing', {'username': username, 'uid': uid, 'typing': true, 'room': room});
+            clearTimeout(timeout)
+            timeout=setTimeout(typingTimeout, 1500)
+        } else {
+            clearTimeout(timeout)
+            typingTimeout()
+            document.getElementById("send-message").click();
+        }
+    }
+    
+    // Message handler
     socket.on('message', data => {
-//         var obj = JSON.parse(data)
         if (data.username) {
             const p = document.createElement('p');
             const msgerChat = document.querySelector(".msger-chat")
@@ -50,11 +82,6 @@ document.addEventListener('DOMContentLoaded', () => {
             msgerChat.insertAdjacentHTML("beforeend", msgHTML);
             msgerChat.scrollTop += 500;
             
-//             p.classList.add("message");
-//             const br = document.createElement('br');
-//             p.innerHTML = data.username + ": " + data.msg;
-//     //         p.innerHTML = data;
-//             document.querySelector('#messages').append(p)
         } else {
             const p = document.createElement('p');
             p.innerHTML = data.msg;
@@ -68,7 +95,14 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('#send-message').onclick = () => {
         console.log(`To be sent to server: ${ document.querySelector('#user-message').value}`)
         socket.send({'uid': uid, 'username': username, 'msg': document.querySelector('#user-message').value, 'room': room}); 
+        
         // Clear Input
         document.querySelector('#user-message').value = ''
     }
+    
+    // Event listener
+    msg.addEventListener('keypress', function(e){
+        e.preventDefault();
+        checkTypingStatus(e.keyCode)
+    })
 })

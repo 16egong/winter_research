@@ -9,8 +9,9 @@ USER2 = winter.users.User(uid=2, username=USERNAMES[1])
 USER3 = winter.users.User(uid=3, username=USERNAMES[2])
 USER4 = winter.users.User(uid=4, username=USERNAMES[3])
 
-PHASE = 1
-DATABASE_NAME = 'trial_1' + str(PHASE)
+PHASE = 2
+TRIAL_NUM = 1
+DATABASE_NAME = f'trial_{TRIAL_NUM}.' + str(PHASE)
 
 
 class Config(object):

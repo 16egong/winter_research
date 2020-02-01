@@ -63,6 +63,7 @@ def chat2():
             
     return render_template("chat.html", uid=user.uid, username=user.username, posts=posts, usernames=usernames, room=room)
 
+
 @app.route('/chat3',methods = ['POST', 'GET'])
 def chat3():
     room = 'room34'
@@ -100,7 +101,8 @@ def on_join(data):
     username = data['username']
     room = data['room']
     join_room(room)
-    send({'msg': username + ' has entered the room.'}, room=room)
+#     send({'msg': username + ' has entered the room.'}, room=room)
+    emit('join_room' {'msg': username + ' has entered the room.'}, room=room)
     
     
 @socketio.on('leave')
@@ -132,7 +134,11 @@ def message(data):
         print('ELSE: ', e )
         print(f'\n\n{data}\n\n')
         send(data, broadcast=True)
-    
+
+@socketio.on('typing')
+def typing(data):
+    print('\ntyping!!! ', data)
+    emit('typing', data['username'], room=data['room'], include_self=True)
     
 # if __name__ == '__main__':
 #     socketio.run(app, debug=True, use_reloader=False, host='0.0.0.0')

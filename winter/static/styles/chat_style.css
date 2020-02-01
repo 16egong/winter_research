@@ -79,6 +79,17 @@ body {
   margin: 0;
 }
 
+.msg-img {
+  width: 25px;
+  height: 25px;
+  margin-right: 10px;
+  background: #ddd;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  border-radius: 50%;
+}
+
 .msg-bubble {
   max-width: 450px;
   padding: 15px;
@@ -116,6 +127,10 @@ body {
   border-bottom-right-radius: 0;
 }
 
+.right-msg .msg-img {
+  margin: 0 0 0 10px;
+}
+
 .msger-inputarea {
   display: flex;
   padding: 10px;
@@ -128,17 +143,6 @@ body {
   border: none;
   border-radius: 3px;
   font-size: 1em;
-}
-
-.msg-img {
-  width: 50px;
-  height: 50px;
-  margin-right: 10px;
-  background: #ddd;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  border-radius: 50%;
 }
 
 .msger-input {
@@ -162,32 +166,3 @@ body {
 .msger-chat{
   background-color: #fcfcfe;
 }
-
-/* .autocomplete {
-
-  position: relative;
-  display: inline-block;
-} */
-
-/* .autocomplete-items {
-  position: absolute;
-  border: 1px solid #d4d4d4;
-  border-bottom: none;
-  border-top: none;
-  z-index: 99;
-  top: 100%;
-  left: 0;
-  right: 0;
-}
-.autocomplete-items div {
-  padding: 10px;
-  cursor: pointer;
-  background-color: #fff;
-  border-bottom: 1px solid #d4d4d4;
-}
-.autocomplete-items div:hover {
-  background-color: #e9e9e9;
-}
-.autocomplete-active {
-  background-color: DodgerBlue !important;
-  color: #ffffff;  */
