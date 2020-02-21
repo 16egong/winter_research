@@ -1,94 +1,154 @@
 <!DOCTYPE html>
 <html lang="en">
-    
         <head>
             <title>Transcript</title>
+            <!-- Custom css for transcript pages -->
+            <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/transcript_style.css') }}">
+            <!-- AJAX -->
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+            <!-- Custom chat JS -->
         </head>
     <body>
-        <section class="msger">
+        <section class="transcript">
             <!-- Header start -->
-            <header class="msger-header">
-                <div class="msger-header-title">
+            <header class="transcript-header">
+                <div class="transcript-header-title">
                     <i class="fas fa-comment-alt"></i> Winter Research
                 </div>
             </header>
-            <!-- Header end -->
+             <!-- Header end -->
             
             <!-- Main section start -->
-            <main id ="messages" class="msger-chat">
-                <!-- Display message start-->
+            <main class="chat">
+                <!-- Left key section start -->
+                <aside class="left-key">
+                    <div class="key-card">
+                        <p>key</p>
+                    </div>
+                    <div class="key-card">
+                        <p>key</p>
+                    </div>
+                    <div class="key-card">
+                        <p>key</p>
+                    </div>
+                    <div class="key-card">
+                        <p>key</p>
+                    </div>
+                     <div class="key-card">
+                        <p>key</p>
+                    </div>
+                </aside>
+                <!-- Left key section end -->
+                
+                <!-- Message section start -->
+                <main class="messages">
+                    <p>{{test_post}}</p>
                     {% for p in posts %} 
-                        {% if  (p.uid == 1 or p.uid == 3) %}
-                            <!-- Right message start-->
-                            <div class="msg right-msg">
-                                <!-- Right message bubble start-->
-                                <div class="msg-bubble">
-                                    <!-- Right message info start -->
-                                    <div class="msg-info">
-                                        <div class="msg-info-name">{{ p.username }}</div>
-                                        <div class="msg-info-time">{{ p.timestamp }}</div>
+                        {% if loop.index0 % 6 == 0 %}
+                            {% if loop.index0 == 0 %}
+                                <div id="{{(loop.index0/6)|round|int}}" class="block active">
+                            {% else %}
+                                <div id="{{(loop.index0/6)|round|int}}" class="block">
+                            {% endif %}
+                        {% endif %}
+                                    {% if  (p.uid == 1 or p.uid == 3) %}
+                                        <!-- Left message section start-->
+                                        <div class="left-messages">
+                                         <!-- Left message card start-->
+                                           <div class="msg-card">
+                                                <!-- Left message start-->
+                                                <div class="msg left-msg">
+                                                    <!-- Left message bubble start-->
+                                                    <div class="msg-bubble">
+                                                        <!-- Left message info start -->
+                                                        <div class="msg-info">
+                                                            <div class="msg-info-name">{{ p.username }}</div>
+                                                            <div class="msg-info-time">{{ p.time }}</div>
+                                                        </div>
+                                                        <!-- Left message info end -->
+                                                        <!-- Left message bubble text-start -->
+                                                        <div class="msg-text">
+                                                            <p class="message"> {{ p.body }}</p>
+                                                        </div>
+                                                        <!-- Left message bubble text end-->
+                                                    </div>
+                                                    <!-- Left message bubble end-->
+                                                </div>
+                                                <!-- Left message end-->
+                                            </div>
+                                            <!-- Left message card end-->
+                                        </div>
+                                        <!-- Left message section end-->                                        
+                                    {% else %}
+                                        <!-- Right message section start-->
+                                        <div class="right-messages">
+                                            <!-- Right message card start-->
+                                            <div class="msg-card">
+                                                <!-- Right message start-->
+                                                <div class="msg right-msg">
+                                                    <!-- Right message bubble start-->
+                                                    <div class="msg-bubble">
+                                                        <!-- Right message info start -->
+                                                        <div class="msg-info">
+                                                            <div class="msg-info-name">{{ p.username }}</div>
+                                                            <div class="msg-info-time">{{ p.time }}</div>
+                                                        </div>
+                                                        <!-- Right message info end -->
+                                                        <!-- Right message bubble text-start -->
+                                                        <div class="msg-text">
+                                                            <p class="message"> {{ p.body }}</p>
+                                                        </div>
+                                                        <!-- Right message bubble text end-->
+                                                    </div>
+                                                    <!-- Right message bubble end-->
+                                                </div>
+                                                <!-- Right message end-->
+                                            </div>
+                                             <!-- Right message card end-->
+                                        </div>
+                                        <!-- Right message section end-->
+                                     {% endif %}
+                                {% if loop.index0 % 6 == 5 or posts|length - loop.index0 == 1%}
                                     </div>
-                                    <!-- Right message info end -->
-                                    <!-- Right message bubble text-start -->
-                                    <div class="msg-text">
-                                        <p class="message">{{ p.body }}</p>
-                                    </div>
-                                    <!-- Right message bubble text end-->
-                                </div>
-                                <!-- Right message bubble end-->
-                            </div>
-                            <!-- Right message end-->
-                        {% else %}
-                            <!-- Left message start-->
-                            <div class="msg left-msg">
-                                <!-- Left message bubble start-->
-                                <div class="msg-bubble">
-                                    <!-- Left message info start -->
-                                    <div class="msg-info">
-                                        <div class="msg-info-name">{{ p.username }}</div>
-                                        <div class="msg-info-time">{{ p.timestamp }}</div>
-                                    </div>
-                                    <!-- Left message info end -->
-                                    <!-- Left message bubble text-start -->
-                                    <div class="msg-text">
-                                        <p class="message">{{ p.body }}</p>
-                                    </div>
-                                    <!-- Right message bubble text end-->
-                                </div>
-                                <!-- Left message bubble end-->
-                            </div>
-                            <!-- Left message end-->
-                         {% endif %}
-                    {% endfor %}
-                <!-- Display message end -->
+                                {% endif %}
+                            {% endfor %}
+                </main>
+                <aside class="right-key">
+                    <div class="key-card">
+                        <p>this is a key 1</p>
+                        <p>this is a key 2</p>
+                        <p>about 15  len</p>
+                    </div>
+                    <div class="key-card">
+                        <p>right key</p>
+                    </div>
+                </aside>
             </main>
+            <!-- Main section end -->
             
+            <!-- Navigation start -->
+            <footer class="pages">
+                <div class="pagination">
+                    <a onclick="prevPage()">&laquo;</a>
+                    <a class="page active" id="0"  onclick="showPage(0)">1</a>
+                    <a class="page" id="1" onclick="showPage(1)">2</a>
+                    <a class="page" id="2" onclick="showPage(2)">3</a>
+                    <a class="page" id="3" onclick="showPage(3)">4</a>
+                    <a id="next" onclick="nextPage()">&raquo;</a>
+                </div>
+            </footer>
+            <!-- Navigation end -->
         </section>
-        <!-- Type message end -->
-
-         <!-- Main section end -->
-        
-        <!-- Custom css for chat pages -->
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/transcript_style.css') }}">
-        
-        <!-- Custom chat JS -->
-
-        <!-- Custom SocketIO JS -->
-        <script src="{{url_for('static', filename='scripts/socketio.js')}}"></script>
-
-        <!-- SocketIO JS -->
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
-
-        <!-- AJAX -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-
-        <!-- Custom SocketIO JS -->
-        <script type="text/javascript">
-            const uid = `{{uid}}`;
-            const username = `{{username}}`;
-            const real_name = `{{real_name}}`;
-            const chat_history = `{{chat_history}}`;
-            const usernames = `{{usernames}}`
-        </script>
+        <section class="notes">
+            <header class="notes-header">
+                <p>instructions<p>
+            </header>
+            <main class="note-taking">
+                <p>note taking</p>
+                <textarea rows="20" cols="40"> </textarea>
+            </main>
+        </section>
+        <script src="{{ url_for('static', filename='scripts/transcript.js') }}"></script>
     </body>
+        
 </html>

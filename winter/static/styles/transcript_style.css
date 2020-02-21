@@ -1,4 +1,3 @@
-/* https://codepen.io/sajadhsm/pen/odaBdd */
 :root{
   --body-bg: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
   --msger-bg: #fff;
@@ -7,42 +6,26 @@
   --right-msg-bg: #579ffb;
 }
 
-html {
-  box-sizing: border-box;
-}
-
-*,
-*:before,
-*:after {
-  margin: 0;
-  padding: 0;
-  box-sizing: inherit;
-}
-
 body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-image: var(--body-bg);
-  font-family: Helvetica, sans-serif;
+    display: flex;
+    justify-content: center;
 }
 
-.msger {
-  display: flex;
-  flex-flow: column wrap;
-  justify-content: space-between;
-  width: 100%;
-  max-width: 867px;
-  margin: 25px 10px;
-  height: calc(100% - 50px);
-  border: var(--border);
-  border-radius: 5px;
-  background: var(--msger-bg);
-  box-shadow: 0 15px 15px -5px rgba(0, 0, 0, 0.2);
+.transcript {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: space-between;
+    margin: 0px 10px;
+    height: calc(100% - 50px);
+    border: var(--border);
+    border-radius: 5px;
+    background: var(--msger-bg);
+    box-shadow: 0 15px 15px -5px rgba(0, 0, 0, 0.2);
+    flex: 1 75%
 }
 
-.msger-header {
+
+.transcript-header {
   display: flex;
   justify-content: space-between;
   padding: 10px;
@@ -51,39 +34,46 @@ body {
   color: #666;
 }
 
-.msger-chat {
-  flex: 1;
-  overflow-y: auto;
-  padding: 10px;
+.chat {
+    display: flex;
+    justify-content: center;
+}
+.msg-card {
+    border-style: dotted;
+    height: 110px
 }
 
-.msger-chat::-webkit-scrollbar {
-  width: 6px;
+.key-card {
+    border-style: dotted;
+    height: 110px;
+    
 }
 
-.msger-chat::-webkit-scrollbar-track {
-  background: #ddd;
+.left-key {
+    background-color: #ccc;
+    padding: 10px;
+    flex: 1 10%
 }
 
-.msger-chat::-webkit-scrollbar-thumb {
-  background: #bdbdbd;
+.messages {
+/*     display: flex; */
+    background-color: #fcfcfe;
+    padding: 10px;
+    flex: 1 80%
 }
 
 .msg {
-  display: flex;
-  align-items: flex-end;
-  margin-bottom: 10px;
-}
-
-.msg:last-of-type {
-  margin: 0;
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 10px;
 }
 
 .msg-bubble {
-  max-width: 600px;
-  padding: 15px;
-  border-radius: 15px;
-  background: var(--left-msg-bg);
+    max-width: 300px;
+    border-radius: 15px;
+    height: 90px;
+    padding: 10px;
+    background: var(--left-msg-bg);
 }
 
 .msg-info {
@@ -102,6 +92,7 @@ body {
   font-size: 0.85em;
 }
 
+
 .left-msg .msg-bubble {
   border-bottom-left-radius: 0;
 }
@@ -114,35 +105,52 @@ body {
   border-bottom-right-radius: 0;
 }
 
-.msger-chat{
-  background-color: #fcfcfe;
+.left-messages {
+    flex: 1 40%
+}
+.middle-space {
+    flex: 1 20%
+}
+.right-messages {
+    flex: 1 40%
+}
+.right-key {
+    background-color: #ccc;
+    padding: 10px;
+    flex: 1 10%
 }
 
-/* .autocomplete {
+.notes {
+    flex: 1 25%
+}
 
-  position: relative;
-  display: inline-block;
-} */
+.notes-header {
+    background-color: #ccc;
+    padding: 30px;
+    text-align: center;
+    font-size: 35px;
+    color: white;
+    flex: 1 25%
+}
+.note-taking {
+    flex: 1 75%
+}
 
-/* .autocomplete-items {
-  position: absolute;
-  border: 1px solid #d4d4d4;
-  border-bottom: none;
-  border-top: none;
-  z-index: 99;
-  top: 100%;
-  left: 0;
-  right: 0;
+.block:not(.active){
+  display:none;
 }
-.autocomplete-items div {
-  padding: 10px;
-  cursor: pointer;
-  background-color: #fff;
-  border-bottom: 1px solid #d4d4d4;
+
+.pagination a {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+  transition: background-color .3s;
 }
-.autocomplete-items div:hover {
-  background-color: #e9e9e9;
+
+.pagination a.active {
+  background-color: dodgerblue;
+  color: white;
 }
-.autocomplete-active {
-  background-color: DodgerBlue !important;
-  color: #ffffff;  */
+
+.pagination a:hover:not(.active) {background-color: #ddd;}

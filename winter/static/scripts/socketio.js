@@ -34,10 +34,29 @@ document.addEventListener('DOMContentLoaded', () => {
         typing=false
         socket.emit('typing', {'username':username, 'uid': uid, 'typing':false, 'room':room})
     }
+    // Checking copy paste
+//     function checkPaste(key) {
+//         var ctrlDown = false,
+//         ctrlKey = 17,
+//         cmdKey = 91,
+//         vKey = 86,
+//         cKey = 67;
+        
+//         if ((key == ctrlKey || key == cmdKey)) {
+//             ctrlDown = true;
+//         }
+//         if (key == ctrlKey || key == cmdKey) {
+//             ctrlDown = false;
+//         }
+        
+//     });
+        
     
     // Check typing status
     function checkTypingStatus(key) {
-        if(key !== 13){
+        var enterKey = 13;
+
+        if(key !== enterKey){
             typing=true
             socket.emit('typing', {'username': username, 'uid': uid, 'typing': true, 'room': room});
             clearTimeout(timeout)
@@ -102,7 +121,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Event listener
     msg.addEventListener('keypress', function(e){
-        e.preventDefault();
         checkTypingStatus(e.keyCode)
     })
 })

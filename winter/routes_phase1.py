@@ -11,37 +11,71 @@ import config
 import time
 from datetime import datetime
 import pytz
+import requests
 
 # db = SQLAlchemy(app)
+
+def fake_call(url_link):
+    return {
+        "time": "0.83 secs",
+        "keywords": ["word1", "w2", "keyword3"]
+        "translation": "The 28-year-old cook was found dead at a shopping mall in San Francisco"}
 
 # from app import routes, models
 @app.route('/1')
 def inst1():
     user = config.USER1
-    url = url_for('chat1')
-    return render_template("instructions.html", uid=user.uid, url=url)
+    chat_url = url_for('chat1')
+    cv_url = url_for('cv_p1')
+    return render_template("instructions_1.html", uid=user.uid, chat_url=chat_url, cv_url=cv_url)
 
 
 @app.route('/2')
 def inst2():
     user = config.USER2
-    url = url_for('chat2')
-    return render_template("instructions.html", uid=user.uid, url=url)
+    chat_url = url_for('chat2')
+    cv_url = url_for('cv_p2')
+    return render_template("instructions_1.html", uid=user.uid, chat_url=chat_url, cv_url=cv_url)
 
 
-@app.route('/3')
+@app.route('/inst_p3')
 def inst3():
     user = config.USER3
-    url = url_for('chat3')
-    return render_template("instructions.html", uid=user.uid, url=url)
+    chat_url = url_for('chat3')
+    cv_url = url_for('cv_p3')
+    return render_template("instructions_1.html", uid=user.uid, chat_url=chat_url, cv_url=cv_url)
 
 
 @app.route('/4')
 def inst4():
     user = config.USER4
-    url = url_for('chat4')
-    return render_template("instructions.html", uid=user.uid, url=url)
+    chat_url = url_for('chat4')
+    cv_url = url_for('cv_p4')
+    return render_template("instructions_1.html", uid=user.uid, chat_url=chat_url, cv_url=cv_url)
     
+@app.route('/cv_p1')
+def cv_p1():
+    user = config.USER1
+    return render_template("cv.html", username=user.username, uid=user.uid)
+
+
+@app.route('/cv_p2')
+def cv_p2():
+    user = config.USER2
+    return render_template("cv.html", username=user.username, uid=user.uid)
+
+
+@app.route('/cv_p3')
+def cv_p3():
+    user = config.USER3
+    return render_template("cv.html", username=user.username, uid=user.uid)
+
+
+@app.route('/cv_p4')
+def cv_p4():
+    user = config.USER4
+    return render_template("cv.html", username=user.username, uid=user.uid)
+
     
 @app.route('/chat1',methods = ['POST', 'GET'])
 def chat1():
@@ -84,10 +118,15 @@ def chat4():
     return render_template("chat.html", uid=user.uid, username=user.username, posts=posts,  usernames=usernames, room=room)
 
 
-@app.route('/transcript_12')
+@app.route('/transcript')
 def transcript_12():
     posts =  winter.models.Post.query.filter(or_(winter.models.Post.uid == 1, winter.models.Post.uid == 2)).order_by(asc(winter.models.Post.timestamp)).all()
-    return render_template("transcript.html", posts=posts)
+    string_chinese= "这位28岁的厨师在旧金山一家购物中心被发现死亡"
+    fake_link = ('http://10.104.101.60:8009/'+string_chinese)
+    fake_call(fake_link)
+    print('TEST POST: ', test_post.text)
+    test_post=test_post.text
+    return render_template("transcript.html", posts=posts, test_post=test_post)
 
 
 @app.route('/transcript_34')
@@ -102,7 +141,7 @@ def on_join(data):
     room = data['room']
     join_room(room)
 #     send({'msg': username + ' has entered the room.'}, room=room)
-    emit('join_room' {'msg': username + ' has entered the room.'}, room=room)
+    emit('join_room', {'msg': username + ' has entered the room.'}, room=room)
     
     
 @socketio.on('leave')
@@ -137,9 +176,7 @@ def message(data):
 
 @socketio.on('typing')
 def typing(data):
-    print('\ntyping!!! ', data)
-    emit('typing', data['username'], room=data['room'], include_self=True)
-    
+    emit('display', data, room=data['room'], include_self=True)
 # if __name__ == '__main__':
 #     socketio.run(app, debug=True, use_reloader=False, host='0.0.0.0')
     # socketio.run(app, debug=True, use_reloader=False, host='0.0.0.0')

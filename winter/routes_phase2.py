@@ -5,7 +5,7 @@ from winter import socketio
 from winter import db
 import winter.models
 import winter.users
-from sqlalchemy import asc
+from sqlalchemy import asc, or_
 import pandas as pd
 import config
 import time
@@ -16,32 +16,87 @@ import pytz
 
 # from app import routes, models
 
+# from app import routes, models
 @app.route('/1')
 def inst1():
     user = config.USER1
-    url = url_for('chat1')
-    return render_template("instructions.html", uid=user.uid, url=url)
+    chat_url = url_for('chat1')
+    cv_url = url_for('cv_p1')
+    return render_template("instructions_1.html", uid=user.uid, chat_url=chat_url, cv_url=cv_url)
 
 
 @app.route('/2')
 def inst2():
     user = config.USER2
-    url = url_for('chat2')
-    return render_template("instructions.html", uid=user.uid, url=url)
+    chat_url = url_for('chat2')
+    cv_url = url_for('cv_p2')
+    return render_template("instructions_1.html", uid=user.uid, chat_url=chat_url, cv_url=cv_url)
 
 
-@app.route('/3')
+@app.route('/inst_p3')
 def inst3():
     user = config.USER3
-    url = url_for('chat3')
-    return render_template("instructions.html", uid=user.uid, url=url)
+    chat_url = url_for('chat3')
+    cv_url = url_for('cv_p3')
+    return render_template("instructions_1.html", uid=user.uid, chat_url=chat_url, cv_url=cv_url)
 
 
 @app.route('/4')
 def inst4():
     user = config.USER4
-    url = url_for('chat4')
-    return render_template("instructions.html", uid=user.uid, url=url)
+    chat_url = url_for('chat4')
+    cv_url = url_for('cv_p4')
+    return render_template("instructions_1.html", uid=user.uid, chat_url=chat_url, cv_url=cv_url)
+    
+@app.route('/cv_p1')
+def cv_p1():
+    user = config.USER1
+    return render_template("cv.html", username=user.username, uid=user.uid)
+
+
+@app.route('/cv_p2')
+def cv_p2():
+    user = config.USER2
+    return render_template("cv.html", username=user.username, uid=user.uid)
+
+
+@app.route('/cv_p3')
+def cv_p3():
+    user = config.USER3
+    return render_template("cv.html", username=user.username, uid=user.uid)
+
+
+@app.route('/cv_p4')
+def cv_p4():
+    user = config.USER4
+    return render_template("cv.html", username=user.username, uid=user.uid)
+
+# @app.route('/1')
+# def inst1():
+#     user = config.USER1
+#     chat_url = url_for('chat1')
+#     return render_template("instructions_2.html", uid=user.uid, chat_url=chat_url)
+
+
+# @app.route('/2')
+# def inst2():
+#     user = config.USER2
+#     chat_url = url_for('chat2')
+#     return render_template("instructions_2.html", uid=user.uid, chat_url=chat_url)
+
+
+# @app.route('/inst_p3')
+# def inst3():
+#     user = config.USER3
+#     chat_url = url_for('chat3')
+#     return render_template("instructions_2.html", uid=user.uid, chat_url=chat_url)
+
+
+# @app.route('/4')
+# def inst4():
+#     user = config.USER4
+#     chat_url = url_for('chat4')
+#     return render_template("instructions_2.html", uid=user.uid, chat_url=chat_url)
 
 
 @app.route('/chat1',methods = ['POST', 'GET'])
@@ -79,11 +134,15 @@ def chat4():
     return render_template("chat.html", uid=user.uid, username=user.username, posts=posts, usernames=usernames, room=1234)
     
     
-@app.route('/transcript_12')
+@app.route('/transcript_old')
+def transcript_old():
+    posts =  winter.models.Post.query.filter(or_(winter.models.Post.uid == 1, winter.models.Post.uid == 2)).order_by(asc(winter.models.Post.timestamp)).all()
+    return render_template("transcript_old.html", posts=posts)
+
+@app.route('/transcript')
 def transcript_12():
     posts =  winter.models.Post.query.filter(or_(winter.models.Post.uid == 1, winter.models.Post.uid == 2)).order_by(asc(winter.models.Post.timestamp)).all()
     return render_template("transcript.html", posts=posts)
-
 
 @app.route('/transcript_34')
 def transcript_34():
