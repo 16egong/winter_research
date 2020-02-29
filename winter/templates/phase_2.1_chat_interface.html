@@ -4,7 +4,7 @@
             <title>Messenger of {{username}}</title>
             
             <!-- Custom css for chat pages -->
-            <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/chat_phase_2.css') }}">
+            <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/phase_2.1_chat_interface.css') }}">
 
             <!-- SocketIO JS -->
             <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
@@ -144,7 +144,7 @@
             </section>
         </main>
         <footer class="instrucions-phase-3">
-            <button class="instrucions-phase-3-btn"type="button" onclick="window.location.href = '{{english_phase_3_instructions_url}}';">Next (Survey Page Link)</button>
+            <button class="instrucions-phase-3-btn"type="button" onclick="window.location.href = '{{phase_3_english_instructions_url}}';">Next (Survey Page Link)</button>
         </footer>
         
         <!-- Custom SocketIO JS -->
