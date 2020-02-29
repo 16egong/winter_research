@@ -107,8 +107,17 @@ def phase_2_chat_interface():
 def phase_3_english_instructions():
     uid = session.get('uid', None)
     username = session.get('username', None)
+    phase_3_wait_url = url_for('phase_3_wait')
+    return render_template("phase_3.0_english_instructions.html", uid=uid, username=username, phase_3_wait_url=phase_3_wait_url)
+
+
+@app.route('/phase_3_wait')
+def phase_3_wait():
+    uid = session.get('uid', None)
+    username = session.get('username', None)
+    phase_3_survey_url = "INSERT URL HERER"
     phase_3_transcript_url = url_for('phase_3_transcript')
-    return render_template("phase_3.0_english_instructions.html", uid=uid, username=username, phase_3_transcript_url=phase_3_transcript_url)
+    return render_template("phase_3.10_wait.html", uid=uid, username=username, phase_3_transcript_url=phase_3_transcript_url, phase_3_survey_url=phase_3_survey_url)
 
 
 @app.route('/phase_3_transcript')
@@ -119,8 +128,26 @@ def phase_3_transcript():
         posts =  winter.models.Post.query.filter(or_(winter.models.Post.uid == 1, winter.models.Post.uid == 2)).order_by(asc(winter.models.Post.timestamp)).all()
     else:
         posts =  winter.models.Post.query.filter(or_(winter.models.Post.uid == 3, winter.models.Post.uid == 4)).order_by(asc(winter.models.Post.timestamp)).all()
-    return render_template("phase_3.1_transcript.html", posts=posts)
+        
+    phase_3_survey_url = url_for('phase_3_survey')
+    return render_template("phase_3.1_transcript.html", posts=posts, phase_3_survey_url=phase_3_survey_url)
 
+
+@app.route('/phase_3_survey')
+def phase_3_survey():
+    uid = session.get('uid', None)
+    username = session.get('username', None)
+    phase_4_english_instructions_url = url_for('phase_4_english_instructions')
+    return render_template("phase_3.2_survey.html", uid=uid, username=username, phase_4_english_instructions_url=phase_4_english_instructions_url)
+    
+    
+    
+@app.route('/phase_4_english_instructions')
+def phase_4_english_instructions():
+    uid = session.get('uid', None)
+    username = session.get('username', None)
+    phase_3_transcript_url = url_for('phase_3_transcript')
+    return render_template("phase_4.0_english_instructions.html", uid=uid, username=username, phase_4_transcript_url=phase__transcript_url)
 
 
 @socketio.on('join')

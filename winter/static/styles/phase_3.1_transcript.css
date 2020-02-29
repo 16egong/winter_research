@@ -7,9 +7,15 @@
 }
 
 body {
-    display: flex;
     justify-content: center;
 }
+
+.content {
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+}
+
 .left-side{
     flex: 1 75%;
     display: flex;
@@ -164,3 +170,19 @@ body {
 }
 
 .pagination a:hover:not(.active) {background-color: #ddd;}
+
+.survey-phase-3-btnn:hover {
+  background-color: #2fa133; /* Green */
+  color: white;
+}
+
+.survey-phase-3-btn {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
