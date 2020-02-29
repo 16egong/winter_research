@@ -23,58 +23,62 @@ def fake_call(url_link):
 
 #PHASE1
 # English
-@app.route('/english_instructions_1_1')
-def e_inst_phase1_user1():
+@app.route('/phase_1_user_1_english_instructions')
+def phase_1_user_1_english_instructions():
     user = config.USER1
     session['uid'] = user.uid
     session['username'] = user.username
-    practice_page_url = url_for('practice_phase_1')
-    return render_template("english_instructions_phase_1.html", uid=session['uid'], username=session['username'], practice_page_url=practice_page_url)
+    phase_1_practice_url = url_for('phase_1_practice')
+    return render_template("phase_1.0_english_instructions.html", uid=session['uid'], username=session['username'], phase_1_practice_url=phase_1_practice_url)
 
-@app.route('/english_instructions_1_2')
-def e_inst_phase1_user2():
+
+@app.route('/phase_1_user_2_english_instructions')
+def phase_1_user_2_english_instructions():
     user = config.USER2
     session['uid'] = user.uid
     session['username'] = user.username
-    practice_page_url = url_for('practice_phase_1')
-    return render_template("english_instructions_phase_1.html", uid=session['uid'], username=session['username'], practice_page_url=practice_page_url)
+    phase_1_practice_url = url_for('phase_1_practice')
+    return render_template("phase_1.0_english_instructions.html", uid=session['uid'], username=session['username'], phase_1_practice_url=phase_1_practice_url)
+
 
 # Mandarin
-@app.route('/mandarin_instructions_1_3')
-def m_inst_phase1_user3():
+@app.route('/phase_1_user_3_mandarin_instructions')
+def phase_1_user_3_mandarin_instructions():
     user = config.USER3
     session['uid'] = user.uid
     session['username'] = user.username
-    practice_page_url = url_for('practice_phase_1')
-    return render_template("english_instructions_phase_1.html", uid=session['uid'], username=session['username'], practice_page_url=practice_page_url)
+    phase_1_practice_url = url_for('phase_1_practice')
+#     return render_template("english_instructions_phase_1.html", uid=session['uid'], username=session['username'], phase_1_practice_url=phase_1_practice_url)
 
-@app.route('/mandarin_instructions_1_4')
-def m_inst_phase1_user4():
+
+@app.route('/phase_1_user_4_mandarin_instructions')
+def phase_1_user_4_mandarin_instructions():
     user = config.USER4
     session['uid'] = user.uid
     session['username'] = user.username
-    practice_page_url = url_for('practice_phase_1')
-    return render_template("english_instructions_phase_1.html", uid=session['uid'], username=session['username'], practice_page_url=practice_page_url)
+    phase_1_practice_url = url_for('phase_1_practice')
+#     return render_template("english_instructions_phase_1.html", uid=session['uid'], username=session['username'], phase_1_practice_url=phase_1_practice_url)
 
-@app.route('/practice_1')
-def practice_phase_1():
+
+@app.route('/phase_1_practice')
+def phase_1_practice():
     uid = session.get('uid', None)
     username = session.get('username', None)
     practice_survey_url = "INSERT URL HERER"
-    english_phase_2_instructions_url = url_for('e_inst_phase_2')
+    phase_2_english_instructions_url = url_for('phase_2_english_instructions')
     
-    return render_template("practice.html", username=username, practice_survey_url=practice_survey_url, english_phase_2_instructions_url=english_phase_2_instructions_url)
+    return render_template("phase_1.1_practice.html", username=username, practice_survey_url=practice_survey_url, phase_2_english_instructions_url=phase_2_english_instructions_url)
 
-@app.route('/english_instructions_2')
-def e_inst_phase_2():
+@app.route('/phase_2_english_instructions')
+def phase_2_english_instructions():
     uid = session.get('uid', None)
     username = session.get('username', None)
-    chat_interface_url = url_for('chat_interface_2')
-    return render_template("english_instructions_phase_2.html", uid=uid, username=username, chat_interface_url=chat_interface_url)
+    phase_2_chat_interface_url = url_for('phase_2_chat_interface')
+    return render_template("phase_2.0_english_instructions.html", uid=uid, username=username, phase_2_chat_interface_url=phase_2_chat_interface_url)
 
 
-@app.route('/chat_interface_2', methods = ['POST', 'GET'])
-def chat_interface_2():
+@app.route('/phase_2_chat_interface', methods = ['POST', 'GET'])
+def phase_2_chat_interface():
     uid = session.get('uid', None)
     username = session.get('username', None)
     usernames = config.USERNAMES
@@ -85,119 +89,28 @@ def chat_interface_2():
         room = 'room34'
         posts =  winter.models.Post.query.filter(or_(winter.models.Post.uid == 3, winter.models.Post.uid == 4)).order_by(asc(winter.models.Post.timestamp)).all()
         
-    return render_template("chat_phase_2.html", uid=uid, username=username, posts=posts, usernames=usernames, room=room)
-
-@app.route('/1')
-def inst1():
-    user = config.USER1
-    chat_url = url_for('chat1')
-    cv_url = url_for('cv_p1')
-    return render_template("instructions_1.html", uid=user.uid, chat_url=chat_url, cv_url=cv_url)
+    phase_3_english_instructions_url = url_for('phase_3_english_instructions')
+    return render_template("phase_2.1_chat_interface.html", uid=uid, username=username, posts=posts, usernames=usernames, room=room, phase_3_english_instructions_url=phase_3_english_instructions_url)
 
 
-@app.route('/2')
-def inst2():
-    user = config.USER2
-    chat_url = url_for('chat2')
-    cv_url = url_for('cv_p2')
-    return render_template("instructions_1.html", uid=user.uid, chat_url=chat_url, cv_url=cv_url)
+@app.route('/phase_3_english_instructions')
+def phase_3_english_instructions():
+    uid = session.get('uid', None)
+    username = session.get('username', None)
+    phase_3_transcript_url = url_for('phase_3_transcript')
+    return render_template("phase_3.0_english_instructions.html", uid=uid, username=username, phase_3_transcript_url=phase_3_transcript_url)
 
 
-@app.route('/inst_p3')
-def inst3():
-    user = config.USER3
-    chat_url = url_for('chat3')
-    cv_url = url_for('cv_p3')
-    return render_template("instructions_1.html", uid=user.uid, chat_url=chat_url, cv_url=cv_url)
+@app.route('/phase_3_transcript')
+def phase_3_transcript():
+    uid = session.get('uid', None)
+    username = session.get('username', None)
+    if uid==3 or uid==4:
+        posts =  winter.models.Post.query.filter(or_(winter.models.Post.uid == 1, winter.models.Post.uid == 2)).order_by(asc(winter.models.Post.timestamp)).all()
+    else:
+        posts =  winter.models.Post.query.filter(or_(winter.models.Post.uid == 3, winter.models.Post.uid == 4)).order_by(asc(winter.models.Post.timestamp)).all()
+    return render_template("phase_3.1_transcript.html", posts=posts)
 
-
-@app.route('/4')
-def inst4():
-    user = config.USER4
-    chat_url = url_for('chat4')
-    cv_url = url_for('cv_p4')
-    return render_template("instructions_1.html", uid=user.uid, chat_url=chat_url, cv_url=cv_url)
-    
-@app.route('/cv_p1')
-def cv_p1():
-    user = config.USER1
-    return render_template("cv.html", username=user.username, uid=user.uid)
-
-
-@app.route('/cv_p2')
-def cv_p2():
-    user = config.USER2
-    return render_template("cv.html", username=user.username, uid=user.uid)
-
-
-@app.route('/cv_p3')
-def cv_p3():
-    user = config.USER3
-    return render_template("cv.html", username=user.username, uid=user.uid)
-
-
-@app.route('/cv_p4')
-def cv_p4():
-    user = config.USER4
-    return render_template("cv.html", username=user.username, uid=user.uid)
-
-    
-@app.route('/chat1',methods = ['POST', 'GET'])
-def chat1():
-    room = 'room12'
-    user = config.USER1
-    posts =  winter.models.Post.query.filter(or_(winter.models.Post.uid == 1, winter.models.Post.uid == 2)).order_by(asc(winter.models.Post.timestamp)).all()
-    usernames = config.USERNAMES
-    
-            
-    return render_template("chat.html", uid=user.uid, username=user.username, posts=posts, usernames=usernames, room=room)
-
-
-@app.route('/chat2',methods = ['POST', 'GET'])
-def chat2():
-    room = 'room12'
-    user = config.USER2
-    posts =  winter.models.Post.query.filter(or_(winter.models.Post.uid == 1, winter.models.Post.uid == 2)).order_by(asc(winter.models.Post.timestamp)).all()
-    usernames = config.USERNAMES
-            
-    return render_template("chat.html", uid=user.uid, username=user.username, posts=posts, usernames=usernames, room=room)
-
-
-@app.route('/chat3',methods = ['POST', 'GET'])
-def chat3():
-    room = 'room34'
-    user = config.USER3
-    posts =  winter.models.Post.query.filter(or_(winter.models.Post.uid == 3, winter.models.Post.uid == 4)).order_by(asc(winter.models.Post.timestamp)).all()
-    usernames = config.USERNAMES
-            
-    return render_template("chat.html", uid=user.uid, username=user.username, posts=posts,  usernames=usernames, room=room)
-
-
-@app.route('/chat4',methods = ['POST', 'GET'])
-def chat4():
-    room = 'room34'
-    user = config.USER4
-    posts =  winter.models.Post.query.filter(or_(winter.models.Post.uid == 3, winter.models.Post.uid == 4)).order_by(asc(winter.models.Post.timestamp)).all()
-    usernames = config.USERNAMES
-            
-    return render_template("chat.html", uid=user.uid, username=user.username, posts=posts,  usernames=usernames, room=room)
-
-
-@app.route('/transcript')
-def transcript_12():
-    posts =  winter.models.Post.query.filter(or_(winter.models.Post.uid == 1, winter.models.Post.uid == 2)).order_by(asc(winter.models.Post.timestamp)).all()
-#     string_chinese= "这位28岁的厨师在旧金山一家购物中心被发现死亡"
-#     fake_link = ('http://10.104.101.60:8009/'+string_chinese)
-#     fake_call(fake_link)
-#     print('TEST POST: ', test_post.text)
-#     test_post=test_post.text
-    return render_template("transcript.html", posts=posts)
-
-
-@app.route('/transcript_34')
-def transcript_34():
-    posts =  winter.models.Post.query.filter(or_(winter.models.Post.uid == 3, winter.models.Post.uid == 4)).order_by(asc(winter.models.Post.timestamp)).all()
-    return render_template("transcript.html", posts=posts)
 
 
 @socketio.on('join')
