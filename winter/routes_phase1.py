@@ -1,4 +1,4 @@
-from flask import session, render_template, url_for
+from flask import request, session, render_template, redirect, url_for
 from flask_socketio import emit, send, join_room, leave_room
 from winter import app
 from winter import socketio
@@ -20,6 +20,13 @@ def fake_call(url_link):
         "time": "0.83 secs",
         "keywords": ["word1", "w2", "keyword3"],
         "translation": "The 28-year-old cook was found dead at a shopping mall in San Francisco"}
+
+
+# Redirect the user to the first page they should see
+@app.route('/')
+def base():
+    return redirect(url_for("phase_1_user_1_english_instructions"))
+
 
 #PHASE1
 # English
@@ -82,15 +89,18 @@ def phase_2_chat_interface():
     uid = session.get('uid', None)
     username = session.get('username', None)
     usernames = config.USERNAMES
+
+    notes = winter.models.Notes.query.filter(winter.models.Notes.uid == uid).first()
+    notes = notes.notes if notes is not None else ""
+
     if uid == 1 or uid == 2:
         room = 'room12'
         posts =  winter.models.Post.query.filter(or_(winter.models.Post.uid == 1, winter.models.Post.uid == 2)).order_by(asc(winter.models.Post.timestamp)).all()
     else:
         room = 'room34'
         posts =  winter.models.Post.query.filter(or_(winter.models.Post.uid == 3, winter.models.Post.uid == 4)).order_by(asc(winter.models.Post.timestamp)).all()
-        
-    phase_3_english_instructions_url = url_for('phase_3_english_instructions')
-    return render_template("phase_2.1_chat_interface.html", uid=uid, username=username, posts=posts, usernames=usernames, room=room, phase_3_english_instructions_url=phase_3_english_instructions_url)
+
+    return render_template("phase_2.1_chat_interface.html", uid=uid, username=username, posts=posts, usernames=usernames, room=room, notes=notes)
 
 
 @app.route('/phase_3_english_instructions')
@@ -129,6 +139,7 @@ def on_leave(data):
     leave_room(room)
     send(username + ' has left the room.', room=room)
 
+
 @socketio.on('message')
 def message(data):
     try:
@@ -152,9 +163,20 @@ def message(data):
         print(f'\n\n{data}\n\n')
         send(data, broadcast=True)
 
+
 @socketio.on('typing')
 def typing(data):
     emit('display', data, room=data['room'], include_self=True)
-# if __name__ == '__main__':
-#     socketio.run(app, debug=True, use_reloader=False, host='0.0.0.0')
-    # socketio.run(app, debug=True, use_reloader=False, host='0.0.0.0')
+
+
+@app.route("/savenotes", methods=["PUT"])
+def save_notes():
+    uid = request.json["uid"]
+    notes = request.json["notes"]
+
+    new_notes = winter.models.Notes(uid=uid, notes=notes)
+    
+    db.session.merge(new_notes)
+    db.session.commit()
+
+    return '{"success": True}', 200, {"ContentType": "application/json"}
