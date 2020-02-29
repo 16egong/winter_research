@@ -186,12 +186,12 @@ def chat4():
 @app.route('/transcript')
 def transcript_12():
     posts =  winter.models.Post.query.filter(or_(winter.models.Post.uid == 1, winter.models.Post.uid == 2)).order_by(asc(winter.models.Post.timestamp)).all()
-    string_chinese= "这位28岁的厨师在旧金山一家购物中心被发现死亡"
-    fake_link = ('http://10.104.101.60:8009/'+string_chinese)
-    fake_call(fake_link)
-    print('TEST POST: ', test_post.text)
-    test_post=test_post.text
-    return render_template("transcript.html", posts=posts, test_post=test_post)
+#     string_chinese= "这位28岁的厨师在旧金山一家购物中心被发现死亡"
+#     fake_link = ('http://10.104.101.60:8009/'+string_chinese)
+#     fake_call(fake_link)
+#     print('TEST POST: ', test_post.text)
+#     test_post=test_post.text
+    return render_template("transcript.html", posts=posts)
 
 
 @app.route('/transcript_34')
