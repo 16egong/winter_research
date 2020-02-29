@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+        <head>
+            <title>Instructions Phase 2 for {{username}}</title>
+            <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/english_instructions_phase_2.css') }}">
+        </head>
+    <body>
+        <main class="main-display">
+            <section class="instrucions-phase-2">
+                <header>Instructions</header>
+                    <iframe src="{{ url_for('static', filename='imgs/phase2_instruction.pdf') }}" type="application/pdf" width="100%" height="700px"></iframe>
+            </section>
+        </main>
+        <footer class="chat-phase-2">
+            <button class="chat-phase-2-btn"type="button" onclick="window.location.href = '{{chat_interface_url}}';">Next (Chat Interface)</button>
+        </footer>
+        
+    </body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+        <head>
+            <title>Instructions for {{username}}</title>
+            <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/english_instructions_phase_1.css') }}">
+        </head>
+    <body>
+        <main class="main-display">
+            <section class="instrucions-phase-1">
+                <header>Insert Instructions</header>
+                    <iframe src="{{ url_for('static', filename='imgs/phase1_instruction.pdf') }}" type="application/pdf" width="100%" height="700px"></iframe>
+<!--                 <iframe href="imgs/fake_english_instructions.pdf" width="50%" height="500px"></iframe> -->
+            </section>
+            <section class="figures">
+                <header>Insert Figures</header>
+                    <embed src="{{ url_for('static', filename='imgs/fig_1.png') }}" type="application/pdf" width="80%" height="250px" />
+                    <embed src="{{ url_for('static', filename='imgs/fig_2.png') }}" type="application/pdf" width="80%" height="450px" />
+            </section>
+        </main>
+        <footer class="practice">
+            <button class="survey-page-btn"type="button" onclick="window.location.href = '{{practice_page_url}}';">Next (Survey Page Link)</button>
+        </footer>
+        
+    </body>
+</html>

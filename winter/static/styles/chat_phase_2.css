@@ -23,10 +23,37 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 110vh;
   background-image: var(--body-bg);
   font-family: Helvetica, sans-serif;
   font-size: 16px
+}
+
+.left-side {
+    display: flex;
+    flex-direction: column;
+    flex: 1 60%;
+    padding: 10px 20px;
+}
+
+.instructions {
+    padding: 10px 20px;
+}
+
+.cv {
+    padding: 10px 20px;
+}
+
+.right-side {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: Helvetica, sans-serif;
+    font-size: 16px;
+    height: 50vh;
+    flex: 1 40%;
+    padding: 10px 20px;
 }
 
 .msger {

@@ -18,10 +18,75 @@ import requests
 def fake_call(url_link):
     return {
         "time": "0.83 secs",
-        "keywords": ["word1", "w2", "keyword3"]
+        "keywords": ["word1", "w2", "keyword3"],
         "translation": "The 28-year-old cook was found dead at a shopping mall in San Francisco"}
 
-# from app import routes, models
+#PHASE1
+# English
+@app.route('/english_instructions_1_1')
+def e_inst_phase1_user1():
+    user = config.USER1
+    session['uid'] = user.uid
+    session['username'] = user.username
+    practice_page_url = url_for('practice_phase_1')
+    return render_template("english_instructions_phase_1.html", uid=session['uid'], username=session['username'], practice_page_url=practice_page_url)
+
+@app.route('/english_instructions_1_2')
+def e_inst_phase1_user2():
+    user = config.USER2
+    session['uid'] = user.uid
+    session['username'] = user.username
+    practice_page_url = url_for('practice_phase_1')
+    return render_template("english_instructions_phase_1.html", uid=session['uid'], username=session['username'], practice_page_url=practice_page_url)
+
+# Mandarin
+@app.route('/mandarin_instructions_1_3')
+def m_inst_phase1_user3():
+    user = config.USER3
+    session['uid'] = user.uid
+    session['username'] = user.username
+    practice_page_url = url_for('practice_phase_1')
+    return render_template("english_instructions_phase_1.html", uid=session['uid'], username=session['username'], practice_page_url=practice_page_url)
+
+@app.route('/mandarin_instructions_1_4')
+def m_inst_phase1_user4():
+    user = config.USER4
+    session['uid'] = user.uid
+    session['username'] = user.username
+    practice_page_url = url_for('practice_phase_1')
+    return render_template("english_instructions_phase_1.html", uid=session['uid'], username=session['username'], practice_page_url=practice_page_url)
+
+@app.route('/practice_1')
+def practice_phase_1():
+    uid = session.get('uid', None)
+    username = session.get('username', None)
+    practice_survey_url = "INSERT URL HERER"
+    english_phase_2_instructions_url = url_for('e_inst_phase_2')
+    
+    return render_template("practice.html", username=username, practice_survey_url=practice_survey_url, english_phase_2_instructions_url=english_phase_2_instructions_url)
+
+@app.route('/english_instructions_2')
+def e_inst_phase_2():
+    uid = session.get('uid', None)
+    username = session.get('username', None)
+    chat_interface_url = url_for('chat_interface_2')
+    return render_template("english_instructions_phase_2.html", uid=uid, username=username, chat_interface_url=chat_interface_url)
+
+
+@app.route('/chat_interface_2', methods = ['POST', 'GET'])
+def chat_interface_2():
+    uid = session.get('uid', None)
+    username = session.get('username', None)
+    usernames = config.USERNAMES
+    if uid == 1 or uid == 2:
+        room = 'room12'
+        posts =  winter.models.Post.query.filter(or_(winter.models.Post.uid == 1, winter.models.Post.uid == 2)).order_by(asc(winter.models.Post.timestamp)).all()
+    else:
+        room = 'room34'
+        posts =  winter.models.Post.query.filter(or_(winter.models.Post.uid == 3, winter.models.Post.uid == 4)).order_by(asc(winter.models.Post.timestamp)).all()
+        
+    return render_template("chat_phase_2.html", uid=uid, username=username, posts=posts, usernames=usernames, room=room)
+
 @app.route('/1')
 def inst1():
     user = config.USER1
