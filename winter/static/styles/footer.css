@@ -1,8 +1,10 @@
 footer {
     position: sticky;
-    flex: none;
     bottom: 0;
+
     background-color: white;
+
+    flex: none;
 
     padding: 0.25rem;
 }
@@ -16,4 +18,8 @@ footer button {
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
+}
+
+footer button + button {
+    margin-left: 1rem;
 }
