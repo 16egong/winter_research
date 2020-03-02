@@ -146,8 +146,29 @@ def phase_3_survey():
 def phase_4_english_instructions():
     uid = session.get('uid', None)
     username = session.get('username', None)
-    phase_3_transcript_url = url_for('phase_3_transcript')
-    return render_template("phase_4.0_english_instructions.html", uid=uid, username=username, phase_4_transcript_url=phase__transcript_url)
+    phase_4_chat_interface_url = url_for('phase_4_chat_interface')
+    return render_template("phase_4.0_english_instructions.html", uid=uid, username=username, phase_4_chat_interface_url=phase_4_chat_interface_url)
+
+
+@app.route('/phase_4_chat_interface',methods = ['POST', 'GET'])
+def phase_4_chat_interface():
+    uid = session.get('uid', None)
+    
+    username = session.get('username', None)
+    usernames = config.USERNAMES
+    room = 1234
+    posts =  winter.models.Post.query.order_by(asc(winter.models.Post.timestamp)).all()
+    
+    notes = winter.models.Notes.query.filter(winter.models.Notes.uid == uid).first()
+    notes = notes.notes if notes is not None else ""
+    
+    return render_template("phase_4.1_chat_interface.html", uid=uid, username=username, posts=posts, usernames=usernames, room=room, notes=notes)
+
+@app.route('/phase_4_survey')
+def phase_4_survey():
+    uid = session.get('uid', None)
+    username = session.get('username', None)
+    return render_template("phase_4.2_survey.html", uid=uid, username=username)
 
 
 @socketio.on('join')
