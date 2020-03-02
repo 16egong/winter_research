@@ -1,34 +1,32 @@
-.main-display {
+body {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
 }
 
-.instrucions-phase-1 {
-    flex: 1 65%;
-    padding: 10px 10px;
+main {
+    flex: auto;
+
+    display: flex;
 }
 
-.figures {
-    flex: 1 35%;
-    padding: 10px 10px;
+#instructions-section {
+    flex: 2 1 auto;
+
+    display: flex;
+    flex-direction: column;
 }
 
-.practice {
-  display: flex;
-  justify-content: center;
-}
-.survey-page-btn:hover {
-  background-color: #2fa133; /* Green */
-  color: white;
+#figures-section {
+    flex: 1 1 auto;
+
+    display: flex;
+    flex-direction: column;
 }
 
-.survey-page-btn {
-  background-color: #4CAF50; /* Green */
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
+#instructions {
+    flex: auto;
+}
+
+#figures {
+    flex: auto;
 }

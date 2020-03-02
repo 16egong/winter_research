@@ -1,23 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-        <head>
-            <title>Instructions for {{username}}</title>
-            <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/phase_1.01_english_instructions.css') }}">
-        </head>
+    <head>
+        <title>Instructions for {{username}}</title>
+        
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/global.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/footer.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/phase_1.01_english_instructions.css') }}">
+    </head>
+
     <body>
-        <main class="main-display">
-            <section class="instrucions-phase-1">
+        <main>
+            <section id="instructions-section">
                 <header>Instructions</header>
-                    <iframe src="{{ url_for('static', filename='imgs/phase1_instruction.pdf') }}" type="application/pdf" width="100%" height="700px"></iframe>
+                <iframe id="instructions" src="{{ url_for('static', filename='imgs/phase1_instruction.pdf') }}" type="application/pdf"></iframe>
             </section>
-            <section class="figures">
+            
+            <section id="figures-section">
                 <header>Figures</header>
-                    <iframe src="{{ url_for('static', filename='imgs/figures.pdf') }}" type="application/pdf" width="100%" height="700px"></iframe>
+                <iframe id="figures" src="{{ url_for('static', filename='imgs/figures.pdf') }}" type="application/pdf"></iframe>
             </section>
         </main>
-        <footer class="practice">
-            <button class="survey-page-btn"type="button" onclick="window.location.href = '{{phase_1_practice_url}}';">Next (Survey Page Link)</button>
+
+        <footer>
+            <button onclick="window.location.href = '{{phase_1_practice_url}}';">Next (Survey Page Link)</button>
         </footer>
-        
     </body>
 </html>
