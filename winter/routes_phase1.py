@@ -35,8 +35,8 @@ def phase_1_user_1_english_instructions():
     user = config.USER1
     session['uid'] = user.uid
     session['username'] = user.username
-    phase_1_practice_url = url_for('phase_1_practice')
-    return render_template("phase_1.0_english_instructions.html", uid=session['uid'], username=session['username'], phase_1_practice_url=phase_1_practice_url)
+    phase_1_01_english_instructions_url = url_for('phase_1_01_english_instructions')
+    return render_template("phase_1.0_english_instructions.html", uid=session['uid'], username=session['username'], phase_1_01_english_instructions_url=phase_1_01_english_instructions_url)
 
 
 @app.route('/phase_1_user_2_english_instructions')
@@ -65,6 +65,15 @@ def phase_1_user_4_mandarin_instructions():
     session['username'] = user.username
     phase_1_practice_url = url_for('phase_1_practice')
 #     return render_template("english_instructions_phase_1.html", uid=session['uid'], username=session['username'], phase_1_practice_url=phase_1_practice_url)
+
+
+@app.route('/phase_1_01_english_instructions')
+def phase_1_01_english_instructions():
+    uid = session.get('uid', None)
+    username = session.get('username', None)
+    phase_1_practice_url = url_for('phase_1_practice')
+    return render_template("phase_1.01_english_instructions.html", uid=uid, username=username, phase_1_practice_url=phase_1_practice_url)
+
 
 
 @app.route('/phase_1_practice')

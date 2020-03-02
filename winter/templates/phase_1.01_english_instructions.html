@@ -2,22 +2,21 @@
 <html lang="en">
         <head>
             <title>Instructions for {{username}}</title>
-            <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/phase_1.0_english_instructions.css') }}">
+            <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/phase_1.01_english_instructions.css') }}">
         </head>
     <body>
         <main class="main-display">
             <section class="instrucions-phase-1">
                 <header>Instructions</header>
                     <iframe src="{{ url_for('static', filename='imgs/phase1_instruction.pdf') }}" type="application/pdf" width="100%" height="700px"></iframe>
-<!--                 <iframe href="imgs/fake_english_instructions.pdf" width="50%" height="500px"></iframe> -->
             </section>
-            <!-- <section class="figures">
+            <section class="figures">
                 <header>Figures</header>
                     <iframe src="{{ url_for('static', filename='imgs/figures.pdf') }}" type="application/pdf" width="100%" height="700px"></iframe>
-            </section> -->
+            </section>
         </main>
-        <footer class="instructions">
-            <button class="instructions-btn"type="button" onclick="window.location.href = '{{phase_1_01_english_instructions_url}}';">Next (Instructions Link)</button>
+        <footer class="practice">
+            <button class="survey-page-btn"type="button" onclick="window.location.href = '{{phase_1_practice_url}}';">Next (Survey Page Link)</button>
         </footer>
         
     </body>

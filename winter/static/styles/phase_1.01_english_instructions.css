@@ -1,13 +1,28 @@
-.chat-phase-2 {
+.main-display {
+    display: flex;
+    justify-content: center;
+}
+
+.instrucions-phase-1 {
+    flex: 1 65%;
+    padding: 10px 10px;
+}
+
+.figures {
+    flex: 1 35%;
+    padding: 10px 10px;
+}
+
+.practice {
   display: flex;
   justify-content: center;
 }
-.chat-phase-2-btn:hover {
+.survey-page-btn:hover {
   background-color: #2fa133; /* Green */
   color: white;
 }
 
-.chat-phase-2-btn{
+.survey-page-btn {
   background-color: #4CAF50; /* Green */
   border: none;
   color: white;

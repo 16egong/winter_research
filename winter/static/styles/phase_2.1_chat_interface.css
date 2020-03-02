@@ -20,36 +20,47 @@ html {
 }
 
 body {
-    height: 110vh;
+    display: flex;
+    flex-direction: column;
+    /* height: 100vh; */
     background-image: var(--body-bg);
     font-family: Helvetica, sans-serif;
     font-size: 16px
 }
 
-.content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 110vh;
-    background-image: var(--body-bg);
-    font-family: Helvetica, sans-serif;
-    font-size: 16px
-}
-.instrucions-phase-1 {
+.main-display {
+  flex: 1 90%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  /* height: 90vh; */
 }
 
 .left-side {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     flex: 1 60%;
     padding: 10px 20px;
 }
 
 .instructions {
+    display: flex;
+    flex: 1 30%;
     padding: 10px 20px;
+    justify-content: center;
+}
+
+.qualifications {
+  flex: 1 30%;
 }
 
 .cv {
+    display: flex;
+    flex: 1 70%;
+    justify-content: center;
     padding: 10px 20px;
 }
 
@@ -58,9 +69,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    font-family: Helvetica, sans-serif;
     font-size: 16px;
-    height: 50vh;
     flex: 1 40%;
     padding: 10px 20px;
 }
@@ -204,6 +213,11 @@ body {
   background-color: #fcfcfe;
 }
 
+.instrucions-phase-3 {
+  flex: 1 10%;
+  display: flex;
+  justify-content: center;
+}
 .instrucions-phase-3-btn:hover {
   background-color: #2fa133; /* Green */
   color: white;

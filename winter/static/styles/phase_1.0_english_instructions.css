@@ -4,21 +4,25 @@
 }
 
 .instrucions-phase-1 {
-    flex: 1 65%;
+    flex: 100%;
     padding: 10px 10px;
 }
 
-.figures {
+/* .figures {
     flex: 1 35%;
     padding: 10px 10px;
-}
+} */
 
-.survey-page-btn:hover {
+.instructions {
+  display: flex;
+  justify-content: center;
+}
+.instructions-btn:hover {
   background-color: #2fa133; /* Green */
   color: white;
 }
 
-.survey-page-btn {
+.instructions-btn {
   background-color: #4CAF50; /* Green */
   border: none;
   color: white;
