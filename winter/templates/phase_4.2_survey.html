@@ -1,12 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-        <head>
-            <title>Instructions for {{username}}</title>
-            <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/phase_3.2_survey.css') }}">
-        </head>
-    <body>
-            <section class="survey">
-                <button class="survey-link-btn" type="button" onclick="window.location.href = '{{survey_url}}';">Insert Survey Link</button>
-            </section>
-    </body>
-</html>
+{% extends "survey.html" %}
+
+{% set survey = survey_url %}

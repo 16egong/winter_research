@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Survey Phase {{ phase }} For {{ username }}</title>
+
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/global.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/footer.css') }}">
+    </head>
+
+    <body>
+        <footer>
+            <button onclick="window.location.href = '{{ survey }}';">Insert Survey Link</button>
+            {% if next is defined %}
+            <button onclick="window.location.href = '{{ next }}';">Next</button>
+            {% endif %}
+        </footer>
+    </body>
+</html>

@@ -1,19 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-        <head>
-            <title>Instructions Phase 2 for {{username}}</title>
-            <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/phase_3.0_english_instructions.css') }}">
-        </head>
-    <body>
-        <main class="main-display">
-            <section class="instrucions-phase-3">
-                <header>Instructions</header>
-                    <iframe src="{{ url_for('static', filename='imgs/phase3_instruction.pdf') }}" type="application/pdf" width="100%" height="700px"></iframe>
-            </section>
-        </main>
-        <footer class="chat-phase-2">
-            <button class="transcript-phase-3-btn"type="button" onclick="window.location.href = '{{phase_3_wait_url}}';">Next (Wait Interface)</button>
-        </footer>
-        
-    </body>
-</html>
+{% extends "instructions.html" %}
+
+{% set phase = "3" %}
+{% set file = url_for('static', filename='imgs/phase3_instruction.pdf') %}
+{% set next = phase_3_wait_url %}

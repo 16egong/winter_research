@@ -1,19 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <title>Instructions Phase 2 for {{username}}</title>
+{% extends "instructions.html" %}
 
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/global.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/footer.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/phase_4.0_english_instructions.css') }}">
-    </head>
-
-    <body>
-        <header>Instructions</header>
-        <iframe id="instructions" src="{{ url_for('static', filename='imgs/phase4_instruction.pdf') }}" type="application/pdf"></iframe>
-
-        <footer class="chat-phase-4">
-            <button onclick="window.location.href = '{{url_for('phase_4_chat_interface')}}';">Next (Chat Interface)</button>
-        </footer>
-    </body>
-</html>
+{% set phase = "4" %}
+{% set file = url_for('static', filename='imgs/phase4_instruction.pdf') %}
+{% set next = url_for('phase_4_chat_interface') %}

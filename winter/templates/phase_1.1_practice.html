@@ -1,17 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <title>Instructions for {{username}}</title>
+{% extends "survey.html" %}
 
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/global.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/footer.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/phase_1.1_practice.css') }}">
-    </head>
-
-    <body>
-        <footer>
-            <button onclick="window.location.href = '{{practice_survey_url}}';">Insert Practice Session Link</button>
-            <button onclick="window.location.href = '{{phase_2_english_instructions_url}}';">Next Instructions</button>
-        </footer>
-    </body>
-</html>
+{% set phase = "1" %}
+{% set survey = practice_survey_url %}
+{% set next = phase_2_english_instructions_url %}

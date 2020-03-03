@@ -1,17 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <title>Instructions for {{username}}</title>
+{% extends "survey.html" %}
 
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/global.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/footer.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/phase_3.2_survey.css') }}">
-    </head>
-
-    <body>
-        <footer>
-            <button onclick="window.location.href = '{{survey_url}}';">Insert Survey Link</button>
-            <button onclick="window.location.href = '{{phase_4_english_instructions_url}}';">Next Instructions</button>
-        </footer>
-    </body>
-</html>
+{% set phase = "3" %}
+{% set survey = survey_url %}
+{% set next = phase_4_english_instructions_url %}
