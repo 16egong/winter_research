@@ -32,8 +32,7 @@ main {
 }
 
 #qualifications {
-    width: 30%;
-    height: auto;
+    flex: auto;
 }
 
 #cv {
