@@ -44,8 +44,8 @@ def phase_1_user_2_english_instructions():
     user = config.USER2
     session['uid'] = user.uid
     session['username'] = user.username
-    phase_1_practice_url = url_for('phase_1_practice')
-    return render_template("phase_1.0_english_instructions.html", uid=session['uid'], username=session['username'], phase_1_practice_url=phase_1_practice_url)
+    phase_1_01_english_instructions_url = url_for('phase_1_01_english_instructions')
+    return render_template("phase_1.0_english_instructions.html", uid=session['uid'], username=session['username'], phase_1_01_english_instructions_url=phase_1_01_english_instructions_url)
 
 
 # Mandarin
@@ -54,8 +54,8 @@ def phase_1_user_3_mandarin_instructions():
     user = config.USER3
     session['uid'] = user.uid
     session['username'] = user.username
-    phase_1_practice_url = url_for('phase_1_practice')
-#     return render_template("english_instructions_phase_1.html", uid=session['uid'], username=session['username'], phase_1_practice_url=phase_1_practice_url)
+    phase_1_01_english_instructions_url = url_for('phase_1_01_english_instructions')
+    return render_template("phase_1.0_english_instructions.html", uid=session['uid'], username=session['username'], phase_1_01_english_instructions_url=phase_1_01_english_instructions_url)
 
 
 @app.route('/phase_1_user_4_mandarin_instructions')
@@ -63,8 +63,8 @@ def phase_1_user_4_mandarin_instructions():
     user = config.USER4
     session['uid'] = user.uid
     session['username'] = user.username
-    phase_1_practice_url = url_for('phase_1_practice')
-#     return render_template("english_instructions_phase_1.html", uid=session['uid'], username=session['username'], phase_1_practice_url=phase_1_practice_url)
+    phase_1_01_english_instructions_url = url_for('phase_1_01_english_instructions')
+    return render_template("phase_1.0_english_instructions.html", uid=session['uid'], username=session['username'], phase_1_01_english_instructions_url=phase_1_01_english_instructions_url)
 
 
 @app.route('/phase_1_01_english_instructions')
@@ -80,10 +80,11 @@ def phase_1_01_english_instructions():
 def phase_1_practice():
     uid = session.get('uid', None)
     username = session.get('username', None)
-    practice_survey_url = "INSERT URL HERER"
+    practice_survey_url = 'https://dogtime.com/puppies/255-puppies'
     phase_2_english_instructions_url = url_for('phase_2_english_instructions')
     
     return render_template("phase_1.1_practice.html", username=username, practice_survey_url=practice_survey_url, phase_2_english_instructions_url=phase_2_english_instructions_url)
+
 
 @app.route('/phase_2_english_instructions')
 def phase_2_english_instructions():

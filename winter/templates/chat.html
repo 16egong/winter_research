@@ -21,11 +21,11 @@
 
         <!-- Custom messenger CSS -->
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/messenger.css') }}">
-
-        <!-- Custom Socketio JS -->
+        
+        <!-- Custom Socketio JS-->
         <script src="{{url_for('static', filename='scripts/socketio.js')}}"></script>    
         <script src="{{url_for('static', filename='scripts/chat.js')}}"></script>
-
+        
         <!-- Passing data to JS -->
         <script type="text/javascript">
             const uid = `{{uid}}`;
@@ -66,5 +66,6 @@
         <footer>
             <button onclick="window.location.href = '{{ next }}';">Next</button>
         </footer>
+        
     </body>
 </html>

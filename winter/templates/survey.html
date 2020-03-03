@@ -4,15 +4,25 @@
         <title>Survey Phase {{ phase }} For {{ username }}</title>
 
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/global.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/footer.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/survey.css') }}">
+        <!-- AJAX -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <!-- Custom Socketio JS-->
+        <script src="{{url_for('static', filename='scripts/survey.js')}}"></script>    
+        
+        <!-- Passing data to JS -->
+        <script type="text/javascript">
+            const survey = `{{survey}}`;
+            const next = `{{next}}`;
+        </script>
     </head>
-
     <body>
-        <footer>
-            <button onclick="window.location.href = '{{ survey }}';">Insert Survey Link</button>
+        <main>
+            <button id="survey" onclick='clickSurvey()'>Insert Survey Link</button>
             {% if next is defined %}
-            <button onclick="window.location.href = '{{ next }}';">Next</button>
+            <button id="next" onclick="clickNext()">Next</button>
             {% endif %}
-        </footer>
+        </main>
+        <!-- Custom Socketio JS -->
     </body>
 </html>
