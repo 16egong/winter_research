@@ -22,10 +22,160 @@ def fake_call(url_link):
         "translation": "The 28-year-old cook was found dead at a shopping mall in San Francisco"}
 
 
-# Redirect the user to the first page they should see
-@app.route('/')
-def base():
-    return redirect(url_for("phase_1_user_1_english_instructions"))
+# Set the user and redirect to the first page
+@app.route('/<int:uid>')
+def base(uid):
+    session["uid"] = uid
+
+    return redirect(url_for("control", phase=1, subphase=0))
+
+
+users = [config.USER1, config.USER2, config.USER3, config.USER4]
+
+
+def get_sitemap():
+    """ A bit of a hack to get this dictionary to be properly populated """
+    if get_sitemap.sitemap is None:
+        get_sitemap.sitemap = {
+            "1.0": {
+                "type": "instructions",
+                "english": url_for("static", filename="imgs/phase1_instruction.pdf"),
+                "mandarin": url_for("static", filename=""),
+                "next": url_for("control", phase=1, subphase=1),
+            },
+            "1.1": {
+                "type": "survey",
+                "english": "INSERT SURVEY LINK",
+                "mandarin": "INSERT SURVEY LINK",
+                "next": url_for("control", phase=2, subphase=0),
+            },
+            "2.0": {
+                "type": "instructions",
+                "english": url_for("static", filename="imgs/phase2_instruction.pdf"),
+                "mandarin": url_for("static", filename=""),
+                "next": url_for("control", phase=2, subphase=1),
+            },
+            "2.1": {
+                "type": "chat",
+                "roomtype": "separate",
+                "qualifications": url_for('static', filename='imgs/qualifications.png'),
+                "cv": url_for('static', filename='imgs/CVs.pdf'),
+                "next": url_for("control", phase=3, subphase=0),
+            },
+            "3.0": {
+                "type": "instructions",
+                "english": url_for('static', filename='imgs/phase3_instruction.pdf'),
+                "mandarin": url_for("static", filename=""),
+                "next": url_for("control", phase=3, subphase=1),
+            },
+            "3.1": {
+                "type": "wait",
+                "next": url_for("control", phase=3, subphase=2),
+            },
+            "3.2": {
+                "type": "transcript",
+                "next": url_for("control", phase=3, subphase=3),
+            },
+            "3.3": {
+                "type": "survey",
+                "english": "INSERT SURVEY LINK",
+                "mandarin": "INSERT SURVEY LINK",
+                "next": url_for("control", phase=4, subphase=0),
+            },
+            "4.0": {
+                "type": "instructions",
+                "english": url_for('static', filename='imgs/phase4_instruction.pdf'),
+                "mandarin": url_for("static", filename=""),
+                "next": url_for("control", phase=4, subphase=1),
+            },
+            "4.1": {
+                "type": "chat",
+                "roomtype": "separate",
+                "qualifications": url_for('static', filename='imgs/qualifications.png'),
+                "cv": url_for('static', filename='imgs/CVs.pdf'),
+                "next": url_for("control", phase=4, subphase=2),
+            },
+            "4.2": {
+                "type": "survey",
+                "english": "INSERT SURVEY LINK",
+                "mandarin": "INSERT SURVEY LINK",
+                "next": None,
+            },
+        }
+    
+    return get_sitemap.sitemap
+
+get_sitemap.sitemap = None
+
+
+@app.route("/app/<phase>/<subphase>")
+def control(phase, subphase):
+    uid = session["uid"]
+    username = users[uid - 1].username
+
+    if uid == 1 or uid == 2:
+        language = "english"
+    else:
+        language = "mandarin"
+
+    site = get_sitemap()["{}.{}".format(phase, subphase)]
+
+    if site["type"] == "instructions":
+        return render_template(
+            "instructions.html", 
+            uid=uid, 
+            username=username, 
+            file=site[language], 
+            next=site["next"]
+        )
+    elif site["type"] == "survey":
+        return render_template(
+            "survey.html", 
+            uid=uid, 
+            username=username, 
+            survey=site[language], 
+            next=site["next"]
+        )
+    elif site["type"] == "chat":
+        if site["roomtype"] == "separate":
+            room_uids = [1, 2] if uid == 1 or uid == 2 else [3, 4]
+            room = "room12" if uid == 1 or uid == 2 else "room34"
+        else:
+            room_uids = [1, 2, 3, 4]
+            room = "room1234"
+
+        # Collect Posts
+        posts = winter.models.Post.query.filter(winter.models.Post.uid.in_(room_uids)).order_by(asc(winter.models.Post.timestamp)).all()
+
+        # Collect Notes
+        notes = notes = winter.models.Notes.query.filter(winter.models.Notes.uid == uid).first()
+        notes = notes.notes if notes is not None else ""
+        
+        return render_template(
+            "chat.html", 
+            uid=uid, 
+            username=username, 
+            qualifications=site["qualifications"], 
+            cv=site["cv"], 
+            room=room,
+            posts=posts,
+            notes=notes,
+            next=site["next"],
+        )
+    elif site["type"] == "wait": # TODO ****************************************
+        return render_template(
+            "phase_3.10_wait.html",
+            uid=uid,
+            username=username,
+            next=site["next"],
+        )
+    elif site["type"] == "transcript": # TODO **********************************
+        return render_template(
+            "phase_3.1_transcript.html",
+            uid=uid,
+            username=username,
+            next=site["next"],
+        )
 
 
 #PHASE1
