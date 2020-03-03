@@ -2,7 +2,11 @@
 <html lang="en">
     <head>
         <title>Messenger of {{username}}</title>
-            
+        
+        <!-- Customer css for pages in general -->
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/global.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/footer.css') }}">
+
         <!-- Custom css for chat pages -->
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/phase_2.1_chat_interface.css') }}">
 
@@ -15,7 +19,11 @@
         <!-- Notes JS -->
         <script type="text/javascript" src="{{ url_for('static', filename='scripts/notes.js') }}"></script>
 
-        <!-- Custom SocketIO JS -->
+        <!-- Custom Socketio JS -->
+        <script src="{{url_for('static', filename='scripts/socketio.js')}}"></script>    
+        <script src="{{url_for('static', filename='scripts/chat.js')}}"></script>
+
+        <!-- Passing data to JS -->
         <script type="text/javascript">
             const uid = `{{uid}}`;
             const username = `{{username}}`;
@@ -27,31 +35,85 @@
     </head>
 
     <body>
-        <main class="main-display">
+        <main>
             <!-- Left side start -->
-            <section class="left-side">
-                <!-- <p>LEFT SIDE</p> -->
-                <section class="instructions">
-                    <img class="qualifications" src="{{ url_for('static', filename='imgs/qualifications.png') }}"  />
-                </section>
-                <section class="cv">
-                    <iframe src="{{ url_for('static', filename='imgs/CVs.pdf') }}" type="application/pdf" width="100%" height="500px"></iframe>
-                </section>
+            <section id="left-section">
+                <img id="qualifications" src="{{ url_for('static', filename='imgs/qualifications.png') }}"/>
+
+                <iframe id="cv" src="{{ url_for('static', filename='imgs/CVs.pdf') }}" type="application/pdf"></iframe>
             </section>
             <!-- Left side end -->
 
             <!-- Right side start -->
-            <section class="right-side">
-                <p>RIGHT SIDE</p>
+            <section id="right-section">
+                <!-- Notes start -->
+                <section id="notes">
+                    <header>Note Taking</header>
+                    <textarea id="note-textbox">{{ notes }}</textarea>
+                </section>
+                <!-- Notes end -->
+
+                <!-- Messenger start -->
+                <section id="messenger">
+                    <!-- Main section start -->
+                    <div id="messages">
+                        <!-- Display message start-->
+                            {% for p in posts %} 
+                                {% if p.username == username %}
+                                    <div class="message sender">
+                                {% else %}
+                                    <div class="message receiver">
+                                {% endif %}
+                                        {% if p.uid == 1 or p.uid == 2 %}
+                                            <div
+                                                class="message-image"
+                                                style="background-image: url(https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fcdn-image.travelandleisure.com%2Fsites%2Fdefault%2Ffiles%2Fstyles%2F1600x1000%2Fpublic%2Fblue0517.jpg%3Fitok%3DV3825voJ&w=400&c=sc&poi=face&q=85)">
+                                            </div>
+                                        {% else %}
+                                            <div
+                                                class="message-image"
+                                                style="background-image: url(https://www.macmillandictionary.com/external/slideshow/full/Lime%20Green_full.png)">
+                                            </div>
+                                        {% endif %}
+                                        <!-- Message bubble start-->
+                                        <div class="message-bubble">
+                                            <!-- Message info start -->
+                                            <div class="message-info">
+                                                <div class="message-info-name">{{ p.username }}</div>
+                                                <div class="message-info-time">{{ p.time }}</div>
+                                            </div>
+                                            <!-- Message info end -->
+                                            <!-- Message bubble text-start -->
+                                            <div class="message-text">{{ p.body }}</div>
+                                            <!-- Message bubble text end-->
+                                        </div>
+                                        <!-- Message bubble end-->
+                                    </div>
+                                    <!-- Message end-->
+                            {% endfor %}
+                        <!-- Display message end -->
+                    </div>
+                    <!-- Main section end -->
+                    <!-- Typing status start -->
+                    <div id="typing_on1"></div>
+                    <div id="typing_on2"></div>
+                    <div id="typing_on3"></div>
+                    <div id="typing_on4"></div>
+                    <!-- Typing status end -->
+                    <!-- Type message start -->
+                    <div id="messenger-inputs">
+                        <input type="text" id="user-message" placeholder="Type here..." autocomplete="off">
+                        <button type="button" id="send-message">SEND</button>
+                    </div>
+                    <!-- Type message end -->
+                </section>
+                <!-- Messenger end -->
             </section>
             <!-- Right side end -->
         </main>
-        <footer class="instrucions-phase-3">
-            <button class="instrucions-phase-3-btn"type="button" onclick="window.location.href = '{{url_for('phase_3_survey')}}';">Next (Survey Page Link)</button>
+
+        <footer>
+            <button onclick="window.location.href = '{{url_for('phase_3_survey')}}';">Next (Survey Page Link)</button>
         </footer>
-        
-        <!-- Custom SocketIO JS -->
-        <script src="{{url_for('static', filename='scripts/socketio.js')}}"></script>    
-        <script src="{{url_for('static', filename='scripts/chat.js')}}"></script>    
     </body>
 </html>
