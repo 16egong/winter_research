@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-        <head>
-            <title>Instructions for {{username}}</title>
-            <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/phase_3.2_survey.css') }}">
-        </head>
+    <head>
+        <title>Instructions for {{username}}</title>
+
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/global.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/footer.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/phase_3.2_survey.css') }}">
+    </head>
+
     <body>
-            <section class="survey">
-                <button class="survey-link-btn" type="button" onclick="window.location.href = '{{survey_url}}';">Insert Survey Link</button>
-            </section>
-            <section class="instrucions-phase-4">
-                 <button class="instrucions-phase-4-btn"type="button" onclick="window.location.href = '{{phase_4_english_instructions_url}}';">Next Instructions</button>
-            </section>
+        <footer>
+            <button onclick="window.location.href = '{{survey_url}}';">Insert Survey Link</button>
+            <button onclick="window.location.href = '{{phase_4_english_instructions_url}}';">Next Instructions</button>
+        </footer>
     </body>
 </html>
