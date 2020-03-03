@@ -1,0 +1,54 @@
+
+<div id="container">
+    <!-- Main section start -->
+    <div id="messages">
+        <!-- Display message start-->
+            {% for p in posts %} 
+                {% if p.username == username %}
+                    <div class="message sender">
+                {% else %}
+                    <div class="message receiver">
+                {% endif %}
+                        {% if p.uid == 1 or p.uid == 2 %}
+                            <div
+                                class="message-image"
+                                style="background-image: url(https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fcdn-image.travelandleisure.com%2Fsites%2Fdefault%2Ffiles%2Fstyles%2F1600x1000%2Fpublic%2Fblue0517.jpg%3Fitok%3DV3825voJ&w=400&c=sc&poi=face&q=85)">
+                            </div>
+                        {% else %}
+                            <div
+                                class="message-image"
+                                style="background-image: url(https://www.macmillandictionary.com/external/slideshow/full/Lime%20Green_full.png)">
+                            </div>
+                        {% endif %}
+                        <!-- Message bubble start-->
+                        <div class="message-bubble">
+                            <!-- Message info start -->
+                            <div class="message-info">
+                                <div class="message-info-name">{{ p.username }}</div>
+                                <div class="message-info-time">{{ p.time }}</div>
+                            </div>
+                            <!-- Message info end -->
+                            <!-- Message bubble text-start -->
+                            <div class="message-text">{{ p.body }}</div>
+                            <!-- Message bubble text end-->
+                        </div>
+                        <!-- Message bubble end-->
+                    </div>
+                    <!-- Message end-->
+            {% endfor %}
+        <!-- Display message end -->
+    </div>
+    <!-- Main section end -->
+    <!-- Typing status start -->
+    <div id="typing_on1"></div>
+    <div id="typing_on2"></div>
+    <div id="typing_on3"></div>
+    <div id="typing_on4"></div>
+    <!-- Typing status end -->
+    <!-- Type message start -->
+    <div id="messenger-inputs">
+        <input type="text" id="user-message" placeholder="Type here..." autocomplete="off">
+        <button type="button" id="send-message">SEND</button>
+    </div>
+    <!-- Type message end -->
+</div>
