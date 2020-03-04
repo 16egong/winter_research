@@ -10,8 +10,7 @@ function clickSurvey() {
     
 };
 function clickNext() {
-    window.open(next);
-    
+    window.open(next, "_self");
 };
 
 
