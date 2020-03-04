@@ -24,8 +24,10 @@ document.addEventListener('DOMContentLoaded', () => {
         
         if(data.typing==true){
             typing_on.innerHTML = '<p><em>' + data.username + ' is typing a message...</em></p>';
+            typing_on.className = 'shown'
         } else {
             typing_on.innerHTML = ""
+            typing_on.className = 'hidden'
         }
     });
     

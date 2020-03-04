@@ -111,3 +111,11 @@
 #send-message:hover {
     background: #3e8cf0;
 }
+
+.shown {
+    display: block;
+}
+
+.hidden {
+    display: hidden;
+}
