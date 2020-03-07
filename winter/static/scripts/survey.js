@@ -1,6 +1,6 @@
 function clickSurvey() {
 //     window.location.href = survey;
-    console.log(`Survey: ${survey}`)
+    console.log(`Survey: ${survey}`);
     window.open(survey, '_blank');
     $('#survey').prop('disabled', true);
     $('#survey').css('background-color', '#dfdfdf');
@@ -9,8 +9,13 @@ function clickSurvey() {
     
     
 };
-function clickNext() {
-    window.open(next, "_self");
+function clickNext() { 
+    if ($('#next').is('.disabled')) {
+        console.log("Please click the survey first");
+    } else{
+        window.open(next, "_self"); 
+    }
+    
 };
 
 

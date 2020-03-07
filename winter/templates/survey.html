@@ -18,9 +18,9 @@
     </head>
     <body>
         <main>
-            <button id="survey" onclick='clickSurvey()'>Insert Survey Link</button>
+            <button id="survey" onclick='clickSurvey()'>Survey Link</button>
             {% if next is defined %}
-            <button id="next" onclick="clickNext()">Next</button>
+            <button id="next" disabled onclick="clickNext()">Next</button>
             {% endif %}
         </main>
         <!-- Custom Socketio JS -->

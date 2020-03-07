@@ -22,163 +22,211 @@ def fake_call(url_link):
         "translation": "The 28-year-old cook was found dead at a shopping mall in San Francisco"}
 
 
-# Redirect the user to the first page they should see
-@app.route('/')
-def base():
-    return redirect(url_for("phase_1_user_1_english_instructions"))
+# # Redirect the user to the first page they should see
+# @app.route('/')
+# def base():
+#     return redirect(url_for("phase_1_user_1_english_instructions"))
+@app.route('/<int:uid>')
+def base(uid):
+    session["uid"] = uid
 
+    return redirect(url_for("control", phase=1, subphase=0))
 
-#PHASE1
-# English
-@app.route('/phase_1_user_1_english_instructions')
-def phase_1_user_1_english_instructions():
-    user = config.USER1
-    session['uid'] = user.uid
-    session['username'] = user.username
-    phase_1_01_english_instructions_url = url_for('phase_1_01_english_instructions')
-    return render_template("phase_1.0_english_instructions.html", uid=session['uid'], username=session['username'], phase_1_01_english_instructions_url=phase_1_01_english_instructions_url)
+users = [config.USER1, config.USER2, config.USER3, config.USER4]
 
-
-@app.route('/phase_1_user_2_english_instructions')
-def phase_1_user_2_english_instructions():
-    user = config.USER2
-    session['uid'] = user.uid
-    session['username'] = user.username
-    phase_1_01_english_instructions_url = url_for('phase_1_01_english_instructions')
-    return render_template("phase_1.0_english_instructions.html", uid=session['uid'], username=session['username'], phase_1_01_english_instructions_url=phase_1_01_english_instructions_url)
-
-
-# Mandarin
-@app.route('/phase_1_user_3_mandarin_instructions')
-def phase_1_user_3_mandarin_instructions():
-    user = config.USER3
-    session['uid'] = user.uid
-    session['username'] = user.username
-    phase_1_01_english_instructions_url = url_for('phase_1_01_english_instructions')
-    return render_template("phase_1.0_english_instructions.html", uid=session['uid'], username=session['username'], phase_1_01_english_instructions_url=phase_1_01_english_instructions_url)
-
-
-@app.route('/phase_1_user_4_mandarin_instructions')
-def phase_1_user_4_mandarin_instructions():
-    user = config.USER4
-    session['uid'] = user.uid
-    session['username'] = user.username
-    phase_1_01_english_instructions_url = url_for('phase_1_01_english_instructions')
-    return render_template("phase_1.0_english_instructions.html", uid=session['uid'], username=session['username'], phase_1_01_english_instructions_url=phase_1_01_english_instructions_url)
-
-
-@app.route('/phase_1_01_english_instructions')
-def phase_1_01_english_instructions():
-    uid = session.get('uid', None)
-    username = session.get('username', None)
-    phase_1_practice_url = url_for('phase_1_practice')
-    return render_template("phase_1.01_english_instructions.html", uid=uid, username=username, phase_1_practice_url=phase_1_practice_url)
-
-
-
-@app.route('/phase_1_practice')
-def phase_1_practice():
-    uid = session.get('uid', None)
-    username = session.get('username', None)
-    practice_survey_url = 'https://dogtime.com/puppies/255-puppies'
-    phase_2_english_instructions_url = url_for('phase_2_english_instructions')
+def get_sitemap():
+    """ A bit of a hack to get this dictionary to be properly populated """
+    if get_sitemap.sitemap is None:
+        get_sitemap.sitemap = {
+            "1.0": {
+                "type": "user_specific_instructions",
+                "user1": url_for("static", filename="imgs/phase_1.0_user_1_CN_instructions.pdf"),
+                "user2": url_for("static", filename="imgs/phase_1.0_user_2_CN_instructions.pdf"),
+                "user3": url_for("static", filename="imgs/phase_1.0_user_3_EN_instructions.pdf"),
+                "user4": url_for("static", filename="imgs/phase_1.0_user_4_EN_instructions.pdf"),
+                "next": url_for("control", phase=1, subphase=1),
+            },
+            "1.1": {
+                "type": "user_specific_instructions",
+                "user1": url_for("static", filename="imgs/phase_1.1_user_1_CN_instructions.pdf"),
+                "user2": url_for("static", filename="imgs/phase_1.1_user_2_CN_instructions.pdf"),
+                "user3": url_for("static", filename="imgs/phase_1.1_user_3_EN_instructions.pdf"),
+                "user4": url_for("static", filename="imgs/phase_1.1_user_4_EN_instructions.pdf"),
+                "next": url_for("control", phase=1, subphase=2),
+            },
+            "1.2": {
+                "type": "user_specific_instructions",
+                "user1": url_for("static", filename="imgs/phase_1.2_user_1_CN_instructions.pdf"),
+                "user2": url_for("static", filename="imgs/phase_1.2_user_2_CN_instructions.pdf"),
+                "user3": url_for("static", filename="imgs/phase_1.2_user_3_EN_instructions.pdf"),
+                "user4": url_for("static", filename="imgs/phase_1.2_user_4_EN_instructions.pdf"),
+                "next": url_for("control", phase=1, subphase=3),
+            },
+            "1.3": {
+                "type": "instructions",
+                "english": url_for("static", filename="imgs/phase_1.3_EN_instructions.pdf"),
+                "mandarin": url_for("static", filename="imgs/phase_1.3_CN_instructions.pdf"),
+                "next": url_for("control", phase=1, subphase=4),
+            },
+            "1.4": {
+                "type": "instructions",
+                "english": url_for("static", filename="imgs/phase_1.4_EN_instructions.pdf"),
+                "mandarin": url_for("static", filename="imgs/phase_1.4_CN_instructions.pdf"),
+                "next": url_for("control", phase=1, subphase=5),
+            },
+            "1.5": {
+                "type": "instructions",
+                "english": url_for("static", filename="imgs/phase_1.5_EN_instructions.pdf"),
+                "mandarin": url_for("static", filename="imgs/phase_1.5_CN_instructions.pdf"),
+                "next": url_for("control", phase=1, subphase=6),
+            },
+            "1.6": {
+                "type": "survey",
+                "english": "https://umdsurvey.umd.edu/jfe/form/SV_26k2aVRuhtyVZsN", 
+                "mandarin": "INSERT SURVEY LINK",
+                "next": url_for("control", phase=2, subphase=0),
+            },
+            "2.0": {
+                "type": "instructions",
+                "english": url_for("static", filename="imgs/phase_2.0_EN_instructions.pdf"),
+                "mandarin": url_for("static", filename="imgs/phase_2.0_CN_instructions.pdf"),
+                "next": url_for("control", phase=2, subphase=1),
+            },
+            "2.1": {
+                "type": "chat",
+                "roomtype": "separate",
+                "cv1": url_for('static', filename='imgs/user3_CV1.pdf'),
+                "cv2": url_for('static', filename='imgs/user3_CV2.pdf'),
+                "cv3": url_for('static', filename='imgs/user3_CV3.pdf'),
+                "cv4": url_for('static', filename='imgs/user3_CV4.pdf'),
+                "next": url_for("control", phase=3, subphase=3),
+            },
+            "3.0": {
+                "type": "instructions",
+                "english": url_for('static', filename='imgs/phase3_instruction.pdf'),
+                "mandarin": url_for("static", filename=""),
+                "next": url_for("control", phase=3, subphase=1),
+            },
+            "3.1": {
+                "type": "wait",
+                "next": url_for("control", phase=3, subphase=2),
+            },
+            "3.2": {
+                "type": "transcript",
+                "next": url_for("control", phase=3, subphase=3),
+            },
+            "3.3": {
+                "type": "survey",
+                "english": "https://umdsurvey.umd.edu/jfe/form/SV_22Y0KXn6kgwZimN ",
+                "mandarin": "INSERT SURVEY LINK",
+                "next": url_for("control", phase=4, subphase=0),
+            },
+            "4.0": {
+                "type": "instructions",
+                "english": url_for('static', filename='imgs/phase_4.0_EN_instructions.pdf'),
+                "mandarin": url_for("static", filename=""),
+                "next": url_for("control", phase=4, subphase=1),
+            },
+            "4.1": {
+                "type": "chat",
+                "roomtype": "separate",
+                "cv1": url_for('static', filename='imgs/user3_CV1.pdf'),
+                "cv2": url_for('static', filename='imgs/user3_CV2.pdf'),
+                "cv3": url_for('static', filename='imgs/user3_CV3.pdf'),
+                "cv4": url_for('static', filename='imgs/user3_CV4.pdf'),
+                "next": url_for("control", phase=4, subphase=2),
+            },
+            "5.0": {
+                "type": "survey",
+                "english": "https://umdsurvey.umd.edu/jfe/form/SV_0xFKrg41yjC3H5r",
+                "mandarin": "INSERT SURVEY LINK",
+                "next": None,
+            },
+        }
     
-    return render_template("phase_1.1_practice.html", username=username, practice_survey_url=practice_survey_url, phase_2_english_instructions_url=phase_2_english_instructions_url)
+    return get_sitemap.sitemap
+
+get_sitemap.sitemap = None
 
 
-@app.route('/phase_2_english_instructions')
-def phase_2_english_instructions():
-    uid = session.get('uid', None)
-    username = session.get('username', None)
-    phase_2_chat_interface_url = url_for('phase_2_chat_interface')
-    return render_template("phase_2.0_english_instructions.html", uid=uid, username=username, phase_2_chat_interface_url=phase_2_chat_interface_url)
-
-
-@app.route('/phase_2_chat_interface', methods = ['POST', 'GET'])
-def phase_2_chat_interface():
-    uid = session.get('uid', None)
-    username = session.get('username', None)
-    usernames = config.USERNAMES
-
-    notes = winter.models.Notes.query.filter(winter.models.Notes.uid == uid).first()
-    notes = notes.notes if notes is not None else ""
+@app.route("/app/<phase>/<subphase>")
+def control(phase, subphase):
+    uid = session["uid"] # TODO ****************************************
+    username = users[uid - 1].username
 
     if uid == 1 or uid == 2:
-        room = 'room12'
-        posts =  winter.models.Post.query.filter(or_(winter.models.Post.uid == 1, winter.models.Post.uid == 2)).order_by(asc(winter.models.Post.timestamp)).all()
+        language = "mandarin"
     else:
-        room = 'room34'
-        posts =  winter.models.Post.query.filter(or_(winter.models.Post.uid == 3, winter.models.Post.uid == 4)).order_by(asc(winter.models.Post.timestamp)).all()
+        language = "english"
 
-    return render_template("phase_2.1_chat_interface.html", uid=uid, username=username, posts=posts, usernames=usernames, room=room, notes=notes)
+    site = get_sitemap()["{}.{}".format(phase, subphase)]
 
+    if site["type"] == "user_specific_instructions":
+        return render_template(
+            "instructions.html", 
+            uid=uid, 
+            username=username, 
+            file=site["user"+str(uid)], 
+            next=site["next"]
+        )
+    elif site["type"] == "instructions":
+        return render_template(
+            "instructions.html", 
+            uid=uid, 
+            username=username, 
+            file=site[language], 
+            next=site["next"]
+        )
+    elif site["type"] == "survey":
+        return render_template(
+            "survey.html", 
+            uid=uid, 
+            username=username, 
+            survey=site[language], 
+            next=site["next"]
+        )
+    elif site["type"] == "chat":
+        if site["roomtype"] == "separate":
+            room_uids = [1, 2] if uid == 1 or uid == 2 else [3, 4]
+            room = "room12" if uid == 1 or uid == 2 else "room34"
+        else:
+            room_uids = [1, 2, 3, 4]
+            room = "room1234"
 
-@app.route('/phase_3_english_instructions')
-def phase_3_english_instructions():
-    uid = session.get('uid', None)
-    username = session.get('username', None)
-    phase_3_wait_url = url_for('phase_3_wait')
-    return render_template("phase_3.0_english_instructions.html", uid=uid, username=username, phase_3_wait_url=phase_3_wait_url)
+        # Collect Posts
+        posts = winter.models.Post.query.filter(winter.models.Post.uid.in_(room_uids)).order_by(asc(winter.models.Post.timestamp)).all()
 
-
-@app.route('/phase_3_wait')
-def phase_3_wait():
-    uid = session.get('uid', None)
-    username = session.get('username', None)
-    phase_3_survey_url = "INSERT URL HERER"
-    phase_3_transcript_url = url_for('phase_3_transcript')
-    return render_template("phase_3.10_wait.html", uid=uid, username=username, phase_3_transcript_url=phase_3_transcript_url, phase_3_survey_url=phase_3_survey_url)
-
-
-@app.route('/phase_3_transcript')
-def phase_3_transcript():
-    uid = session.get('uid', None)
-    username = session.get('username', None)
-    if uid==3 or uid==4:
-        posts =  winter.models.Post.query.filter(or_(winter.models.Post.uid == 1, winter.models.Post.uid == 2)).order_by(asc(winter.models.Post.timestamp)).all()
-    else:
-        posts =  winter.models.Post.query.filter(or_(winter.models.Post.uid == 3, winter.models.Post.uid == 4)).order_by(asc(winter.models.Post.timestamp)).all()
+        # Collect Notes
+        notes = notes = winter.models.Notes.query.filter(winter.models.Notes.uid == uid).first()
+        notes = notes.notes if notes is not None else ""
         
-    phase_3_survey_url = url_for('phase_3_survey')
-    return render_template("phase_3.1_transcript.html", posts=posts, phase_3_survey_url=phase_3_survey_url)
-
-
-@app.route('/phase_3_survey')
-def phase_3_survey():
-    uid = session.get('uid', None)
-    username = session.get('username', None)
-    phase_4_english_instructions_url = url_for('phase_4_english_instructions')
-    return render_template("phase_3.2_survey.html", uid=uid, username=username, phase_4_english_instructions_url=phase_4_english_instructions_url)
-    
-    
-    
-@app.route('/phase_4_english_instructions')
-def phase_4_english_instructions():
-    uid = session.get('uid', None)
-    username = session.get('username', None)
-    phase_4_chat_interface_url = url_for('phase_4_chat_interface')
-    return render_template("phase_4.0_english_instructions.html", uid=uid, username=username, phase_4_chat_interface_url=phase_4_chat_interface_url)
-
-
-@app.route('/phase_4_chat_interface',methods = ['POST', 'GET'])
-def phase_4_chat_interface():
-    uid = session.get('uid', None)
-    
-    username = session.get('username', None)
-    usernames = config.USERNAMES
-    room = 1234
-    posts =  winter.models.Post.query.order_by(asc(winter.models.Post.timestamp)).all()
-    
-    notes = winter.models.Notes.query.filter(winter.models.Notes.uid == uid).first()
-    notes = notes.notes if notes is not None else ""
-    
-    return render_template("phase_4.1_chat_interface.html", uid=uid, username=username, posts=posts, usernames=usernames, room=room, notes=notes)
-
-@app.route('/phase_4_survey')
-def phase_4_survey():
-    uid = session.get('uid', None)
-    username = session.get('username', None)
-    return render_template("phase_4.2_survey.html", uid=uid, username=username)
+        return render_template(
+            "chat.html", 
+            uid=uid, 
+            username=username, 
+            cv1=site["cv1"], 
+            cv2=site["cv2"], 
+            cv3=site["cv3"], 
+            cv4=site["cv4"], 
+            room=room,
+            posts=posts,
+            notes=notes,
+            next=site["next"],
+        )
+    elif site["type"] == "wait": # TODO ****************************************
+        return render_template(
+            "phase_3.10_wait.html",
+            uid=uid,
+            username=username,
+            next=site["next"],
+        )
+    elif site["type"] == "transcript": # TODO **********************************
+        return render_template(
+            "phase_3.1_transcript.html",
+            uid=uid,
+            username=username,
+            next=site["next"],
+        )
 
 
 @socketio.on('join')
