@@ -47,11 +47,9 @@ def get_sitemap():
                 "next": url_for("control", phase=1, subphase=1),
             },
             "1.1": {
-                "type": "user_specific_instructions",
-                "user1": url_for("static", filename="imgs/phase_1.1_user_1_CN_instructions.pdf"),
-                "user2": url_for("static", filename="imgs/phase_1.1_user_2_CN_instructions.pdf"),
-                "user3": url_for("static", filename="imgs/phase_1.1_user_3_EN_instructions.pdf"),
-                "user4": url_for("static", filename="imgs/phase_1.1_user_4_EN_instructions.pdf"),
+                "type": "instructions",
+                "english": url_for("static", filename="imgs/phase_1.1_CN_instructions.pdf"),
+                "mandarin": url_for("static", filename="imgs/phase_1.1_EN_instructions.pdf"),
                 "next": url_for("control", phase=1, subphase=2),
             },
             "1.2": {
@@ -124,16 +122,17 @@ def get_sitemap():
             "4.0": {
                 "type": "instructions",
                 "english": url_for('static', filename='imgs/phase_4.0_EN_instructions.pdf'),
-                "mandarin": url_for("static", filename=""),
+                "mandarin": url_for("static", filename="imgs/phase_4.0_CN_instructions.pdf"),
                 "next": url_for("control", phase=4, subphase=1),
             },
             "4.1": {
                 "type": "chat",
                 "roomtype": "separate",
-                "cv1": url_for('static', filename='imgs/user3_CV1.pdf'),
-                "cv2": url_for('static', filename='imgs/user3_CV2.pdf'),
-                "cv3": url_for('static', filename='imgs/user3_CV3.pdf'),
-                "cv4": url_for('static', filename='imgs/user3_CV4.pdf'),
+                "u3cv1": url_for('static', filename='imgs/user3_CV1.pdf'),
+                "u3cv2": url_for('static', filename='imgs/user3_CV2.pdf'),
+                "u3cv3": url_for('static', filename='imgs/user3_CV3.pdf'),
+                "u3cv4": url_for('static', filename='imgs/user3_CV4.pdf'),
+                
                 "next": url_for("control", phase=4, subphase=2),
             },
             "5.0": {
