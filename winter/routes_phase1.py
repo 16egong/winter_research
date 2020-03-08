@@ -210,14 +210,12 @@ def control(phase, subphase):
         )
     elif site["type"] == "chat":
         if site["roomtype"] == "separate":
-            room_uids = [1, 2] if uid == 1 or uid == 2 else [3, 4]
             room = "room12" if uid == 1 or uid == 2 else "room34"
         else:
-            room_uids = [1, 2, 3, 4]
             room = "room1234"
 
         # Collect Posts
-        posts = winter.models.Post.query.filter(winter.models.Post.uid.in_(room_uids)).order_by(asc(winter.models.Post.timestamp)).all()
+        posts = winter.models.Post.query.filter(winter.models.Post.room==room).order_by(asc(winter.models.Post.timestamp)).all()
 
         # Collect Notes
         notes = notes = winter.models.Notes.query.filter(winter.models.Notes.uid == uid).first()
