@@ -139,7 +139,7 @@ def get_sitemap():
             },
             "4.1": {
                 "type": "chat",
-                "roomtype": "separate",
+                "roomtype": "not_separate",
                 "1cv1": url_for('static', filename='imgs/user1_CV1.pdf'),
                 "1cv2": url_for('static', filename='imgs/user1_CV2.pdf'),
                 "1cv3": url_for('static', filename='imgs/user1_CV3.pdf'),
