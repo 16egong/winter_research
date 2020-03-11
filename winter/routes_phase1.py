@@ -293,7 +293,7 @@ def message(data):
 
 @socketio.on('typing')
 def typing(data):
-    emit('display', data, room=data['room'], include_self=True)
+    emit('display', data, room=data['room'], include_self=False)
 
 
 @app.route("/savenotes", methods=["PUT"])
