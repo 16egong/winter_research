@@ -3,7 +3,7 @@ Chat UI for research project
 
 ## Installation
 ```bash
-git clone* <repository>
+git clone <repository>
 cd winter_research
 ```
 ### Docker
