@@ -1,8 +1,8 @@
 from datetime import datetime
 from winter import db
     
-class Post(db.Model):
-    __tablename__ = 'post'
+class Posts(db.Model):
+    __tablename__ = 'posts'
     id = db.Column(db.Integer, primary_key=True)
     uid = db.Column(db.Integer)
     username = db.Column(db.String)
@@ -12,7 +12,7 @@ class Post(db.Model):
     room = db.Column(db.String)
 
     def __repr__(self):
-        return '<Post {}>'.format(self.body)
+        return '<Posts {}>'.format(self.body)
 
 class Notes(db.Model):
     __tablename__ = "notes"

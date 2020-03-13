@@ -9,32 +9,12 @@ function clickSurvey() {
     
     
 };
+
 function clickNext() { 
-    if ($('#next').is('.disabled')) {
-        console.log("Please click the survey first");
-    } else{
+    if ($('#survey').is(':disabled')) {
         window.open(next, "_self"); 
+    } else{
+        console.log("Please click the survey first");
     }
     
 };
-
-
-
-// function clickButton(page_num) {
-//     var $curr_msg = $('.block.active');
-//     var $page_num = $('.page.active');
-//     $('.block').removeClass('active');
-//     $('.page').removeClass('active');
-//     var $msg = $('#'+page_num + '.block');
-//     var $page = $('#'+page_num + '.page');
-//     $msg.addClass('active');
-//     $page.addClass('active');
-// }
-
-// $("#survey").click(function (event) {
-//     if ($(this).hasClass("disabled")) {
-//         event.preventDefault();
-//     }
-//     $(this).addClass("disabled");
-//     document.getElementById("next").disabled = false;
-// });

@@ -9,9 +9,9 @@ USER2 = winter.users.User(uid=2, username=USERNAMES[1])
 USER3 = winter.users.User(uid=3, username=USERNAMES[2])
 USER4 = winter.users.User(uid=4, username=USERNAMES[3])
 
-PHASE = 1
-TRIAL_NUM = 2
-DATABASE_NAME = f'trial_{TRIAL_NUM}.' + str(PHASE)
+TRIAL_NUM = 1
+TYPE = "control" #switch between control, no_keys, or keys
+DATABASE_NAME = f'data/trial_{TRIAL_NUM}_' + TYPE + '.db'
 
 
 class Config(object):

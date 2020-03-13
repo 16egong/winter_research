@@ -1,3 +1,7 @@
+body {
+    display: flex;
+    flex-direction: column;
+}
 main {
 
     background-color: white;
@@ -5,10 +9,10 @@ main {
 /*     flex: none; */
 
 /*     padding: 0.25rem; */
-    padding: 200px 10px;
     
     display: flex;
     justify-content: center;
+    
 
 }
 
@@ -33,7 +37,10 @@ main button + button {
     margin-left: 1rem;
     margin-right: 1rem;
 }
-
+#instructions{
+    display: flex;
+    flex: 90%
+}
 #survey {
   
 }
