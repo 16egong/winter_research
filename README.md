@@ -62,6 +62,10 @@ python -m winter
 - user 4: http://34.236.57.52/4
 
 ## Collecting Data
+At the file path of hci_research.pem secure copy over the data
+```bash
+scp -i "hci_research.pem" ec2-user@ec2-34-236-57-52.compute-1.amazonaws.com:~/winter_research/data/trial_1_control.db .
+```
 In terminal
 ```bash
 cd /data
