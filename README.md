@@ -69,6 +69,7 @@ cd /data
 sqlite> .tables
 ```
 You should see posts and notes as the two tables
+```bash
 sqlite> .headers on
 sqlite> .mode csv
 sqlite> .output trial_{trial_num}_{trial_type}_posts.csv
