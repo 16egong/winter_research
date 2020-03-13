@@ -15,9 +15,4 @@ from winter import models
 
 db.create_all()
 
-if config.PHASE == 1:
-    from winter import routes_phase1 as routes
-elif config.PHASE == 2:
-    from winter import routes_phase2 as routes
-else:
-    print('PHASE 1 or 2')
+from winter import routes

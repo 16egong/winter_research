@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Messenger of {{username}}</title>
+        
+        <!-- Custome css for pages in general -->
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/global.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/footer.css') }}">
+
+        <!-- Custom css for chat pages -->
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/chat.css') }}">
+
+        <!-- SocketIO JS -->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
+
+        <!-- AJAX -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+        <!-- Notes JS -->
+        <script type="text/javascript" src="{{ url_for('static', filename='scripts/notes.js') }}"></script>
+
+        <!-- Custom messenger CSS -->
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/messenger.css') }}">
+        
+        <!-- Custom Socketio JS-->
+        <script src="{{url_for('static', filename='scripts/socketio.js')}}"></script>    
+        <script src="{{url_for('static', filename='scripts/chat.js')}}"></script>
+        
+        <!-- Passing data to JS -->
+        <script type="text/javascript">
+            const uid = `{{uid}}`;
+            const username = `{{username}}`;
+            const posts = `{{posts}}`;
+            const usernames = `{{usernames}}`
+            const notesurl = `{{url_for("save_notes")}}`;
+            var room = `{{room}}`
+        </script>
+    </head>
+
+    <body>
+        <main>
+            <!-- Left side start -->
+            <section id="left-section">
+                <div id="qualifications">
+                    <p><b>Preferred Qualificationsfor Candidate Evaluation:</b></p>
+                    <ul>
+                        <li>Excellent coursework performance:  <br/>
+                            Qualified candidates should receive <b>top</b> grades in theireducation programs.</li>
+                        <li>Solid research experience in quantitative analysis:  <br/>
+                            Qualified candidates should demonstrate proficient research skills in 
+                            <b>large scale data</b> analysis using <b>statistical and/or computational methods.</b></li>
+                        <li>Rich industrial experience in diverse teams:  <br/>
+                            Qualified candidates should have sufficient experience of working in <b>cross-department or multi-institutional industrial teams/projects.</b></li>
+                    </ul>
+                </div>
+                <div id="cv_section">
+                    <iframe class="cv active" id="0" src="{{ cv1 }}#toolbar=0&navpanes=0" type="application/pdf"></iframe>
+                    <iframe class="cv" id="1" src="{{ cv2 }}#toolbar=0&navpanes=0" type="application/pdf"></iframe>
+                    <iframe class="cv" id="2" src="{{ cv3 }}#toolbar=0&navpanes=0" type="application/pdf"></iframe>
+                    <iframe class="cv" id="3" src="{{ cv4 }}#toolbar=0&navpanes=0" type="application/pdf"></iframe>
+                    <footer class="pages">
+                        <div class="pagination">
+                            <a onclick="prevPage()">&laquo;</a>
+                            <a class="page active" id="0"  onclick="showPage(0)">1</a>
+                            <a class="page" id="1" onclick="showPage(1)">2</a>
+                            <a class="page" id="2" onclick="showPage(2)">3</a>
+                            <a class="page" id="3" onclick="showPage(3)">4</a>
+                            <a id="next" onclick="nextPage()">&raquo;</a>
+                        </div>
+                    </footer>
+                </div>
+                
+            </section>
+            <!-- Left side end -->
+
+            <!-- Right side start -->
+            <section id="right-section">
+                <!-- Notes start -->
+                <section id="notes">
+                    <header>Note Taking</header>
+                    <textarea id="note-textbox">{{ notes }}</textarea>
+                </section>
+                <!-- Notes end -->
+                
+                <section id="messenger">
+                    {% include 'messenger.html' %}
+                </section>
+            </section>
+            <!-- Right side end -->
+        </main>
+
+        <footer>
+            <button onclick="window.location.href = '{{ next }}';">Next</button>
+        </footer>
+        
+    </body>
+</html>

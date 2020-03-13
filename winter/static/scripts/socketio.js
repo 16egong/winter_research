@@ -24,8 +24,10 @@ document.addEventListener('DOMContentLoaded', () => {
         
         if(data.typing==true){
             typing_on.innerHTML = '<p><em>' + data.username + ' is typing a message...</em></p>';
+            typing_on.className = 'shown'
         } else {
             typing_on.innerHTML = ""
+            typing_on.className = 'hidden'
         }
     });
     
@@ -71,13 +73,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Message handler
     socket.on('message', data => {
         if (data.username) {
-            const p = document.createElement('p');
-            const msgerChat = document.querySelector(".msger-chat")
+            const msgerChat = document.getElementById("messages")
             var side = ''
             if (data.username == username) {
-                side = 'right'
+                side = 'sender'
             } else {
-                side = 'left'
+                side = 'receiver'
             } 
             var style = ''
             if (data.uid == 1 || data.uid == 2) {
@@ -86,15 +87,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 style="background-image: url(https://www.macmillandictionary.com/external/slideshow/full/Lime%20Green_full.png)"
             }
             const msgHTML = `
-                <div class="msg ${side}-msg">
-                    <div class="msg-img" style="${style}">
+                <div class="message ${side}">
+                    <div class="message-image" style="${style}">
                     </div>
-                    <div class="msg-bubble">
-                        <div class="msg-info">
-                              <div class="msg-info-name">${data.username}</div>
-                              <div class="msg-info-time">${data.time}</div>
+                    <div class="message-bubble">
+                        <div class="message-info">
+                              <div class="message-info-name">${data.username}</div>
+                              <div class="message-info-time">${data.time}</div>
                         </div>
-                    <div class="msg-text">${data.msg}</div>
+                    <div class="message-text">${data.msg}</div>
                   </div>
                 </div>
               `;
