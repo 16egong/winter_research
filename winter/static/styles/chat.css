@@ -69,6 +69,8 @@ main {
 #messenger {
     flex: 2 1 auto;
 
+    display: flex;
+    flex-direction: column;
     border: var(--border)
 }
 
