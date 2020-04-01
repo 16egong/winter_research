@@ -1,0 +1,63 @@
+:root{
+  --body-bg: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  --msger-bg: #fff;
+  --border: 2px solid #ddd;
+  --left-msg-bg: #ececec;
+  --right-msg-bg: #579ffb;
+}
+
+body {
+    justify-content: center;
+}
+
+.content {
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+}
+
+.left-side{
+    flex: 1 75%;
+    display: flex;
+    flex-flow: column;
+}
+.right-side{
+    flex: 1 25%;
+    display: flex;
+    flex-flow: column;
+    
+}
+
+
+.right-key {
+    background-color: #ccc;
+    padding: 10px;
+    flex: 1 10%
+}
+
+#notes {
+  flex: 1 1 auto;
+
+  display: flex;
+  flex-direction: column;
+}
+
+#note-textbox {
+  resize: none;
+  flex: auto;
+}
+.survey-phase-3-btnn:hover {
+  background-color: #2fa133; /* Green */
+  color: white;
+}
+
+.survey-phase-3-btn {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}

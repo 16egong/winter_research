@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Transcript of Other Group}</title>
+        
+        <!-- Custome css for pages in general -->
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/global.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/footer.css') }}">
+
+        <!-- Custom css for chat pages -->
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/transcript.css') }}">
+
+        <!-- AJAX -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+        <!-- Notes JS -->
+        <script type="text/javascript" src="{{ url_for('static', filename='scripts/notes.js') }}"></script>
+
+        <!-- Custom messenger CSS -->
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/posts.css') }}">
+        
+        <!-- Custom Socketio JS-->
+        <script src="{{url_for('static', filename='scripts/socketio.js')}}"></script>    
+        <script src="{{url_for('static', filename='scripts/chat.js')}}"></script>
+        
+        <!-- Passing data to JS -->
+        <script type="text/javascript">
+            const uid = `{{uid}}`;
+            const username = `{{username}}`;
+            const posts = `{{posts}}`;
+            const usernames = `{{usernames}}`
+            const notesurl = `{{url_for("save_notes")}}`;
+            var room = `{{room}}`
+        </script>
+    </head>
+
+    <body>
+        <main class=content>
+            <!-- Left side start-->
+            <section class="left-side">
+                <section id="qualifications">
+                    <p><b>Preferred Qualificationsfor Candidate Evaluation:</b></p>
+                    <ul>
+                        <li>Excellent coursework performance:  <br/>
+                            Qualified candidates should receive <b>top</b> grades in theireducation programs.</li>
+                        <li>Solid research experience in quantitative analysis:  <br/>
+                            Qualified candidates should demonstrate proficient research skills in 
+                            <b>large scale data</b> analysis using <b>statistical and/or computational methods.</b></li>
+                        <li>Rich industrial experience in diverse teams:  <br/>
+                            Qualified candidates should have sufficient experience of working in <b>cross-department or multi-institutional industrial teams/projects.</b></li>
+                    </ul>
+                </section>
+                {% include 'posts.html' %}
+            </section>
+            <!-- Left side end-->
+            <!-- Right side start -->
+            <section class="right-side">
+                <!-- Notes start -->
+                <section id="notes">
+                    <header>Note Taking</header>
+                    <textarea id="note-textbox">{{ notes }}</textarea>
+                </section>
+                <!-- Notes end -->
+            </section>
+            <!-- Right side end -->
+        </main>
+        <footer>
+            <button onclick="window.location.href = '{{ next }}';">Next</button>
+        </footer>
+    </body>
+</html>
