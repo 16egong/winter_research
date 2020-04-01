@@ -3,8 +3,8 @@ function showPage(page_num) {
     var $page_num = $('.page.active');
     $('.block').removeClass('active');
     $('.page').removeClass('active');
-    var $msg = $('#'+page_num + '.block');
-    var $page = $('#'+page_num + '.page');
+    var $msg = $('.'+page_num + '.block');
+    var $page = $('.'+page_num + '.page');
     $msg.addClass('active');
     $page.addClass('active');
 }

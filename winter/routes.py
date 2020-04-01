@@ -111,12 +111,13 @@ def get_sitemap():
                 "4cv2": url_for('static', filename='docs/user4_CV2.pdf'),
                 "4cv3": url_for('static', filename='docs/user4_CV3.pdf'),
                 "4cv4": url_for('static', filename='docs/user4_CV4.pdf'),
-                "next": url_for("control", phase=3, subphase=3),
+                "next": url_for("control", phase=3, subphase=3 if config.TYPE == "control" else 0),
             },
             "3.0": {
                 "type": "instructions",
                 "english": url_for('static', filename='docs/phase_3.0_EN_instructions.pdf'),
                 "mandarin": url_for("static", filename='docs/phase_3.0_CN_instructions.pdf'),
+                # TODO: Keywords instructions versus no keyword instructions?
                 "next": url_for("control", phase=3, subphase=1),
             },
             "3.1": {
@@ -243,16 +244,36 @@ def control(phase, subphase):
         )
     elif site["type"] == "wait": # TODO ****************************************
         return render_template(
-            "phase_3.10_wait.html",
+            "wait.html",
             uid=uid,
             username=username,
             next=site["next"],
         )
     elif site["type"] == "transcript": # TODO **********************************
+        room = "12" if uid == 3 or uid == 4 else "34"
+
+        # Collect Posts
+        posts = winter.models.Posts.query.filter(winter.models.Posts.room==room).order_by(asc(winter.models.Posts.timestamp)).all()
+        if room == "12":
+            # Translate Posts
+            for p in posts:
+                data = fake_call('api_call_url/'+p.body)
+                p.translation = data["translation"]
+                p.keyword = data["keywords"]
+                db.session.commit()
+
+        
+        # Collect Notes
+        notes = notes = winter.models.Notes.query.filter(winter.models.Notes.uid == uid).first()
+        notes = notes.notes if notes is not None else ""
+
         return render_template(
-            "phase_3.1_transcript.html",
+            "transcript.html",
             uid=uid,
             username=username,
+            room=room,
+            posts=posts,
+            notes=notes,
             next=site["next"],
         )
 

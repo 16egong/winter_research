@@ -10,6 +10,8 @@ class Posts(db.Model):
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
     time = db.Column(db.String)
     room = db.Column(db.String)
+    keywords = db.Column(db.String)
+    translation = db.Column(db.String)
 
     def __repr__(self):
         return '<Posts {}>'.format(self.body)
