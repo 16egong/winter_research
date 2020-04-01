@@ -32,7 +32,7 @@ def base(uid):
 
     return redirect(url_for("control", phase=1, subphase=0))
 
-users = [config.USER1, config.USER2, config.USER3, config.USER4]
+users = [config.USER1, config.USER2, config.USER3, config.USER4, config.USER12, config.USER34]
 
 def get_sitemap():
     """ A bit of a hack to get this dictionary to be properly populated """
@@ -44,6 +44,8 @@ def get_sitemap():
                 "user2": url_for("static", filename="docs/phase_1.0_user_2_CN_instructions.pdf"),
                 "user3": url_for("static", filename="docs/phase_1.0_user_3_EN_instructions.pdf"),
                 "user4": url_for("static", filename="docs/phase_1.0_user_4_EN_instructions.pdf"),
+                "user12": url_for("static", filename="docs/phase_1.0_user_1_CN_instructions.pdf"),
+                "user34": url_for("static", filename="docs/phase_1.0_user_3_EN_instructions.pdf"),
                 "next": url_for("control", phase=1, subphase=1),
             },
             "1.1": {
@@ -58,6 +60,8 @@ def get_sitemap():
                 "user2": url_for("static", filename="docs/phase_1.2_user_2_CN_instructions.pdf"),
                 "user3": url_for("static", filename="docs/phase_1.2_user_3_EN_instructions.pdf"),
                 "user4": url_for("static", filename="docs/phase_1.2_user_4_EN_instructions.pdf"),
+                "user12": url_for("static", filename="docs/phase_1.2_user_1_CN_instructions.pdf"),
+                "user34": url_for("static", filename="docs/phase_1.2_user_3_EN_instructions.pdf"),
                 "next": url_for("control", phase=1, subphase=3),
             },
             "1.3": {
@@ -111,6 +115,14 @@ def get_sitemap():
                 "4cv2": url_for('static', filename='docs/user4_CV2.pdf'),
                 "4cv3": url_for('static', filename='docs/user4_CV3.pdf'),
                 "4cv4": url_for('static', filename='docs/user4_CV4.pdf'),
+                "12cv1": url_for('static', filename='docs/user1_CV1.pdf'),
+                "12cv2": url_for('static', filename='docs/user1_CV2.pdf'),
+                "12cv3": url_for('static', filename='docs/user1_CV3.pdf'),
+                "12cv4": url_for('static', filename='docs/user1_CV4.pdf'),
+                "34cv1": url_for('static', filename='docs/user3_CV1.pdf'),
+                "34cv2": url_for('static', filename='docs/user3_CV2.pdf'),
+                "34cv3": url_for('static', filename='docs/user3_CV3.pdf'),
+                "34cv4": url_for('static', filename='docs/user3_CV4.pdf'),
                 "next": url_for("control", phase=3, subphase=3 if config.TYPE == "control" else 0),
             },
             "3.0": {
@@ -161,6 +173,14 @@ def get_sitemap():
                 "4cv2": url_for('static', filename='docs/user4_CV2.pdf'),
                 "4cv3": url_for('static', filename='docs/user4_CV3.pdf'),
                 "4cv4": url_for('static', filename='docs/user4_CV4.pdf'),
+                "12cv1": url_for('static', filename='docs/user1_CV1.pdf'),
+                "12cv2": url_for('static', filename='docs/user1_CV2.pdf'),
+                "12cv3": url_for('static', filename='docs/user1_CV3.pdf'),
+                "12cv4": url_for('static', filename='docs/user1_CV4.pdf'),
+                "34cv1": url_for('static', filename='docs/user3_CV1.pdf'),
+                "34cv2": url_for('static', filename='docs/user3_CV2.pdf'),
+                "34cv3": url_for('static', filename='docs/user3_CV3.pdf'),
+                "34cv4": url_for('static', filename='docs/user3_CV4.pdf'),
                 
                 "next": url_for("control", phase=5, subphase=0),
             },
@@ -182,9 +202,15 @@ get_sitemap.sitemap = None
 @app.route("/app/<phase>/<subphase>")
 def control(phase, subphase):
     uid = session["uid"]
-    username = users[uid - 1].username
 
-    if uid == 1 or uid == 2:
+    if uid == 12:
+        username = users[4].username
+    elif uid == 34:
+        username = users[5].username
+    else:
+        username = users[uid - 1].username
+
+    if uid == 1 or uid == 2 or uid == 12:
         language = "mandarin"
     else:
         language = "english"
@@ -218,7 +244,7 @@ def control(phase, subphase):
         )
     elif site["type"] == "chat":
         if site["roomtype"] == "separate":
-            room = "12" if uid == 1 or uid == 2 else "34"
+            room = "12" if uid == 1 or uid == 2 or uid == 12 else "34"
         else:
             room = "1234"
 
