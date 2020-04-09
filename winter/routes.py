@@ -160,7 +160,6 @@ def get_sitemap():
                 "4cv2": url_for('static', filename='docs/user4_CV2.pdf'),
                 "4cv3": url_for('static', filename='docs/user4_CV3.pdf'),
                 "4cv4": url_for('static', filename='docs/user4_CV4.pdf'),
-                
                 "next": url_for("control", phase=5, subphase=0),
             },
             "5.0": {
@@ -239,21 +238,41 @@ def control(phase, subphase):
             room=room,
             posts=posts,
             notes=notes,
-            next=site["next"],
+            next=site["next"]
         )
-    elif site["type"] == "wait": # TODO ****************************************
+    elif site["type"] == "wait": 
         return render_template(
-            "phase_3.10_wait.html",
+            "wait.html",
             uid=uid,
             username=username,
-            next=site["next"],
+            next=site["next"]
         )
-    elif site["type"] == "transcript": # TODO **********************************
+    elif site["type"] == "transcript":
+
+        room = "12" if uid == 3 or uid == 4 or uid == 34 else "34"
+
+        # Collect Posts
+        posts = winter.models.Posts.query.filter(winter.models.Posts.room==room).order_by(asc(winter.models.Posts.timestamp)).all()
+        if room == "12":
+            # Translate Posts
+            for p in posts:
+                data = fake_call('api_call_url/'+p.body)
+                p.translation = data["translation"]
+                p.keywords = data["keywords"]
+                db.session.commit()
+        
+        # Collect Notes
+        notes = notes = winter.models.Notes.query.filter(winter.models.Notes.uid == uid).first()
+        notes = notes.notes if notes is not None else ""
+
         return render_template(
-            "phase_3.1_transcript.html",
+            "transcript.html",
             uid=uid,
             username=username,
-            next=site["next"],
+            room=room,
+            posts=posts,
+            notes=notes,
+            next=site["next"]
         )
 
 

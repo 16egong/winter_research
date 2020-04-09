@@ -10,16 +10,16 @@
         {% for p in posts %} 
             {% if loop.index0 % 6 == 0 %}
                 {% if loop.index0 == 0 %}
-                    <section class="{{(loop.index0/6)|round|int}} block active">
+                    <section class="{{(loop.index0/6)|round(0, 'floor')|int}} block active">
                 {% else %}
-                    <section class="{{(loop.index0/6)|round|int}} block">
+                    <section class="{{(loop.index0/6)|round(0, 'floor')|int}} block">
                 {% endif %}
             {% endif %}
             <!-- Post section start-->
             <section class="post">
                 <div class="key-card">
                     {% if  (p.uid == 1 or p.uid == 3) %}
-                        <p>{{p.keywords}}</p>
+                        <p>{{ p.keywords }}</p>
                     {% endif %}
                 </div>
                 {% if  (p.uid == 1 or p.uid == 3) %}
@@ -39,7 +39,7 @@
                                     <!-- Left message info end -->
                                     <!-- Left message bubble text-start -->
                                     <div class="msg-text">
-                                        <p class="message"> {{ p.body }}</p>
+                                        <p class="message"> {{ p.translation }}</p>
                                     </div>
                                     <!-- Left message bubble text end-->
                                 </div>
@@ -67,7 +67,7 @@
                                     <!-- Right message info end -->
                                     <!-- Right message bubble text-start -->
                                     <div class="msg-text">
-                                        <p class="message"> {{ p.body }}</p>
+                                        <p class="message"> {{ p.translation }}</p>
                                     </div>
                                     <!-- Right message bubble text end-->
                                 </div>
@@ -90,19 +90,25 @@
             {% if loop.index0 % 6 == 5 or posts|length - loop.index0 == 1%}
                 </section>
             {% endif %}
-            {% endfor %}
+        {% endfor %}
     </main>
     <!-- Main section end -->
 
     <!-- Navigation start -->
     <footer class="pages">
         <div class="pagination">
-            <a onclick="prevPage()">&laquo;</a>
-            <a class="page active" id="0"  onclick="showPage(0)">1</a>
-                <a class="page" id="{{(loop.index0/6)|round|int}}" onclick="showPage(1)">2</a>
-            <a class="page" id="2" onclick="showPage(2)">3</a>
-            <a class="page" id="3" onclick="showPage(3)">4</a>
-            <a id="next" onclick="nextPage()">&raquo;</a>
+            <a class="prev" onclick="prevPage()">&laquo;</a>
+            
+            {% for p in posts %}
+                {% if loop.index0 % 6 == 0 %}
+                    {% if loop.index0 == 0 %}
+                        <a class="{{(loop.index0/6)|round(0, 'floor')|int}} page active" onclick="showPage({{(loop.index0/6)|round(0, 'floor')|int}})">{{(loop.index0/6)|round(0, 'floor')|int + 1}}</a>
+                    {% else %}
+                        <a class="{{(loop.index0/6)|round(0, 'floor')|int}} page" onclick="showPage({{(loop.index0/6)|round(0, 'floor')|int}})">{{(loop.index0/6)|round(0, 'floor')|int + 1}}</a>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+            <a class="next" onclick="nextPage()">&raquo;</a>
         </div>
     </footer>
     <!-- Navigation end -->
