@@ -12,7 +12,7 @@ function showPage(page_num) {
 function nextPage() {
     var $cur_msg = $('.block.active');
     var $cur_num = $('.page.active');
-    if($cur_msg.next().is('div')) {
+    if($cur_msg.next().is('section')) {
         $('.block').removeClass('active');
         $cur_msg.next().addClass('active');
         $('.page').removeClass('active');
@@ -23,7 +23,7 @@ function nextPage() {
 function prevPage() {
     var $cur_msg = $('.block.active');
     var $cur_num = $('.page.active');
-    if($cur_msg.prev().is('div')) {
+    if($cur_msg.prev().is('section')) {
         $('.block').removeClass('active');
         $cur_msg.prev().addClass('active');
         $('.page').removeClass('active');

@@ -12,6 +12,7 @@ class Posts(db.Model):
     room = db.Column(db.String)
     keywords = db.Column(db.String)
     translation = db.Column(db.String)
+    translation_time = db.Column(db.String)
 
     def __repr__(self):
         return '<Posts {}>'.format(self.body)
@@ -21,3 +22,10 @@ class Notes(db.Model):
 
     uid = db.Column(db.Integer, primary_key=True)
     notes = db.Column(db.String)
+
+class Record(db.Model):
+    __tablename__ = "record"
+
+    uid = db.Column(db.Integer, primary_key=True)
+    record = db.Column(db.String)
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow, primary_key=True)
