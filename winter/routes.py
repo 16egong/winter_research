@@ -26,7 +26,7 @@ logger = logging.getLogger()
 def base(uid):
     session["uid"] = uid
 
-    return redirect(url_for("control", phase=1, subphase=0))
+    return redirect(url_for("control", phase=0, subphase=0))
 
 users = [config.USER1, config.USER2, config.USER3, config.USER4, config.USER12, config.USER34]
 
@@ -34,6 +34,12 @@ def get_sitemap():
     """ A bit of a hack to get this dictionary to be properly populated """
     if get_sitemap.sitemap is None:
         get_sitemap.sitemap = {
+            "0.0": {
+                "type": "wait",
+                "english": url_for("static", filename="docs/phase_0.0_EN_wait.pdf"),
+                "mandarin": url_for("static", filename="docs/phase_0.0_CN_wait.pdf"),
+                "next": url_for("control", phase=1, subphase=1),
+            },
             "1.0": {
                 "type": "user_specific_instructions",
                 "user1": url_for("static", filename="docs/phase_1.0_user_1_CN_instructions.pdf"),
@@ -130,6 +136,8 @@ def get_sitemap():
             },
             "3.1": {
                 "type": "wait",
+                "english": url_for("static", filename="docs/phase_0.0_EN_wait.pdf"),
+                "mandarin": url_for("static", filename="docs/phase_0.0_CN_wait.pdf"),
                 "next": url_for("control", phase=3, subphase=2),
             },
             "3.2": {
@@ -269,6 +277,7 @@ def control(phase, subphase):
             "wait.html",
             uid=uid,
             username=username,
+            file=site[language], 
             next=site["next"]
         )
     elif site["type"] == "transcript":
