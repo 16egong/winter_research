@@ -1,0 +1,17 @@
+# docker exec -it winter_research_winter_1 bash/
+
+version: '3'
+services:
+  winter:
+    build: "docker/"
+    # entrypoint: ["sh", "-c", "sleep 2073600"]
+    volumes:
+        - "./config.py:/code/config.py:ro"
+        - "./winter:/code/winter:ro"
+        - "./data:/data:rw"
+    ports:
+        - "5000:5000"
+  mt-server:
+    image: "mt4teams:mt-server"
+    ports:
+        - "8000:8000"

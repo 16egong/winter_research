@@ -12,15 +12,11 @@ import time
 from datetime import datetime
 import pytz
 import requests
+import logging
+
+logger = logging.getLogger()
 
 # db = SQLAlchemy(app)
-
-def fake_call(url_link):
-    return {
-        "time": "0.83 secs",
-        "keywords": ["word1", "w2", "keyword3"],
-        "translation": "The 28-year-old cook was found dead at a shopping mall in San Francisco"}
-
 
 # # Redirect the user to the first page they should see
 # @app.route('/')
@@ -253,13 +249,6 @@ def control(phase, subphase):
 
         # Collect Posts
         posts = winter.models.Posts.query.filter(winter.models.Posts.room==room).order_by(asc(winter.models.Posts.timestamp)).all()
-        if room == "12":
-            # Translate Posts
-            for p in posts:
-                data = fake_call('api_call_url/'+p.body)
-                p.translation = data["translation"]
-                p.keywords = data["keywords"]
-                db.session.commit()
         
         # Collect Notes
         notes = notes = winter.models.Notes.query.filter(winter.models.Notes.uid == uid).first()
@@ -296,17 +285,28 @@ def on_leave(data):
 @socketio.on('message')
 def message(data):
     try:
-        print('MESSAGE')
-        
+        logger.critical('MESSAGE')
         tz = pytz.timezone('US/Eastern')
         data['time'] = str(datetime.now(tz).strftime('%I:%M %p'))
+        # TODO Check to see if url length is an issue
+        if data['uid'] == '1' or data['uid'] == '2':
+            req = requests.get('http://mt-server:8000/' + '\"' + data['msg']+ '\"').json()
+            data['translation'] = req['translation']
+            data['keywords'] =  str(', '.join(req['keywords']))
+            data['translation_time'] =  str(req['time'])
+        else:
+            data['translation'] = None
+            data['keywords'] =  None
+            data['translation_time'] =  None
         
         post = winter.models.Posts(uid=data['uid'], username= data['username'], 
-                                  body=data['msg'], time=data['time'], room=data['room'])
+                                  body=data['msg'], time=data['time'], room=data['room'], 
+                                  keywords=data['keywords'], translation=data['translation'],
+                                  translation_time=data['translation_time'])
         db.session.add(post)
         db.session.commit()
         
-        print(f'\n\n{data}\n\n')
+        logger.critical('\n\n %s \n\n', data)
 
         # gets sent to the message bucket on client side
         room = data['room']
@@ -330,6 +330,19 @@ def save_notes():
     new_notes = winter.models.Notes(uid=uid, notes=notes)
     
     db.session.merge(new_notes)
+    db.session.commit()
+
+    return '{"success": True}', 200, {"ContentType": "application/json"}
+
+
+@app.route("/saverecord", methods=["PUT"])
+def save_record():
+    uid = request.json["uid"]
+    record = request.json["record"]
+
+    current_record = winter.models.Record(uid=uid, record=record)
+    
+    db.session.add(current_record)
     db.session.commit()
 
     return '{"success": True}', 200, {"ContentType": "application/json"}

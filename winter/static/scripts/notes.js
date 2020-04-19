@@ -2,6 +2,9 @@ var timer;
 
 document.addEventListener("DOMContentLoaded", () => {
     $("#note-textbox").on("input", notesChanged);
+    setInterval(function(){ saveRecord(uid, $("#note-textbox").val()); }, 15000);
+      
+
 })
 
 function notesChanged() {
@@ -28,10 +31,34 @@ function updateNotes(uid, notes) {
     })
 }
 
+function saveRecord(uid, record) {
+    data = {
+        uid: uid,
+        record: record,
+    }
+
+    $.ajax({
+        type: "PUT",
+        url: recordurl,
+        data: JSON.stringify(data),
+        contentType: "application/json",
+        success: recordUpdateSuccess,
+        error: recordUpdateFailure,
+    })
+}
+
 function notesUpdateSuccess(data) {
     console.log("successfully updated notes")
 }
 
 function notesUpdateFailure(data) {
     console.log("failed to update notes")
+}
+
+function recordUpdateSuccess(data) {
+    console.log("successfully updated record")
+}
+
+function recordUpdateFailure(data) {
+    console.log("failed to update record")
 }

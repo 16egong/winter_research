@@ -11,7 +11,7 @@ USER4 = winter.users.User(uid=4, username=USERNAMES[3])
 
 TRIAL_NUM = 1
 TYPE = "control" #switch between control, no_keys, or keys
-DATABASE_NAME = f'data/trial_{TRIAL_NUM}_' + TYPE + '.db'
+DATABASE_NAME = f'/data/trial_{TRIAL_NUM}_' + TYPE + '.db'
 
 
 class Config(object):
