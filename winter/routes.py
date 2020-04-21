@@ -345,15 +345,19 @@ def message(data):
         data['time'] = str(datetime.now(tz).strftime('%I:%M %p'))
         # TODO Check to see if url length is an issue
 
-        if data['uid'] == '1' or data['uid'] == '2':
-            req = requests.get('http://mt-server:8000/' + '\"' + data['msg']+ '\"').json()
-            data['translation'] = req['translation']
-            data['keywords'] =  str(', '.join(req['keywords']))
-            data['translation_time'] =  str(req['time'])
-        else:
-            data['translation'] = None
-            data['keywords'] =  None
-            data['translation_time'] =  None
+        data['translation'] = None
+        data['keywords'] =  None
+        data['translation_time'] =  None
+
+        # if data['uid'] == '1' or data['uid'] == '2':
+            # req = requests.get('http://mt-server:8000/' + '\"' + data['msg']+ '\"').json()
+            # data['translation'] = req['translation']
+            # data['keywords'] =  str(', '.join(req['keywords']))
+            # data['translation_time'] =  str(req['time'])
+        # else:
+        #     data['translation'] = None
+        #     data['keywords'] =  None
+        #     data['translation_time'] =  None
         
         post = winter.models.Posts(uid=data['uid'], username= data['username'], 
                                   body=data['msg'], time=data['time'], room=data['room'], 

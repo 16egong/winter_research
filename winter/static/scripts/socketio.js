@@ -39,6 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function typingTimeout(){
         typing=false
         socket.emit('typing', {'username':username, 'uid': uid, 'typing':false, 'room':room})
+    }
         
     
     // Check typing status
