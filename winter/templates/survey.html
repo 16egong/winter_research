@@ -10,21 +10,25 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <!-- Custom Socketio JS-->
         <script src="{{url_for('static', filename='scripts/survey.js')}}"></script>    
+        <!-- Timer JS -->
+        <script type="text/javascript" src="{{ url_for('static', filename='scripts/timer.js') }}"></script>
         
         
         <!-- Passing data to JS -->
         <script type="text/javascript">
             const survey = `{{survey}}`;
             const next = `{{next}}`;
+            const time_in_min = `{{time_in_min}}`;
         </script>
     </head>
     <body>
         <iframe id="instructions" src="{{ instructions }}#toolbar=0&navpanes=0" type="application/pdf"></iframe>
         <footer>
+            <div id="counter"></div>
+            <button id="survey" onclick='clickSurvey()'>LINK</button>
             {% if next is not none %}
             <button id="next" onclick="clickNext()">NEXT</button>
             {% endif %}
-            <button id="survey" onclick='clickSurvey()'>LINK</button>
         </footer>
     </body>
     

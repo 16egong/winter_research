@@ -26,6 +26,9 @@
         <script src="{{url_for('static', filename='scripts/socketio.js')}}"></script>    
         <script src="{{url_for('static', filename='scripts/chat.js')}}"></script>
         
+        <!-- Timer JS -->
+        <script type="text/javascript" src="{{ url_for('static', filename='scripts/timer.js') }}"></script>
+        
         <!-- Passing data to JS -->
         <script type="text/javascript">
             const uid = `{{uid}}`;
@@ -35,6 +38,7 @@
             const notesurl = `{{url_for("save_notes")}}`;
             const recordurl = `{{url_for("save_record")}}`;
             var room = `{{room}}`
+            const time_in_min = `{{time_in_min}}`;
         </script>
     </head>
 
@@ -107,6 +111,7 @@
         </main>
 
         <footer>
+            <div id="counter"></div>
             <button onclick="window.location.href = '{{ next }}';">Next</button>
         </footer>
         

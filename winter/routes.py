@@ -17,11 +17,7 @@ import logging
 logger = logging.getLogger()
 
 # db = SQLAlchemy(app)
-
-# # Redirect the user to the first page they should see
-# @app.route('/')
-# def base():
-#     return redirect(url_for("phase_1_user_1_english_instructions"))
+    
 @app.route('/<int:uid>')
 def base(uid):
     session["uid"] = uid
@@ -38,7 +34,8 @@ def get_sitemap():
                 "type": "wait",
                 "english": url_for("static", filename="docs/phase_0.0_EN_wait.pdf"),
                 "mandarin": url_for("static", filename="docs/phase_0.0_CN_wait.pdf"),
-                "next": url_for("control", phase=1, subphase=1),
+                "next": url_for("control", phase=1, subphase=0),
+                "time_in_min": -1,
             },
             "1.0": {
                 "type": "user_specific_instructions",
@@ -48,12 +45,14 @@ def get_sitemap():
                 "user4": url_for("static", filename="docs/phase_1.0_user_4_EN_instructions.pdf"),
                 "user12": url_for("static", filename="docs/phase_1.0_user_1_CN_instructions.pdf"),
                 "user34": url_for("static", filename="docs/phase_1.0_user_3_EN_instructions.pdf"),
+                "time_in_min": 10,
                 "next": url_for("control", phase=1, subphase=1),
             },
             "1.1": {
                 "type": "instructions",
                 "english": url_for("static", filename="docs/phase_1.1_EN_instructions.pdf"),
                 "mandarin": url_for("static", filename="docs/phase_1.1_CN_instructions.pdf"),
+                "time_in_min": -1,
                 "next": url_for("control", phase=1, subphase=2),
             },
             "1.2": {
@@ -64,24 +63,28 @@ def get_sitemap():
                 "user4": url_for("static", filename="docs/phase_1.2_user_4_EN_instructions.pdf"),
                 "user12": url_for("static", filename="docs/phase_1.2_user_1_CN_instructions.pdf"),
                 "user34": url_for("static", filename="docs/phase_1.2_user_3_EN_instructions.pdf"),
+                "time_in_min": -1,
                 "next": url_for("control", phase=1, subphase=3),
             },
             "1.3": {
                 "type": "instructions",
                 "english": url_for("static", filename="docs/phase_1.3_EN_instructions.pdf"),
                 "mandarin": url_for("static", filename="docs/phase_1.3_CN_instructions.pdf"),
+                "time_in_min": -1,
                 "next": url_for("control", phase=1, subphase=4),
             },
             "1.4": {
                 "type": "instructions",
                 "english": url_for("static", filename="docs/phase_1.4_EN_instructions.pdf"),
                 "mandarin": url_for("static", filename="docs/phase_1.4_CN_instructions.pdf"),
+                "time_in_min": -1,
                 "next": url_for("control", phase=1, subphase=5),
             },
             "1.5": {
                 "type": "instructions",
                 "english": url_for("static", filename="docs/phase_1.5_EN_instructions.pdf"),
                 "mandarin": url_for("static", filename="docs/phase_1.5_CN_instructions.pdf"),
+                "time_in_min": -1,
                 "next": url_for("control", phase=1, subphase=6),
             },
             "1.6": {
@@ -90,12 +93,14 @@ def get_sitemap():
                 "mandarin_instructions": url_for("static", filename="docs/phase_1.6_CN_instructions.pdf"),
                 "english_survey": "https://umdsurvey.umd.edu/jfe/form/SV_26k2aVRuhtyVZsN", 
                 "mandarin_survey": "https://umdsurvey.umd.edu/jfe/form/SV_baBQC9W2E36bSmh",
+                "time_in_min": -1,
                 "next": url_for("control", phase=2, subphase=0),
             },
             "2.0": {
                 "type": "instructions",
                 "english": url_for("static", filename="docs/phase_2.0_EN_instructions.pdf"),
                 "mandarin": url_for("static", filename="docs/phase_2.0_CN_instructions.pdf"),
+                "time_in_min": 15,
                 "next": url_for("control", phase=2, subphase=1),
             },
             "2.1": {
@@ -125,6 +130,7 @@ def get_sitemap():
                 "34cv2": url_for('static', filename='docs/user3_CV2.pdf'),
                 "34cv3": url_for('static', filename='docs/user3_CV3.pdf'),
                 "34cv4": url_for('static', filename='docs/user3_CV4.pdf'),
+                "time_in_min": -1,
                 "next": url_for("control", phase=3, subphase=3 if config.TYPE == "control" else 0),
             },
             "3.0": {
@@ -132,16 +138,19 @@ def get_sitemap():
                 "english": url_for('static', filename='docs/phase_3.0_EN_instructions.pdf'),
                 "mandarin": url_for("static", filename='docs/phase_3.0_CN_instructions.pdf'),
                 # TODO: Keywords instructions versus no keyword instructions?
+                "time_in_min": 10,
                 "next": url_for("control", phase=3, subphase=1),
             },
             "3.1": {
                 "type": "wait",
                 "english": url_for("static", filename="docs/phase_0.0_EN_wait.pdf"),
                 "mandarin": url_for("static", filename="docs/phase_0.0_CN_wait.pdf"),
+                "time_in_min": -1,
                 "next": url_for("control", phase=3, subphase=2),
             },
             "3.2": {
                 "type": "transcript",
+                "time_in_min": -1,
                 "next": url_for("control", phase=3, subphase=3),
             },
             "3.3": {
@@ -150,12 +159,14 @@ def get_sitemap():
                 "mandarin_instructions": url_for("static", filename="docs/phase_3.3_CN_instructions.pdf"),
                 "english_survey": "https://umdsurvey.umd.edu/jfe/form/SV_22Y0KXn6kgwZimN ",
                 "mandarin_survey": "https://umdsurvey.umd.edu/jfe/form/SV_cAeRuGTx4FRLj1z",
+                "time_in_min": -1,
                 "next": url_for("control", phase=4, subphase=0),
             },
             "4.0": {
                 "type": "instructions",
                 "english": url_for('static', filename='docs/phase_4.0_EN_instructions.pdf'),
                 "mandarin": url_for("static", filename="docs/phase_4.0_CN_instructions.pdf"),
+                "time_in_min": 15,
                 "next": url_for("control", phase=4, subphase=1),
             },
             "4.1": {
@@ -185,7 +196,7 @@ def get_sitemap():
                 "34cv2": url_for('static', filename='docs/user3_CV2.pdf'),
                 "34cv3": url_for('static', filename='docs/user3_CV3.pdf'),
                 "34cv4": url_for('static', filename='docs/user3_CV4.pdf'),
-                
+                "time_in_min": -1,
                 "next": url_for("control", phase=5, subphase=0),
             },
             "5.0": {
@@ -194,6 +205,7 @@ def get_sitemap():
                 "mandarin_instructions": url_for("static", filename="docs/phase_5.0_CN_instructions.pdf"),
                 "english_survey": "https://umdsurvey.umd.edu/jfe/form/SV_0xFKrg41yjC3H5r",
                 "mandarin_survey": "https://umdsurvey.umd.edu/jfe/form/SV_3s0GDBme8QIVj4F",
+                "time_in_min": 10,
                 "next": None,
             },
         }
@@ -227,6 +239,7 @@ def control(phase, subphase):
             uid=uid, 
             username=username, 
             file=site["user"+str(uid)], 
+            time_in_min = site["time_in_min"],
             next=site["next"]
         )
     elif site["type"] == "instructions":
@@ -234,7 +247,8 @@ def control(phase, subphase):
             "instructions.html", 
             uid=uid, 
             username=username, 
-            file=site[language], 
+            file=site[language],
+            time_in_min = site["time_in_min"],
             next=site["next"]
         )
     elif site["type"] == "survey":
@@ -244,6 +258,7 @@ def control(phase, subphase):
             username=username, 
             instructions=site[language+"_instructions"],
             survey=site[language+"_survey"], 
+            time_in_min = site["time_in_min"],
             next=site["next"]
         )
     elif site["type"] == "chat":
@@ -270,6 +285,7 @@ def control(phase, subphase):
             room=room,
             posts=posts,
             notes=notes,
+            time_in_min = site["time_in_min"],
             next=site["next"]
         )
     elif site["type"] == "wait": 
@@ -278,6 +294,7 @@ def control(phase, subphase):
             uid=uid,
             username=username,
             file=site[language], 
+            time_in_min = site["time_in_min"],
             next=site["next"]
         )
     elif site["type"] == "transcript":
@@ -298,6 +315,7 @@ def control(phase, subphase):
             room=room,
             posts=posts,
             notes=notes,
+            time_in_min = site["time_in_min"],
             next=site["next"]
         )
 
@@ -326,6 +344,7 @@ def message(data):
         tz = pytz.timezone('US/Eastern')
         data['time'] = str(datetime.now(tz).strftime('%I:%M %p'))
         # TODO Check to see if url length is an issue
+
         if data['uid'] == '1' or data['uid'] == '2':
             req = requests.get('http://mt-server:8000/' + '\"' + data['msg']+ '\"').json()
             data['translation'] = req['translation']
@@ -353,6 +372,9 @@ def message(data):
         print(f'\n\n{data}\n\n')
         send(data, broadcast=True)
 
+@socketio.on('timer')
+def typing(timer):
+    emit('time', data, room=data['room'])
 
 @socketio.on('typing')
 def typing(data):

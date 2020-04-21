@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let msg = document.getElementById("user-message");
     var typing = false;
     var timeout = undefined;
+    var clock = 1000; 
+
     // Autofocus on textbox
     document.querySelector("#user-message").focus();
     
@@ -17,7 +19,9 @@ document.addEventListener('DOMContentLoaded', () => {
     socket.on('join_room', function(msg) {
         console.log(`Join room: ${msg}`);
     });
+
     
+    // Display user typing status
     socket.on('display', data =>{
         const typing_id = `typing_on${data.uid}`
         const typing_on = document.getElementById(typing_id);
@@ -30,28 +34,11 @@ document.addEventListener('DOMContentLoaded', () => {
             typing_on.className = 'hidden'
         }
     });
-    
+
     // End typing status
     function typingTimeout(){
         typing=false
         socket.emit('typing', {'username':username, 'uid': uid, 'typing':false, 'room':room})
-    }
-    // Checking copy paste
-//     function checkPaste(key) {
-//         var ctrlDown = false,
-//         ctrlKey = 17,
-//         cmdKey = 91,
-//         vKey = 86,
-//         cKey = 67;
-        
-//         if ((key == ctrlKey || key == cmdKey)) {
-//             ctrlDown = true;
-//         }
-//         if (key == ctrlKey || key == cmdKey) {
-//             ctrlDown = false;
-//         }
-        
-//     });
         
     
     // Check typing status

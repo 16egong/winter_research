@@ -8,15 +8,18 @@
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/wait.css') }}">
         <!-- AJAX -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> 
-        
+        <!-- Timer JS -->
+        <script type="text/javascript" src="{{ url_for('static', filename='scripts/timer.js') }}"></script>
         <!-- Passing data to JS -->
         <script type="text/javascript">
             const next = `{{next}}`;
+            const time_in_min = `{{time_in_min}}`;
         </script>
     </head>
     <body>
         <iframe id="instructions" src="{{ file }}#toolbar=0&navpanes=0" type="application/pdf"></iframe>
         <footer>
+            <div id="counter"></div>
             <button onclick="window.location.href = '{{ next }}';">Next</button>
         </footer>
     </body>
