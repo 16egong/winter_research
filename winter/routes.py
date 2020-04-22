@@ -13,6 +13,7 @@ from datetime import datetime
 import pytz
 import requests
 import logging
+import threading
 
 logger = logging.getLogger()
 
@@ -336,6 +337,17 @@ def on_leave(data):
     leave_room(room)
     send(username + ' has left the room.', room=room)
 
+# def translate_message():
+        # req = requests.get('http://mt-server:8000/' + '\"' + data['msg']+ '\"').json()
+        # data['translation'] = req['translation']
+        # data['keywords'] =  str(', '.join(req['keywords']))
+        # data['translation_time'] =  str(req['time'])
+        
+        # data['translation'] = None
+        # data['keywords'] =  None
+        # data['translation_time'] =  None
+
+    # return data 
 
 @socketio.on('message')
 def message(data):
@@ -345,9 +357,18 @@ def message(data):
         data['time'] = str(datetime.now(tz).strftime('%I:%M %p'))
         # TODO Check to see if url length is an issue
 
+        
         data['translation'] = None
         data['keywords'] =  None
         data['translation_time'] =  None
+        # if data['uid'] == '1' or data['uid'] == '2':
+            # t1 = threading.Thread(target=translate_message, args=(data)) 
+            # t1.start()
+        # else:
+        #     data['translation'] = None
+        #     data['keywords'] =  None
+        #     data['translation_time'] =  None
+
 
         # if data['uid'] == '1' or data['uid'] == '2':
             # req = requests.get('http://mt-server:8000/' + '\"' + data['msg']+ '\"').json()
@@ -375,10 +396,6 @@ def message(data):
         print('ELSE: ', e )
         print(f'\n\n{data}\n\n')
         send(data, broadcast=True)
-
-@socketio.on('timer')
-def typing(timer):
-    emit('time', data, room=data['room'])
 
 @socketio.on('typing')
 def typing(data):
