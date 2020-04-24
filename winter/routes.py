@@ -13,6 +13,7 @@ from datetime import datetime
 import pytz
 import requests
 import logging
+from timeit import default_timer as timer
 
 logger = logging.getLogger()
 
@@ -298,7 +299,7 @@ def on_join(data):
     username = data['username']
     room = data['room']
     join_room(room)
-#     send({'msg': username + ' has entered the room.'}, room=room)
+    # emit('join_room', {'msg': 'TEST'}, room=room)
     emit('join_room', {'msg': username + ' has entered the room.'}, room=room)
     
     
@@ -309,40 +310,52 @@ def on_leave(data):
     leave_room(room)
     send(username + ' has left the room.', room=room)
 
+def translate(data):
+    req = requests.get('http://mt-server:8000/' + '\"' + data['msg']+ '\"').json()
+    return req
 
 @socketio.on('message')
 def message(data):
     try:
-        logger.critical('MESSAGE')
+        logger.critical('SERVER SIDE MESSAGE')
         tz = pytz.timezone('US/Eastern')
         data['time'] = str(datetime.now(tz).strftime('%I:%M %p'))
+
         # TODO Check to see if url length is an issue
         if data['uid'] == '1' or data['uid'] == '2':
-            req = requests.get('http://mt-server:8000/' + '\"' + data['msg']+ '\"').json()
+            start = timer()
+            req = translate(data)
             data['translation'] = req['translation']
             data['keywords'] =  str(', '.join(req['keywords']))
-            data['translation_time'] =  str(req['time'])
+            data['translation_time'] = str(req['time'])
+            end = timer()
+            data['request_time'] = str(end-start)
+            
         else:
             data['translation'] = None
             data['keywords'] =  None
             data['translation_time'] =  None
+            data['request_time'] = None
+        
+        data['msg_len'] = len(data['msg'])
+
         
         post = winter.models.Posts(uid=data['uid'], username= data['username'], 
                                   body=data['msg'], time=data['time'], room=data['room'], 
                                   keywords=data['keywords'], translation=data['translation'],
-                                  translation_time=data['translation_time'])
+                                  translation_time=data['translation_time'], 
+                                  request_time=data['request_time'], msg_len=data['msg_len'])
         db.session.add(post)
         db.session.commit()
         
-        logger.critical('\n\n %s \n\n', data)
-
         # gets sent to the message bucket on client side
         room = data['room']
         send(data, room=room)
+        logger.critical('\n\n %s \n\n', data)
     except Exception as e:
-        print('ELSE: ', e )
-        print(f'\n\n{data}\n\n')
-        send(data, broadcast=True)
+        logger.critical('ELSE: %s', e )
+        logger.critical('\n\n %s \n\n', data)
+        send(data, room=room)
 
 
 @socketio.on('typing')

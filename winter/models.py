@@ -13,6 +13,8 @@ class Posts(db.Model):
     keywords = db.Column(db.String)
     translation = db.Column(db.String)
     translation_time = db.Column(db.String)
+    request_time = db.Column(db.String)
+    msg_len = db.Column(db.Integer)
 
     def __repr__(self):
         return '<Posts {}>'.format(self.body)
