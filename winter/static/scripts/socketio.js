@@ -1,23 +1,73 @@
 document.addEventListener('DOMContentLoaded', () => {
-    var socket = io.connect('http://' + document.domain + ':' + location.port);
+    var socket = io.connect('http://' + document.domain + ':' + location.port );
     let msg = document.getElementById("user-message");
     var typing = false;
     var timeout = undefined;
+
     // Autofocus on textbox
     document.querySelector("#user-message").focus();
-    
     
     // Client Connects
     socket.on('connect', () => {
         socket.emit('join', {'username': username, 'room': room}); 
         console.log(`User Connecting`);
+        socket.on('disconnect', function () {
+            socket.emit('leave', {'username': username, 'room': room});
+            console.log(`User Disconnected: ${username}`);
+          });
     });
-    
+
     // Message handler for the 'join_room' channel
     socket.on('join_room', data => {
-        console.log(`Join room: ${data.msg}`);
+        console.log(`Join room: ${data.user}`);
     });
+
+    // Message handler for the 'leave_room' channel
+    socket.on('leave_room', data => {
+        console.log(`Left room: ${data.user}`);
+    });
+
+    // Start timer
+    socket.on('start_timer', data => {
+        console.log(`DEBUG: users in room ${data.users}`);
+        console.log(`DEBUG: start timer ${data.time}`);
+        set_timer(data.time)
+    });
+
+    function set_timer(time_in_min) {
+        var clock = document.getElementById('counter');
+        var current_time = Date.parse(new Date());
+        var endtime = new Date(current_time + time_in_min*60*1000);
+        run_clock(clock, endtime);
+    }
+
+    function time_remaining(endtime){
+        var t = Date.parse(endtime) - Date.parse(new Date());
+        var seconds = Math.floor( (t/1000) % 60 );
+        var minutes = Math.floor( (t/1000/60) % 60 );
+        var hours = Math.floor( (t/(1000*60*60)) % 24 );
+        var days = Math.floor( t/(1000*60*60*24) );
+        return {'total':t, 'days':days, 'hours':hours, 'minutes':minutes, 'seconds':seconds};
+    }
     
+    function run_clock(clock, endtime){
+        function update_clock(){
+            var t = time_remaining(endtime);
+            clock.innerHTML = 'Time Left: '+t.minutes+': '+t.seconds;
+            if(t.total<=0){
+                clearInterval(timeinterval);
+                clock.innerHTML = 'Times Up!';
+                const msg = document.getElementById("user-message");
+                msg.onkeypress = e => {
+                    e.preventDefault();
+                };
+             }
+        }
+        update_clock();
+        var timeinterval = setInterval(update_clock,1000);
+    }
+    
+    // Displaying typing status
     socket.on('display', data =>{
         const typing_id = `typing_on${data.uid}`
         const typing_on = document.getElementById(typing_id);
