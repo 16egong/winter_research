@@ -242,8 +242,10 @@ def control(phase, subphase):
     elif site["type"] == "chat":
         if site["roomtype"] == "separate":
             room = "12" if uid == 1 or uid == 2 or uid == 12 else "34"
+            session["room"] = room 
         else:
             room = "1234"
+            session["room"] = room
 
         # Collect Posts
         posts = winter.models.Posts.query.filter(winter.models.Posts.room==room).order_by(asc(winter.models.Posts.timestamp)).all()
@@ -299,16 +301,29 @@ def on_join(data):
     username = data['username']
     room = data['room']
     join_room(room)
-    # emit('join_room', {'msg': 'TEST'}, room=room)
-    emit('join_room', {'msg': username + ' has entered the room.'}, room=room)
-    
-    
+    if username != 'Yongle 12' and username != 'Yongle 34':
+        if username not in config.ROOMS[room]:
+            config.ROOMS[room].append(username)
+        logger.critical('ROOMS AFTER %s', config.ROOMS)
+        if room == "1234":
+            if len(config.ROOMS[room]) == 4:
+                logger.critical('START TIMER 4')
+                emit('start_timer', {'time': 1, 'users': config.ROOMS[room]}, room=room)
+        else:
+            if len(config.ROOMS[room]) == 2:
+                logger.critical('START TIMER 2')
+                emit('start_timer', {'time': 1, 'users': config.ROOMS[room]}, room=room)
+
+    emit('join_room', {'user': username + ' has entered the room.'}, room=room)
+
 @socketio.on('leave')
 def on_leave(data):
     username = data['username']
     room = data['room']
     leave_room(room)
-    send(username + ' has left the room.', room=room)
+    config.ROOMS[room].remove(username)
+    logger.critical('ROOMS AFTER LEAVE %s', config.ROOMS)
+    emit('leave_room', {'user': username + ' has left the room.'}, room=room)
 
 def translate(data):
     req = requests.get('http://mt-server:8000/' + '\"' + data['msg']+ '\"').json()

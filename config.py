@@ -1,5 +1,6 @@
 import os
 import winter.users
+from collections import defaultdict
 
 # basedir = os.path.dirname(__file__)
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -10,6 +11,7 @@ USER3 = winter.users.User(uid=3, username=USERNAMES[2])
 USER4 = winter.users.User(uid=4, username=USERNAMES[3])
 USER12 = winter.users.User(uid=12, username=USERNAMES[4])
 USER34 = winter.users.User(uid=34, username=USERNAMES[5])
+ROOMS = defaultdict(list)
 
 TRIAL_NUM = 1
 TYPE = "control" #switch between control, no_keys, or keys

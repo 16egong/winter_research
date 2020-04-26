@@ -7,7 +7,7 @@ footer {
     flex: none;
 
     padding: 0.25rem;
-
+    display: flex; 
 }
 
 footer button:hover {
@@ -22,11 +22,8 @@ footer button {
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;
-/*     display: inline-block; */
-/*     display: flex; */
-/*     justify-content: right; */
     font-size: 16px;
-    float: right;
+    margin-left: auto; 
 }
 
 footer button + button {
