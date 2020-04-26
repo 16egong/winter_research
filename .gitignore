@@ -11,3 +11,4 @@
 *.ipynb_checkpoint
 *.sqlite3
 *.sqlite
+/data/*
