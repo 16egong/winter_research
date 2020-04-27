@@ -1,31 +1,17 @@
 # winter_research
 Chat UI for research project
 
+## Requirements
+- docker
+- docker compose
+- mt-server.tar
+
 ## Installation
 ```bash
 git clone <repository>
 cd winter_research
 ```
-### Docker
-```bash
-cd docker
-docker build . --tag winter
-cd ..
-```
-Check the permissions of the database and potentially change them 
-```bash
-chmod 764 trial_1_0.db
-```
-Start the docker container
-```bash
-./start_script <container_name> <port_number> (i.e. ./start_script research 1111)
-```
-### Requirements.txt
-```bash
-cd docker 
-python3 -m pip install -r requirements.txt
-cd ..
-```
+
 ## Setup
 - Open config.py
 - For each trial configure the trial number and the type i.e.
@@ -33,33 +19,35 @@ cd ..
 TRIAL_NUM = 2
 TYPE = "control" #switch between control, no_keys, or keys
 ```
-## Start up server
-### Locally
-In the terminal
+
+## Docker
+Use the command below to start the machine translation server container and the flask server container together
 ```bash
-python -m winter
+docker-compose up
 ```
-- user 1: http://0.0.0.0/1 
-- user 2: http://0.0.0.0/2
-- user 3: http://0.0.0.0/3
-- user 4: http://0.0.0.0/4
+
+(Optional) Use the command below to stop containers and remove containers, networks, volumes, and images created by up
+```bash
+docker-compose down
+```
+
+Check the permissions of the database and potentially change them 
+```bash
+chmod 764 trial_1_0.db
+```
+
 ### Amazon EC2 Instance
 From your terminal where the hci_research.pem key is
 ```bash
-ssh -i "hci_research.pem" ec2-user@ec2-34-236-57-52.compute-1.amazonaws.com
+ssh -i <permissions_file.pem> ec2-user@ec2-34-236-57-52.compute-1.amazonaws.com
 ```
-Start the docker container
-```bash
-./start_script <container_name> <port_number> (i.e. ./start_script research 1111)
-```
-Refer to Setup
-```bash
-python -m winter
-```
-- user 1: http://34.236.57.52/1 
-- user 2: http://34.236.57.52/2
-- user 3: http://34.236.57.52/3
-- user 4: http://34.236.57.52/4
+
+- user 1: http://34.236.57.52:5000/1 
+- user 2: http://34.236.57.52:5000/2
+- user 3: http://34.236.57.52:5000/3
+- user 4: http://34.236.57.52:5000/4
+- Observe as user 1: http://34.236.57.52:5000/12
+- Observe as user 3: http://34.236.57.52:5000/34
 
 ## Collecting Data
 At the file path of hci_research.pem secure copy over the data
@@ -90,5 +78,7 @@ sqlite> .output trial_{trial_num}_{trial_type}_notes_.csv
 sqlite> SELECT * FROM notes;
 sqlite> .quit
 ```
+
+You can open this in google docs without any encoding issues.
 Open split_csv.ipynb
 Run cells
