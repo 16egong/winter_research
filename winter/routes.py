@@ -14,6 +14,7 @@ import pytz
 import requests
 import logging
 import threading
+from timeit import default_timer as timer
 
 logger = logging.getLogger()
 
@@ -36,7 +37,6 @@ def get_sitemap():
                 "english": url_for("static", filename="docs/phase_0.0_EN_wait.pdf"),
                 "mandarin": url_for("static", filename="docs/phase_0.0_CN_wait.pdf"),
                 "next": url_for("control", phase=1, subphase=0),
-                "time_in_min": -1,
             },
             "1.0": {
                 "type": "user_specific_instructions",
@@ -46,14 +46,12 @@ def get_sitemap():
                 "user4": url_for("static", filename="docs/phase_1.0_user_4_EN_instructions.pdf"),
                 "user12": url_for("static", filename="docs/phase_1.0_user_1_CN_instructions.pdf"),
                 "user34": url_for("static", filename="docs/phase_1.0_user_3_EN_instructions.pdf"),
-                "time_in_min": 10,
                 "next": url_for("control", phase=1, subphase=1),
             },
             "1.1": {
                 "type": "instructions",
                 "english": url_for("static", filename="docs/phase_1.1_EN_instructions.pdf"),
                 "mandarin": url_for("static", filename="docs/phase_1.1_CN_instructions.pdf"),
-                "time_in_min": -1,
                 "next": url_for("control", phase=1, subphase=2),
             },
             "1.2": {
@@ -64,28 +62,24 @@ def get_sitemap():
                 "user4": url_for("static", filename="docs/phase_1.2_user_4_EN_instructions.pdf"),
                 "user12": url_for("static", filename="docs/phase_1.2_user_1_CN_instructions.pdf"),
                 "user34": url_for("static", filename="docs/phase_1.2_user_3_EN_instructions.pdf"),
-                "time_in_min": -1,
                 "next": url_for("control", phase=1, subphase=3),
             },
             "1.3": {
                 "type": "instructions",
                 "english": url_for("static", filename="docs/phase_1.3_EN_instructions.pdf"),
                 "mandarin": url_for("static", filename="docs/phase_1.3_CN_instructions.pdf"),
-                "time_in_min": -1,
                 "next": url_for("control", phase=1, subphase=4),
             },
             "1.4": {
                 "type": "instructions",
                 "english": url_for("static", filename="docs/phase_1.4_EN_instructions.pdf"),
                 "mandarin": url_for("static", filename="docs/phase_1.4_CN_instructions.pdf"),
-                "time_in_min": -1,
                 "next": url_for("control", phase=1, subphase=5),
             },
             "1.5": {
                 "type": "instructions",
                 "english": url_for("static", filename="docs/phase_1.5_EN_instructions.pdf"),
                 "mandarin": url_for("static", filename="docs/phase_1.5_CN_instructions.pdf"),
-                "time_in_min": -1,
                 "next": url_for("control", phase=1, subphase=6),
             },
             "1.6": {
@@ -94,14 +88,12 @@ def get_sitemap():
                 "mandarin_instructions": url_for("static", filename="docs/phase_1.6_CN_instructions.pdf"),
                 "english_survey": "https://umdsurvey.umd.edu/jfe/form/SV_26k2aVRuhtyVZsN", 
                 "mandarin_survey": "https://umdsurvey.umd.edu/jfe/form/SV_baBQC9W2E36bSmh",
-                "time_in_min": -1,
                 "next": url_for("control", phase=2, subphase=0),
             },
             "2.0": {
                 "type": "instructions",
                 "english": url_for("static", filename="docs/phase_2.0_EN_instructions.pdf"),
                 "mandarin": url_for("static", filename="docs/phase_2.0_CN_instructions.pdf"),
-                "time_in_min": 15,
                 "next": url_for("control", phase=2, subphase=1),
             },
             "2.1": {
@@ -131,7 +123,6 @@ def get_sitemap():
                 "34cv2": url_for('static', filename='docs/user3_CV2.pdf'),
                 "34cv3": url_for('static', filename='docs/user3_CV3.pdf'),
                 "34cv4": url_for('static', filename='docs/user3_CV4.pdf'),
-                "time_in_min": -1,
                 "next": url_for("control", phase=3, subphase=3 if config.TYPE == "control" else 0),
             },
             "3.0": {
@@ -139,19 +130,16 @@ def get_sitemap():
                 "english": url_for('static', filename='docs/phase_3.0_EN_instructions.pdf'),
                 "mandarin": url_for("static", filename='docs/phase_3.0_CN_instructions.pdf'),
                 # TODO: Keywords instructions versus no keyword instructions?
-                "time_in_min": 10,
                 "next": url_for("control", phase=3, subphase=1),
             },
             "3.1": {
                 "type": "wait",
                 "english": url_for("static", filename="docs/phase_0.0_EN_wait.pdf"),
                 "mandarin": url_for("static", filename="docs/phase_0.0_CN_wait.pdf"),
-                "time_in_min": -1,
                 "next": url_for("control", phase=3, subphase=2),
             },
             "3.2": {
                 "type": "transcript",
-                "time_in_min": -1,
                 "next": url_for("control", phase=3, subphase=3),
             },
             "3.3": {
@@ -160,14 +148,12 @@ def get_sitemap():
                 "mandarin_instructions": url_for("static", filename="docs/phase_3.3_CN_instructions.pdf"),
                 "english_survey": "https://umdsurvey.umd.edu/jfe/form/SV_22Y0KXn6kgwZimN ",
                 "mandarin_survey": "https://umdsurvey.umd.edu/jfe/form/SV_cAeRuGTx4FRLj1z",
-                "time_in_min": -1,
                 "next": url_for("control", phase=4, subphase=0),
             },
             "4.0": {
                 "type": "instructions",
                 "english": url_for('static', filename='docs/phase_4.0_EN_instructions.pdf'),
                 "mandarin": url_for("static", filename="docs/phase_4.0_CN_instructions.pdf"),
-                "time_in_min": 15,
                 "next": url_for("control", phase=4, subphase=1),
             },
             "4.1": {
@@ -197,7 +183,6 @@ def get_sitemap():
                 "34cv2": url_for('static', filename='docs/user3_CV2.pdf'),
                 "34cv3": url_for('static', filename='docs/user3_CV3.pdf'),
                 "34cv4": url_for('static', filename='docs/user3_CV4.pdf'),
-                "time_in_min": -1,
                 "next": url_for("control", phase=5, subphase=0),
             },
             "5.0": {
@@ -206,7 +191,6 @@ def get_sitemap():
                 "mandarin_instructions": url_for("static", filename="docs/phase_5.0_CN_instructions.pdf"),
                 "english_survey": "https://umdsurvey.umd.edu/jfe/form/SV_0xFKrg41yjC3H5r",
                 "mandarin_survey": "https://umdsurvey.umd.edu/jfe/form/SV_3s0GDBme8QIVj4F",
-                "time_in_min": 10,
                 "next": None,
             },
         }
@@ -240,7 +224,6 @@ def control(phase, subphase):
             uid=uid, 
             username=username, 
             file=site["user"+str(uid)], 
-            time_in_min = site["time_in_min"],
             next=site["next"]
         )
     elif site["type"] == "instructions":
@@ -249,7 +232,6 @@ def control(phase, subphase):
             uid=uid, 
             username=username, 
             file=site[language],
-            time_in_min = site["time_in_min"],
             next=site["next"]
         )
     elif site["type"] == "survey":
@@ -259,14 +241,15 @@ def control(phase, subphase):
             username=username, 
             instructions=site[language+"_instructions"],
             survey=site[language+"_survey"], 
-            time_in_min = site["time_in_min"],
             next=site["next"]
         )
     elif site["type"] == "chat":
         if site["roomtype"] == "separate":
             room = "12" if uid == 1 or uid == 2 or uid == 12 else "34"
+            session["room"] = room 
         else:
             room = "1234"
+            session["room"] = room
 
         # Collect Posts
         posts = winter.models.Posts.query.filter(winter.models.Posts.room==room).order_by(asc(winter.models.Posts.timestamp)).all()
@@ -286,7 +269,6 @@ def control(phase, subphase):
             room=room,
             posts=posts,
             notes=notes,
-            time_in_min = site["time_in_min"],
             next=site["next"]
         )
     elif site["type"] == "wait": 
@@ -295,7 +277,6 @@ def control(phase, subphase):
             uid=uid,
             username=username,
             file=site[language], 
-            time_in_min = site["time_in_min"],
             next=site["next"]
         )
     elif site["type"] == "transcript":
@@ -316,7 +297,6 @@ def control(phase, subphase):
             room=room,
             posts=posts,
             notes=notes,
-            time_in_min = site["time_in_min"],
             next=site["next"]
         )
 
@@ -326,82 +306,83 @@ def on_join(data):
     username = data['username']
     room = data['room']
     join_room(room)
-#     send({'msg': username + ' has entered the room.'}, room=room)
-    emit('join_room', {'msg': username + ' has entered the room.'}, room=room)
-    
-    
+    if username != 'Yongle 12' and username != 'Yongle 34':
+        if username not in config.ROOMS[room]:
+            config.ROOMS[room].append(username)
+        logger.critical('ROOMS AFTER %s', config.ROOMS)
+        if room == "1234":
+            if len(config.ROOMS[room]) == 4:
+                logger.critical('START TIMER 4')
+                emit('start_timer', {'time': 1, 'users': config.ROOMS[room]}, room=room)
+        else:
+            if len(config.ROOMS[room]) == 2:
+                logger.critical('START TIMER 2')
+                emit('start_timer', {'time': 1, 'users': config.ROOMS[room]}, room=room)
+
+    emit('join_room', {'user': username + ' has entered the room.'}, room=room)
+
 @socketio.on('leave')
 def on_leave(data):
     username = data['username']
     room = data['room']
     leave_room(room)
-    send(username + ' has left the room.', room=room)
-
-# def translate_message():
-        # req = requests.get('http://mt-server:8000/' + '\"' + data['msg']+ '\"').json()
-        # data['translation'] = req['translation']
-        # data['keywords'] =  str(', '.join(req['keywords']))
-        # data['translation_time'] =  str(req['time'])
-        
-        # data['translation'] = None
-        # data['keywords'] =  None
-        # data['translation_time'] =  None
-
-    # return data 
+    config.ROOMS[room].remove(username)
+    logger.critical('ROOMS AFTER LEAVE %s', config.ROOMS)
+    emit('leave_room', {'user': username + ' has left the room.'}, room=room)
 
 @socketio.on('message')
 def message(data):
     try:
-        logger.critical('MESSAGE')
+        logger.critical('SERVER SIDE MESSAGE')
         tz = pytz.timezone('US/Eastern')
         data['time'] = str(datetime.now(tz).strftime('%I:%M %p'))
+
         # TODO Check to see if url length is an issue
-
+        if data['uid'] == '1' or data['uid'] == '2':
+            start = timer()
+            req = translate(data)
+            data['translation'] = req['translation']
+            data['keywords'] =  str(', '.join(req['keywords']))
+            data['translation_time'] = str(req['time'])
+            end = timer()
+            data['request_time'] = str(end-start)
+        else:
+            data['translation'] = None
+            data['keywords'] =  None
+            data['translation_time'] =  None
+            data['request_time'] = None
         
-        data['translation'] = None
-        data['keywords'] =  None
-        data['translation_time'] =  None
-        # if data['uid'] == '1' or data['uid'] == '2':
-            # t1 = threading.Thread(target=translate_message, args=(data)) 
-            # t1.start()
-        # else:
-        #     data['translation'] = None
-        #     data['keywords'] =  None
-        #     data['translation_time'] =  None
+        data['msg_len'] = len(data['msg'])
 
-
-        # if data['uid'] == '1' or data['uid'] == '2':
-            # req = requests.get('http://mt-server:8000/' + '\"' + data['msg']+ '\"').json()
-            # data['translation'] = req['translation']
-            # data['keywords'] =  str(', '.join(req['keywords']))
-            # data['translation_time'] =  str(req['time'])
-        # else:
-        #     data['translation'] = None
-        #     data['keywords'] =  None
-        #     data['translation_time'] =  None
         
         post = winter.models.Posts(uid=data['uid'], username= data['username'], 
                                   body=data['msg'], time=data['time'], room=data['room'], 
                                   keywords=data['keywords'], translation=data['translation'],
-                                  translation_time=data['translation_time'])
+                                  translation_time=data['translation_time'], 
+                                  request_time=data['request_time'], msg_len=data['msg_len'])
         db.session.add(post)
         db.session.commit()
         
-        logger.critical('\n\n %s \n\n', data)
-
         # gets sent to the message bucket on client side
         room = data['room']
         send(data, room=room)
+        logger.critical('\n\n %s \n\n', data)
     except Exception as e:
-        print('ELSE: ', e )
-        print(f'\n\n{data}\n\n')
-        send(data, broadcast=True)
+        logger.critical('ELSE: %s', e )
+        logger.critical('\n\n %s \n\n', data)
+        send(data, room=room)
 
+# Translate mandarin messages and save to db
+def translate(data):
+    req = requests.get('http://mt-server:8000/' + '\"' + data['msg']+ '\"').json()
+    return req
+
+# Present typing message
 @socketio.on('typing')
 def typing(data):
     emit('display', data, room=data['room'], include_self=False)
 
-
+# Save notes
 @app.route("/savenotes", methods=["PUT"])
 def save_notes():
     uid = request.json["uid"]
@@ -414,7 +395,7 @@ def save_notes():
 
     return '{"success": True}', 200, {"ContentType": "application/json"}
 
-
+# Save notes in intervals
 @app.route("/saverecord", methods=["PUT"])
 def save_record():
     uid = request.json["uid"]
