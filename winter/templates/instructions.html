@@ -3,14 +3,20 @@
     <head>
         <title>Instructions Phase {{ phase }} For {{username}}</title>
 
+        <!-- Custome css for pages in general -->
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/global.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/footer.css') }}">
+        
+        <!-- Custom css for instruction  pages -->
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/instructions.css') }}">
+
+        <!-- Passing data to JS -->
+        <script type="text/javascript">
+            const time_in_min = `{{time_in_min}}`;
+        </script>
     </head>
 
     <body>
-        <header>Instructions</header>
-
         <iframe id="instructions" src="{{ file }}#toolbar=0&navpanes=0" type="application/pdf"></iframe>
         
         <footer>

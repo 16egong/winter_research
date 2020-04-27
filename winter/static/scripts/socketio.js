@@ -80,13 +80,12 @@ document.addEventListener('DOMContentLoaded', () => {
             typing_on.className = 'hidden'
         }
     });
-    
+
     // End typing status
     function typingTimeout(){
         typing=false
         socket.emit('typing', {'username':username, 'uid': uid, 'typing':false, 'room':room})
     }
-        
     
     // Check typing status
     function checkTypingStatus(key) {

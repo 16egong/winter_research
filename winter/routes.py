@@ -13,21 +13,18 @@ from datetime import datetime
 import pytz
 import requests
 import logging
+import threading
 from timeit import default_timer as timer
 
 logger = logging.getLogger()
 
 # db = SQLAlchemy(app)
-
-# # Redirect the user to the first page they should see
-# @app.route('/')
-# def base():
-#     return redirect(url_for("phase_1_user_1_english_instructions"))
+    
 @app.route('/<int:uid>')
 def base(uid):
     session["uid"] = uid
 
-    return redirect(url_for("control", phase=1, subphase=0))
+    return redirect(url_for("control", phase=0, subphase=0))
 
 users = [config.USER1, config.USER2, config.USER3, config.USER4, config.USER12, config.USER34]
 
@@ -35,6 +32,12 @@ def get_sitemap():
     """ A bit of a hack to get this dictionary to be properly populated """
     if get_sitemap.sitemap is None:
         get_sitemap.sitemap = {
+            "0.0": {
+                "type": "wait",
+                "english": url_for("static", filename="docs/phase_0.0_EN_wait.pdf"),
+                "mandarin": url_for("static", filename="docs/phase_0.0_CN_wait.pdf"),
+                "next": url_for("control", phase=1, subphase=0),
+            },
             "1.0": {
                 "type": "user_specific_instructions",
                 "user1": url_for("static", filename="docs/phase_1.0_user_1_CN_instructions.pdf"),
@@ -131,6 +134,8 @@ def get_sitemap():
             },
             "3.1": {
                 "type": "wait",
+                "english": url_for("static", filename="docs/phase_0.0_EN_wait.pdf"),
+                "mandarin": url_for("static", filename="docs/phase_0.0_CN_wait.pdf"),
                 "next": url_for("control", phase=3, subphase=2),
             },
             "3.2": {
@@ -178,7 +183,6 @@ def get_sitemap():
                 "34cv2": url_for('static', filename='docs/user3_CV2.pdf'),
                 "34cv3": url_for('static', filename='docs/user3_CV3.pdf'),
                 "34cv4": url_for('static', filename='docs/user3_CV4.pdf'),
-                
                 "next": url_for("control", phase=5, subphase=0),
             },
             "5.0": {
@@ -227,7 +231,7 @@ def control(phase, subphase):
             "instructions.html", 
             uid=uid, 
             username=username, 
-            file=site[language], 
+            file=site[language],
             next=site["next"]
         )
     elif site["type"] == "survey":
@@ -272,6 +276,7 @@ def control(phase, subphase):
             "wait.html",
             uid=uid,
             username=username,
+            file=site[language], 
             next=site["next"]
         )
     elif site["type"] == "transcript":
@@ -325,10 +330,6 @@ def on_leave(data):
     logger.critical('ROOMS AFTER LEAVE %s', config.ROOMS)
     emit('leave_room', {'user': username + ' has left the room.'}, room=room)
 
-def translate(data):
-    req = requests.get('http://mt-server:8000/' + '\"' + data['msg']+ '\"').json()
-    return req
-
 @socketio.on('message')
 def message(data):
     try:
@@ -345,7 +346,6 @@ def message(data):
             data['translation_time'] = str(req['time'])
             end = timer()
             data['request_time'] = str(end-start)
-            
         else:
             data['translation'] = None
             data['keywords'] =  None
@@ -372,12 +372,17 @@ def message(data):
         logger.critical('\n\n %s \n\n', data)
         send(data, room=room)
 
+# Translate mandarin messages and save to db
+def translate(data):
+    req = requests.get('http://mt-server:8000/' + '\"' + data['msg']+ '\"').json()
+    return req
 
+# Present typing message
 @socketio.on('typing')
 def typing(data):
     emit('display', data, room=data['room'], include_self=False)
 
-
+# Save notes
 @app.route("/savenotes", methods=["PUT"])
 def save_notes():
     uid = request.json["uid"]
@@ -390,7 +395,7 @@ def save_notes():
 
     return '{"success": True}', 200, {"ContentType": "application/json"}
 
-
+# Save notes in intervals
 @app.route("/saverecord", methods=["PUT"])
 def save_record():
     uid = request.json["uid"]
