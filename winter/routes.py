@@ -338,19 +338,26 @@ def message(data):
         data['time'] = str(datetime.now(tz).strftime('%I:%M %p'))
 
         # TODO Check to see if url length is an issue
-        if data['uid'] == '1' or data['uid'] == '2':
-            start = timer()
-            req = translate(data)
-            data['translation'] = req['translation']
-            data['keywords'] =  str(', '.join(req['keywords']))
-            data['translation_time'] = str(req['time'])
-            end = timer()
-            data['request_time'] = str(end-start)
-        else:
-            data['translation'] = None
-            data['keywords'] =  None
-            data['translation_time'] =  None
-            data['request_time'] = None
+        # TODO: Update for deploy in non control
+        
+        data['translation'] = None
+        data['keywords'] =  None
+        data['translation_time'] =  None
+        data['request_time'] = None
+
+        #if data['uid'] == '1' or data['uid'] == '2':
+           # start = timer()
+           # req = translate(data)
+           # data['translation'] = req['translation']
+           # data['keywords'] =  str(', '.join(req['keywords']))
+           # data['translation_time'] = str(req['time'])
+           # end = timer()
+           # data['request_time'] = str(end-start)
+        #else:
+           # data['translation'] = None
+           # data['keywords'] =  None
+           # data['translation_time'] =  None
+           # data['request_time'] = None
         
         data['msg_len'] = len(data['msg'])
 
