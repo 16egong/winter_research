@@ -313,11 +313,11 @@ def on_join(data):
         if room == "1234":
             if len(config.ROOMS[room]) == 4:
                 logger.critical('START TIMER 4')
-                emit('start_timer', {'time': 1, 'users': config.ROOMS[room]}, room=room)
+                emit('start_timer', {'time': 10, 'users': config.ROOMS[room]}, room=room)
         else:
             if len(config.ROOMS[room]) == 2:
                 logger.critical('START TIMER 2')
-                emit('start_timer', {'time': 1, 'users': config.ROOMS[room]}, room=room)
+                emit('start_timer', {'time': 15, 'users': config.ROOMS[room]}, room=room)
 
     emit('join_room', {'user': username + ' has entered the room.'}, room=room)
 
