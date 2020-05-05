@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Instructions Phase {{ phase }} For {{username}}</title>
+
+         <!-- Custome css for pages in general -->
+         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/global.css') }}">
+         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/footer.css') }}">
+         
+         <!-- Custom css for instruction  pages -->
+         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/special_instructions.css') }}">
+
+         <!-- AJAX -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+         <!-- Custom Chat JS-->
+        <script src="{{url_for('static', filename='scripts/special_instructions.js')}}"></script>
+
+         <!-- Passing data to JS -->
+         <script type="text/javascript">
+            const next = `{{next}}`;
+         </script>
+    </head>
+    <body>
+        <div class="instr-section">
+            <iframe class="instr 0 active" src="{{ inst1_2 }}#toolbar=0&navpanes=0" type="application/pdf"></iframe>
+            <iframe class="instr 1" src="{{ inst1_3 }}#toolbar=0&navpanes=0" type="application/pdf"></iframe>
+            <iframe class="instr 2" src="{{ inst1_4 }}#toolbar=0&navpanes=0" type="application/pdf"></iframe>
+            <div class="pages">
+                <div class="pagination">
+                    <a onclick="prevPage()">&laquo;</a>
+                    <a class="page 0 active check"  onclick="showPage(0)">1</a>
+                    <a class="page 1" onclick="showPage(1)">2</a>
+                    <a class="page 2" onclick="showPage(2)">3</a>
+                    <a id="next-inst" onclick="nextPage()">&raquo;</a>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <!-- <button onclick="window.location.href = '{{ next }}';">Next</button> -->
+            <button id="next" type="button" disabled onclick="clickNext()">NEXT</button>
+        </footer>
+    </body>
+</html>

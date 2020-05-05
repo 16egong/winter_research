@@ -16,15 +16,19 @@
         <!-- AJAX -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
-        <!-- Notes JS -->
+        <!-- Custom Chat JS-->
+        <script src="{{url_for('static', filename='scripts/chat.js')}}"></script>
+
+        <!-- Custom Notes JS -->
         <script type="text/javascript" src="{{ url_for('static', filename='scripts/notes.js') }}"></script>
 
-        <!-- Custom messenger CSS -->
+        <!-- Custom Messenger CSS -->
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/messenger.css') }}">
         
         <!-- Custom Socketio JS-->
         <script src="{{url_for('static', filename='scripts/socketio.js')}}"></script>    
-        <script src="{{url_for('static', filename='scripts/chat.js')}}"></script>
+
+        
         
         <!-- Passing data to JS -->
         <script type="text/javascript">
@@ -34,8 +38,7 @@
             const usernames = `{{usernames}}`
             const notesurl = `{{url_for("save_notes")}}`;
             const recordurl = `{{url_for("save_record")}}`;
-            var room = `{{room}}`
-            const time_in_min = `{{time_in_min}}`;
+            var room = `{{room}}`;
         </script>
     </head>
 
@@ -99,17 +102,18 @@
                     <textarea id="note-textbox">{{ notes }}</textarea>
                 </section>
                 <!-- Notes end -->
-                
+                {% if chat %}
                 <section id="messenger">
                     {% include 'messenger.html' %}
                 </section>
+                {% endif %}
             </section>
             <!-- Right side end -->
         </main>
 
         <footer>
             <div id="counter"></div>
-            <button onclick="window.location.href = '{{ next }}';">Next</button>
+            <button onclick="window.location.href = '{{ next }}';">NEXT</button>
         </footer>
         
     </body>

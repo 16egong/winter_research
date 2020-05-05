@@ -16,5 +16,4 @@ function clickNext() {
     } else{
         console.log("Please click the survey first");
     }
-    
 };
