@@ -55,27 +55,32 @@ def get_sitemap():
                 "next": url_for("control", phase=1, subphase=2),
             },
             "1.2": {
-                "type": "user_specific_instructions",
+                "type": "special_instructions",
                 "user1": url_for("static", filename="docs/phase_1.2_user_1_CN_instructions.pdf"),
                 "user2": url_for("static", filename="docs/phase_1.2_user_2_CN_instructions.pdf"),
                 "user3": url_for("static", filename="docs/phase_1.2_user_3_EN_instructions.pdf"),
                 "user4": url_for("static", filename="docs/phase_1.2_user_4_EN_instructions.pdf"),
                 "user12": url_for("static", filename="docs/phase_1.2_user_1_CN_instructions.pdf"),
                 "user34": url_for("static", filename="docs/phase_1.2_user_3_EN_instructions.pdf"),
-                "next": url_for("control", phase=1, subphase=3),
-            },
-            "1.3": {
-                "type": "instructions",
-                "english": url_for("static", filename="docs/phase_1.3_EN_instructions.pdf"),
-                "mandarin": url_for("static", filename="docs/phase_1.3_CN_instructions.pdf"),
-                "next": url_for("control", phase=1, subphase=4),
-            },
-            "1.4": {
-                "type": "instructions",
-                "english": url_for("static", filename="docs/phase_1.4_EN_instructions.pdf"),
-                "mandarin": url_for("static", filename="docs/phase_1.4_CN_instructions.pdf"),
+                "english_1": url_for("static", filename="docs/phase_1.3_EN_instructions.pdf"),
+                "mandarin_1": url_for("static", filename="docs/phase_1.3_CN_instructions.pdf"),
+                "english_2": url_for("static", filename="docs/phase_1.4_EN_instructions.pdf"),
+                "mandarin_2": url_for("static", filename="docs/phase_1.4_CN_instructions.pdf"),
+
                 "next": url_for("control", phase=1, subphase=5),
             },
+            # "1.3": {
+            #     "type": "instructions",
+            #     "english": url_for("static", filename="docs/phase_1.3_EN_instructions.pdf"),
+            #     "mandarin": url_for("static", filename="docs/phase_1.3_CN_instructions.pdf"),
+            #     "next": url_for("control", phase=1, subphase=4),
+            # },
+            # "1.4": {
+            #     "type": "instructions",
+            #     "english": url_for("static", filename="docs/phase_1.4_EN_instructions.pdf"),
+            #     "mandarin": url_for("static", filename="docs/phase_1.4_CN_instructions.pdf"),
+            #     "next": url_for("control", phase=1, subphase=5),
+            # },
             "1.5": {
                 "type": "instructions",
                 "english": url_for("static", filename="docs/phase_1.5_EN_instructions.pdf"),
@@ -123,6 +128,37 @@ def get_sitemap():
                 "34cv2": url_for('static', filename='docs/user3_CV2.pdf'),
                 "34cv3": url_for('static', filename='docs/user3_CV3.pdf'),
                 "34cv4": url_for('static', filename='docs/user3_CV4.pdf'),
+                "chat": False,
+                "next": url_for("control", phase=2, subphase=2 if config.TYPE == "control" else 0),
+            },
+            "2.2": {
+                "type": "chat",
+                "roomtype": "separate",
+                "1cv1": url_for('static', filename='docs/user1_CV1.pdf'),
+                "1cv2": url_for('static', filename='docs/user1_CV2.pdf'),
+                "1cv3": url_for('static', filename='docs/user1_CV3.pdf'),
+                "1cv4": url_for('static', filename='docs/user1_CV4.pdf'),
+                "2cv1": url_for('static', filename='docs/user2_CV1.pdf'),
+                "2cv2": url_for('static', filename='docs/user2_CV2.pdf'),
+                "2cv3": url_for('static', filename='docs/user2_CV3.pdf'),
+                "2cv4": url_for('static', filename='docs/user2_CV4.pdf'),
+                "3cv1": url_for('static', filename='docs/user3_CV1.pdf'),
+                "3cv2": url_for('static', filename='docs/user3_CV2.pdf'),
+                "3cv3": url_for('static', filename='docs/user3_CV3.pdf'),
+                "3cv4": url_for('static', filename='docs/user3_CV4.pdf'),
+                "4cv1": url_for('static', filename='docs/user4_CV1.pdf'),
+                "4cv2": url_for('static', filename='docs/user4_CV2.pdf'),
+                "4cv3": url_for('static', filename='docs/user4_CV3.pdf'),
+                "4cv4": url_for('static', filename='docs/user4_CV4.pdf'),
+                "12cv1": url_for('static', filename='docs/user1_CV1.pdf'),
+                "12cv2": url_for('static', filename='docs/user1_CV2.pdf'),
+                "12cv3": url_for('static', filename='docs/user1_CV3.pdf'),
+                "12cv4": url_for('static', filename='docs/user1_CV4.pdf'),
+                "34cv1": url_for('static', filename='docs/user3_CV1.pdf'),
+                "34cv2": url_for('static', filename='docs/user3_CV2.pdf'),
+                "34cv3": url_for('static', filename='docs/user3_CV3.pdf'),
+                "34cv4": url_for('static', filename='docs/user3_CV4.pdf'),
+                "chat": True,
                 "next": url_for("control", phase=3, subphase=3 if config.TYPE == "control" else 0),
             },
             "3.0": {
@@ -183,6 +219,7 @@ def get_sitemap():
                 "34cv2": url_for('static', filename='docs/user3_CV2.pdf'),
                 "34cv3": url_for('static', filename='docs/user3_CV3.pdf'),
                 "34cv4": url_for('static', filename='docs/user3_CV4.pdf'),
+                "chat": True,
                 "next": url_for("control", phase=5, subphase=0),
             },
             "5.0": {
@@ -207,18 +244,27 @@ def control(phase, subphase):
     if uid == 12:
         username = users[4].username
     elif uid == 34:
-        username = users[5].username
+        username=users[5].username
     else:
-        username = users[uid - 1].username
+        username=users[uid - 1].username
 
     if uid == 1 or uid == 2 or uid == 12:
-        language = "mandarin"
+        language="mandarin"
     else:
-        language = "english"
+        language="english"
 
     site = get_sitemap()["{}.{}".format(phase, subphase)]
 
-    if site["type"] == "user_specific_instructions":
+    
+    if site["type"] == "instructions":
+        return render_template(
+            "instructions.html", 
+            uid=uid, 
+            username=username, 
+            file=site[language],
+            next=site["next"]
+        )
+    elif site["type"] == "user_specific_instructions":
         return render_template(
             "instructions.html", 
             uid=uid, 
@@ -226,12 +272,14 @@ def control(phase, subphase):
             file=site["user"+str(uid)], 
             next=site["next"]
         )
-    elif site["type"] == "instructions":
+    elif site["type"] == "special_instructions":
         return render_template(
-            "instructions.html", 
-            uid=uid, 
-            username=username, 
-            file=site[language],
+            "special_instructions.html",
+            uid=uid,
+            username=username,
+            inst1_2=site["user"+str(uid)],
+            inst1_3=site[language+"_1"],
+            inst1_4=site[language+"_2"],
             next=site["next"]
         )
     elif site["type"] == "survey":
@@ -248,7 +296,7 @@ def control(phase, subphase):
             room = "12" if uid == 1 or uid == 2 or uid == 12 else "34"
             session["room"] = room 
         else:
-            room = "1234"
+            room="1234"
             session["room"] = room
 
         # Collect Posts
@@ -262,6 +310,7 @@ def control(phase, subphase):
             "chat.html", 
             uid=uid, 
             username=username, 
+            chat=site["chat"],
             cv1=site[str(uid)+"cv1"], 
             cv2=site[str(uid)+"cv2"], 
             cv3=site[str(uid)+"cv3"], 
@@ -313,7 +362,7 @@ def on_join(data):
         if room == "1234":
             if len(config.ROOMS[room]) == 4:
                 logger.critical('START TIMER 4')
-                emit('start_timer', {'time': 10, 'users': config.ROOMS[room]}, room=room)
+                emit('start_timer', {'time': 15, 'users': config.ROOMS[room]}, room=room)
         else:
             if len(config.ROOMS[room]) == 2:
                 logger.critical('START TIMER 2')

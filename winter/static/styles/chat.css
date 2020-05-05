@@ -86,9 +86,9 @@ main {
     transition: background-color .3s;
   }
   
-  .pagination a.active {
+.pagination a.active {
     background-color: dodgerblue;
     color: white;
-  }
+}
   
-  .pagination a:hover:not(.active) {background-color: #ddd;}
+.pagination a:hover:not(.active) {background-color: #ddd;}

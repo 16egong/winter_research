@@ -1,6 +1,4 @@
 function showPage(page_num) {
-    var $curr_msg = $('.block.active');
-    var $page_num = $('.page.active');
     $('.block').removeClass('active');
     $('.page').removeClass('active');
     var $msg = $('.'+page_num + '.block');
