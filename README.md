@@ -17,7 +17,19 @@ cd winter_research
 - For each trial configure the trial number and the type i.e.
 ```bash
 TRIAL_NUM = 2
-TYPE = "control" #switch between control, no_keys, or keys
+TYPE = "control"
+```
+Switch to the **keys** branch if you are running the translation + keyword trials
+```bash
+git status
+```
+Make sure there are no changes to commit, if there are, either remove them or commit them
+```bash
+git checkout keys
+```
+Swith to the **no_keys** branch if running just translation
+```bash
+git checkout no_keys
 ```
 
 ## Docker
@@ -60,7 +72,7 @@ cd /data
 >sqlite3 trial_1_control.db
 sqlite> .tables
 ```
-You should see posts and notes as the two tables
+You should see posts, notes, record as the tables
 ```bash
 sqlite> .headers on
 sqlite> .mode csv
@@ -76,6 +88,16 @@ sqlite> .headers on
 sqlite> .mode csv
 sqlite> .output trial_{trial_num}_{trial_type}_notes_.csv
 sqlite> SELECT * FROM notes;
+sqlite> .quit
+```
+
+```bash
+cd /data
+>sqlite3 trial_1_control.db
+sqlite> .headers on
+sqlite> .mode csv
+sqlite> .output trial_{trial_num}_{trial_type}_record_.csv
+sqlite> SELECT * FROM record;
 sqlite> .quit
 ```
 
