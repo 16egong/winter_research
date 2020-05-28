@@ -1,16 +1,10 @@
 #chat {
+    flex: auto;
     display: flex;
-    flex-flow: column wrap;
-    justify-content: space-between;
-    margin: 0px 10px;
-    height: calc(100% - 50px);
-    border: var(--border);
-    border-radius: 5px;
-    background: var(--msger-bg);
-    box-shadow: 0 15px 15px -5px rgba(0, 0, 0, 0.2);
+    flex-direction: column;
 }
 
-#chat-header {
+.chat-header {
     display: flex;
     justify-content: space-between;
     padding: 10px;
@@ -20,103 +14,75 @@
 }
 
 #posts {
+    flex: 1 1 0; /* 0 needed to tell this flex box to start small then grow */
+    overflow-y: auto;
+
+    padding: 10px;
+    
+    font-family: sans-serif;
     display: flex;
-    justify-content: center;
-    flex-flow: column;
-}
-
-.block:not(.active){
-    display:none;
-}
-
-.post {
-    display: flex;
-    flex-flow: row;
-}
-
-.msg-card {
-    border-style: dotted;
-    height: 110px
+    flex-direction: column;
 }
 
 .key-card {
-    border-style: dotted;
-    height: 110px;
-    width: 100px;
-    
-}
-
-.messages {
-/*     display: flex; */
-    background-color: #fcfcfe;
-    padding: 10px;
-    flex: 1 80%
-}
-
-.msg {
     display: flex;
-    align-items: flex-end;
-    margin-bottom: 10px;
+    align-items: center;
+    width: 100px;
+    margin: 5px;
+    padding: 5px;
+    border-radius: 5px;
+    flex-direction: column;
 }
 
-.msg-bubble {
-    max-width: 300px;
+.keyword {
+    display: flex;
+    background-color: #CCF2FF;
+    border-radius: 5px;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin: 2px;
+}
+
+.message {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+
+}
+
+.message-bubble {
+    max-width: 450px;
+    padding: 15px;
     border-radius: 15px;
-    height: 90px;
-    padding: 10px;
     background: var(--left-msg-bg);
 }
-
-.msg-info {
+  
+.message-info {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
 }
-
-.msg-info-name {
+  
+.message-info-name {
     margin-right: 10px;
     font-weight: bold;
 }
-
-.msg-info-time {
+  
+.message-info-time {
     font-size: 0.85em;
 }
 
-
-.left-msg .msg-bubble {
+.receiver .message-bubble {
     border-bottom-left-radius: 0;
 }
-
-.right-msg {
+  
+.sender {
     flex-direction: row-reverse;
 }
-
-.right-msg .msg-bubble {
+  
+.sender .message-bubble {
     border-bottom-right-radius: 0;
 }
-
-.left-messages {
-    flex: 1 40%
-}
-.middle-space {
-    flex: 1 20%
-}
-.right-messages {
-    flex: 1 40%
-}
-
-.pagination a {
-color: black;
-float: left;
-padding: 8px 16px;
-text-decoration: none;
-transition: background-color .3s;
-}
-
-.pagination a.active {
-background-color: dodgerblue;
-color: white;
-}
-
-.pagination a:hover:not(.active) {background-color: #ddd;}

@@ -11,6 +11,9 @@ services:
         - "./data:/data:rw"
     ports:
         - "5000:5000"
+    depends_on:
+        - "mt-server"
+    command: ["/tmp/wait-for-it.sh", "mt-server:8000", "--", "python", "-m", "winter"]
   mt-server:
     image: "mt4teams:mt-server"
     ports:

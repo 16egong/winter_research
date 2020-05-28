@@ -2,7 +2,7 @@ var timer;
 
 document.addEventListener("DOMContentLoaded", () => {
     $("#note-textbox").on("input", notesChanged);
-    // TODO: Uncomment below for deploy
+    // TODO: Uncomment for deploy
     setInterval(function(){ saveRecord(uid, $("#note-textbox").val()); }, 15000);
       
 

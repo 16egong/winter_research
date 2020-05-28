@@ -6,33 +6,35 @@
   --right-msg-bg: #579ffb;
 }
 
-body {
-    justify-content: center;
+body{
+  display: flex;
+  flex-direction: column;
 }
 
-.content {
-    display: flex;
-    flex-flow: row;
-    justify-content: center;
+main {
+  flex: auto;
+
+  display: flex;
 }
 
 .left-side{
-    flex: 1 75%;
-    display: flex;
-    flex-flow: column;
+  flex: 1 75%;
+  display: flex;
+  flex-flow: column;
 }
+
 .right-side{
-    flex: 1 25%;
-    display: flex;
-    flex-flow: column;
+  flex: 1 25%;
+  display: flex;
+  flex-flow: column;
     
 }
 
 
 .right-key {
-    background-color: #ccc;
-    padding: 10px;
-    flex: 1 10%
+  background-color: #ccc;
+  padding: 10px;
+  flex: 1 10%
 }
 
 #notes {

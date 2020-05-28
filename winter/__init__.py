@@ -4,13 +4,14 @@ from flask_sqlalchemy import SQLAlchemy
 from config import Config
 import config
 
+
 print('SQLALCHEMY_DATABASE_URI: ', Config.SQLALCHEMY_DATABASE_URI)
 
 app = Flask(__name__)
 app.config.from_object('config.Config')
 socketio = SocketIO(app)
 db = SQLAlchemy(app)
-
+ 
 from winter import models
 
 db.create_all()

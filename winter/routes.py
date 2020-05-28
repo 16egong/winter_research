@@ -4,9 +4,7 @@ from winter import app
 from winter import socketio
 from winter import db
 import winter.models
-import winter.users
 from sqlalchemy import asc, or_
-import pandas as pd
 import config
 import time
 from datetime import datetime
@@ -14,11 +12,9 @@ import pytz
 import requests
 import logging
 import threading
-from timeit import default_timer as timer
+
 
 logger = logging.getLogger()
-
-# db = SQLAlchemy(app)
     
 @app.route('/<int:uid>')
 def base(uid):
@@ -69,18 +65,6 @@ def get_sitemap():
 
                 "next": url_for("control", phase=1, subphase=5),
             },
-            # "1.3": {
-            #     "type": "instructions",
-            #     "english": url_for("static", filename="docs/phase_1.3_EN_instructions.pdf"),
-            #     "mandarin": url_for("static", filename="docs/phase_1.3_CN_instructions.pdf"),
-            #     "next": url_for("control", phase=1, subphase=4),
-            # },
-            # "1.4": {
-            #     "type": "instructions",
-            #     "english": url_for("static", filename="docs/phase_1.4_EN_instructions.pdf"),
-            #     "mandarin": url_for("static", filename="docs/phase_1.4_CN_instructions.pdf"),
-            #     "next": url_for("control", phase=1, subphase=5),
-            # },
             "1.5": {
                 "type": "instructions",
                 "english": url_for("static", filename="docs/phase_1.5_EN_instructions.pdf"),
@@ -165,7 +149,6 @@ def get_sitemap():
                 "type": "instructions",
                 "english": url_for('static', filename='docs/phase_3.0_EN_instructions.pdf'),
                 "mandarin": url_for("static", filename='docs/phase_3.0_CN_instructions.pdf'),
-                # TODO: Keywords instructions versus no keyword instructions?
                 "next": url_for("control", phase=3, subphase=1),
             },
             "3.1": {
@@ -379,6 +362,7 @@ def on_leave(data):
     logger.critical('ROOMS AFTER LEAVE %s', config.ROOMS)
     emit('leave_room', {'user': username + ' has left the room.'}, room=room)
 
+
 @socketio.on('message')
 def message(data):
     try:
@@ -386,39 +370,12 @@ def message(data):
         tz = pytz.timezone('US/Eastern')
         data['time'] = str(datetime.now(tz).strftime('%I:%M %p'))
 
-        # TODO Check to see if url length is an issue
-        # TODO: Update for deploy in non control
-        
-        data['translation'] = None
-        data['keywords'] =  None
-        data['translation_time'] =  None
-        data['request_time'] = None
-
-        #if data['uid'] == '1' or data['uid'] == '2':
-           # start = timer()
-           # req = translate(data)
-           # data['translation'] = req['translation']
-           # data['keywords'] =  str(', '.join(req['keywords']))
-           # data['translation_time'] = str(req['time'])
-           # end = timer()
-           # data['request_time'] = str(end-start)
-        #else:
-           # data['translation'] = None
-           # data['keywords'] =  None
-           # data['translation_time'] =  None
-           # data['request_time'] = None
-        
-        data['msg_len'] = len(data['msg'])
-
-        
         post = winter.models.Posts(uid=data['uid'], username= data['username'], 
-                                  body=data['msg'], time=data['time'], room=data['room'], 
-                                  keywords=data['keywords'], translation=data['translation'],
-                                  translation_time=data['translation_time'], 
-                                  request_time=data['request_time'], msg_len=data['msg_len'])
+                                  body=data['msg'], time=data['time'], room=data['room'])
+        
         db.session.add(post)
         db.session.commit()
-        
+
         # gets sent to the message bucket on client side
         room = data['room']
         send(data, room=room)
@@ -427,11 +384,6 @@ def message(data):
         logger.critical('ELSE: %s', e )
         logger.critical('\n\n %s \n\n', data)
         send(data, room=room)
-
-# Translate mandarin messages and save to db
-def translate(data):
-    req = requests.get('http://mt-server:8000/' + '\"' + data['msg']+ '\"').json()
-    return req
 
 # Present typing message
 @socketio.on('typing')

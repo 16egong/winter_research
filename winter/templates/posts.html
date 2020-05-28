@@ -1,115 +1,44 @@
 <section id="chat">
     <header class="chat-header">
         <div class="chat-header-title">
-            <i class="fas fa-comment-alt"></i> Winter Research
+            <i class="fas fa-comment-alt"></i> Transcript
         </div>
     </header>
     <!-- Main section start -->
     <main id="posts">
         <!-- Left key section start -->
         {% for p in posts %} 
-            {% if loop.index0 % 6 == 0 %}
-                {% if loop.index0 == 0 %}
-                    <section class="{{(loop.index0/6)|round(0, 'floor')|int}} block active">
-                {% else %}
-                    <section class="{{(loop.index0/6)|round(0, 'floor')|int}} block">
-                {% endif %}
-            {% endif %}
             <!-- Post section start-->
-            <section class="post">
-                <div class="key-card">
-                    {% if  (p.uid == 1 or p.uid == 3) %}
-                        <p>{{ p.keywords }}</p>
-                    {% endif %}
-                </div>
                 {% if  (p.uid == 1 or p.uid == 3) %}
-                    <!-- Left message section start-->
-                    <div class="left-messages">
-                        <!-- Left message card start-->
-                        <div class="msg-card">
-                            <!-- Left message start-->
-                            <div class="msg left-msg">
-                                <!-- Left message bubble start-->
-                                <div class="msg-bubble">
-                                    <!-- Left message info start -->
-                                    <div class="msg-info">
-                                        <div class="msg-info-name">{{ p.username }}</div>
-                                        <div class="msg-info-time">{{ p.time }}</div>
-                                    </div>
-                                    <!-- Left message info end -->
-                                    <!-- Left message bubble text-start -->
-                                    <div class="msg-text">
-                                        <p class="message"> {{ p.translation }}</p>
-                                    </div>
-                                    <!-- Left message bubble text end-->
-                                </div>
-                                <!-- Left message bubble end-->
-                            </div>
-                            <!-- Left message end-->
-                        </div>
-                        <!-- Left message card end-->
-                    </div>
-                    <!-- Left message section end-->                                        
+                <div class="message sender">
                 {% else %}
-                    <!-- Right message section start-->
-                    <div class="right-messages">
-                        <!-- Right message card start-->
-                        <div class="msg-card">
-                            <!-- Right message start-->
-                            <div class="msg right-msg">
-                                <!-- Right message bubble start-->
-                                <div class="msg-bubble">
-                                    <!-- Right message info start -->
-                                    <div class="msg-info">
-                                        <div class="msg-info-name">{{ p.username }}</div>
-                                        <div class="msg-info-time">{{ p.time }}</div>
-                                    </div>
-                                    <!-- Right message info end -->
-                                    <!-- Right message bubble text-start -->
-                                    <div class="msg-text">
-                                        <p class="message"> {{ p.translation }}</p>
-                                    </div>
-                                    <!-- Right message bubble text end-->
+                <div class="message receiver">
+                {% endif %}
+                    <div class="key-card">
+                        {% for keyword in p.keywords.split(',') %}
+                            {% if keyword | length > 0 %}
+                                <div class="keyword">
+                                    <span>{{keyword}}</span>
                                 </div>
-                                <!-- Right message bubble end-->
-                            </div>
-                            <!-- Right message end-->
-                        </div>
-                            <!-- Right message card end-->
+                            {% endif %}
+                        {% endfor %}
                     </div>
-                    <!-- Right message section end-->
-                    {% endif %}
-                
-                <div class="key-card">
-                    {% if  (p.uid == 2 or p.uid == 4) %}
-                        <p>{{p.keywords}}</p>
-                    {% endif %}
+                    <!-- Message bubble start-->
+                    <div class="message-bubble">
+                        <!-- Message info start -->
+                        <div class="message-info">
+                            <div class="message-info-name">{{ p.username }}</div>
+                            <div class="message-info-time">{{ p.time }}</div>
+                        </div>
+                        <!-- Message info end -->
+                        <!-- Message bubble text-start -->
+                        <div class="message-text">{{ p.translation }}</div>
+                        <!-- Message bubble text end-->
+                    </div>
+                    <!-- Message bubble end-->
                 </div>
-            </section>
-            <!-- Post section end-->
-            {% if loop.index0 % 6 == 5 or posts|length - loop.index0 == 1%}
-                </section>
-            {% endif %}
+                <!-- Message end-->
         {% endfor %}
     </main>
     <!-- Main section end -->
-
-    <!-- Navigation start -->
-    <footer class="pages">
-        <div class="pagination">
-            <a class="prev" onclick="prevPage()">&laquo;</a>
-            
-            {% for p in posts %}
-                {% if loop.index0 % 6 == 0 %}
-                    {% if loop.index0 == 0 %}
-                        <a class="{{(loop.index0/6)|round(0, 'floor')|int}} page active" onclick="showPage({{(loop.index0/6)|round(0, 'floor')|int}})">{{(loop.index0/6)|round(0, 'floor')|int + 1}}</a>
-                    {% else %}
-                        <a class="{{(loop.index0/6)|round(0, 'floor')|int}} page" onclick="showPage({{(loop.index0/6)|round(0, 'floor')|int}})">{{(loop.index0/6)|round(0, 'floor')|int + 1}}</a>
-                    {% endif %}
-                {% endif %}
-            {% endfor %}
-            <a class="next" onclick="nextPage()">&raquo;</a>
-        </div>
-    </footer>
-    <!-- Navigation end -->
 </section>

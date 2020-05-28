@@ -1,3 +1,4 @@
+pandas
 flask
 Flask-SocketIO
 flask-sqlalchemy
