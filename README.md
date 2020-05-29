@@ -33,6 +33,11 @@ git checkout no_keys
 ```
 
 ## Docker
+If this is the first time running or there are changes to the docker file, or yaml file, run the command below
+```bash
+docker-compose build
+```
+
 Use the command below to start the machine translation server container and the flask server container together
 ```bash
 docker-compose up
@@ -47,6 +52,19 @@ Check the permissions of the database and potentially change them
 ```bash
 chmod 764 trial_1_0.db
 ```
+
+
+
+### Local
+From your local computer, you can access the the site
+
+- user 1: http://0.0.0.0:5000/1 
+- user 2: http://0.0.0.0:5000/2
+- user 3: http://0.0.0.0:5000/3
+- user 4: http://0.0.0.0:5000/4
+- Observe as user 1: http://0.0.0.0:5000/12
+- Observe as user 3: http://0.0.0.0:5000/34
+
 
 ### Amazon EC2 Instance
 From your terminal where the hci_research.pem key is
