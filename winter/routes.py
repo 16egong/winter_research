@@ -143,7 +143,7 @@ def get_sitemap():
                 "34cv3": url_for('static', filename='docs/user3_CV3.pdf'),
                 "34cv4": url_for('static', filename='docs/user3_CV4.pdf'),
                 "chat": True,
-                "next": url_for("control", phase=3, subphase=3 if config.TYPE == "control" else 0),
+                "next": url_for("control", phase=3, subphase=0),
             },
             "3.0": {
                 "type": "instructions",
