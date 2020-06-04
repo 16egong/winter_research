@@ -21,6 +21,21 @@ TYPE = "control" #switch between control, no_keys, or keys
 ```
 
 ## Docker
+You will need access to the mt-server.tar. In the same directory as mt-server.tar, run the command below in the terminal
+```
+load -i mt-server.tar 
+```
+Build the docker images
+```
+docker-compose build
+```
+If any chances are made to the docker file, the mt-server.tar, or switching between different branches, please make sure to rebuild the docker images or run the command below
+```
+docker-compose up --build
+```
+where the --build flag will build the images prior to starting the docker containers
+
+
 Use the command below to start the machine translation server container and the flask server container together
 ```bash
 docker-compose up

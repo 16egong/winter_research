@@ -1,5 +1,4 @@
 # docker exec -it winter_research_winter_1 bash/
-
 version: '3'
 services:
   winter:

@@ -165,8 +165,8 @@ def get_sitemap():
                 "type": "survey",
                 "english_instructions": url_for("static", filename="docs/phase_3.3_EN_instructions.pdf"),
                 "mandarin_instructions": url_for("static", filename="docs/phase_3.3_CN_instructions.pdf"),
-                "english_survey": "https://umdsurvey.umd.edu/jfe/form/SV_22Y0KXn6kgwZimN ",
-                "mandarin_survey": "https://umdsurvey.umd.edu/jfe/form/SV_cAeRuGTx4FRLj1z",
+                "english_survey": "https://umdsurvey.umd.edu/jfe/form/SV_6Xa1crDLB9zX5MV",
+                "mandarin_survey": "https://umdsurvey.umd.edu/jfe/form/SV_0PwG3vLkEaTz0s5 ",
                 "next": url_for("control", phase=4, subphase=0),
             },
             "4.0": {
@@ -353,14 +353,14 @@ def on_join(data):
 
     emit('join_room', {'user': username + ' has entered the room.'}, room=room)
 
-@socketio.on('leave')
-def on_leave(data):
-    username = data['username']
-    room = data['room']
-    leave_room(room)
-    config.ROOMS[room].remove(username)
-    logger.critical('ROOMS AFTER LEAVE %s', config.ROOMS)
-    emit('leave_room', {'user': username + ' has left the room.'}, room=room)
+# @socketio.on('leave')
+# def on_leave(data):
+#     username = data['username']
+#     room = data['room']
+#     leave_room(room)
+#     config.ROOMS[room].remove(username)
+#     logger.critical('ROOMS AFTER LEAVE %s', config.ROOMS)
+#     emit('leave_room', {'user': username + ' has left the room.'}, room=room)
 
 
 @socketio.on('message')
