@@ -28,7 +28,7 @@ USER12 = User(uid=12, username=USERNAMES[4])
 USER34 = User(uid=34, username=USERNAMES[5])
 ROOMS = defaultdict(list)
 
-TRIAL_NUM = 1
+TRIAL_NUM = 2
 TYPE = "keys" #switch between control, no_keys, or keys
 DATABASE_NAME = f'/data/trial_{TRIAL_NUM}_' + TYPE + '.db'
 
