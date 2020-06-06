@@ -29,7 +29,7 @@ USER34 = User(uid=34, username=USERNAMES[5])
 ROOMS = defaultdict(list)
 
 TRIAL_NUM = 1
-TYPE = "keys" #switch between control, no_keys, or keys
+TYPE = "no_keys" 
 DATABASE_NAME = f'/data/trial_{TRIAL_NUM}_' + TYPE + '.db'
 
 class Config(object):

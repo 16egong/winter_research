@@ -9,31 +9,45 @@ import logging
 
 logger = logging.getLogger()
 
-def translate(data):
-    req = requests.get('http://mt-server:8000/' + '\"' + data.body + '\"').json()
+def get_keywords(data):
+    logging.critical('REQUESTING KEYWORDS FOR: %s', data.body)
+    req = requests.get('http://mt-server:8000/keywords', params={"sentence": data.body}).json()
+    logging.critical('KEYWORD RESULTS: %s', req)
+    return req
+
+
+def get_translation(data):
+    logging.critical('REQUESTING TRANSLATION FOR: %s', data.body)
+    req = requests.get('http://mt-server:8000/translate', params={"sentence": data.body}).json()
+    logging.critical('TRANSLATION RESULTS: %s', req)
     return req
 
 def translate_db():
     # posts = winter.models.Posts.query.filter(winter.models.Posts.translation == None).order_by(asc(winter.models.Posts.timestamp)).all()
 
     posts = winter.models.Posts.query.filter(
-            winter.models.Posts.translation == None,
-            or_(winter.models.Posts.uid == 1, winter.models.Posts.uid == 2)) \
+            winter.models.Posts.translation == None) \
         .order_by(asc(winter.models.Posts.timestamp)).all()
 
     for data in posts:
-        logging.critical('DATA TO TRANSLATE: %s UID: %s', data, data.uid)
-        
         if data.uid == 1 or data.uid == 2:
-                start = timer()
-                req = translate(data)
-                data.translation = req['translation'][1:-1]
-                data.keywords =  str(','.join(req['keywords'][0:3]))
-                data.translation_time = str(req['time'])
-                end = timer()
-                data.request_time = str(end-start)
+            logging.critical('DATA TO TRANSLATE: %s UID: %s', data, data.uid)
+            start = timer()
+            req = get_translation(data)
+            data.translation = req['translation']
+            data.keywords =  str(','.join(req['keywords'][0:3]))
+            data.translation_time = str(req['time'])
+            end = timer()
+            data.request_time = str(end-start)
         else:
-            logger.critical('THIS SHOULD NEVER HAPPEN')
+            logging.critical('KEYWORDS: %s ', data.keywords)
+            start = timer()
+            req = get_keywords(data)
+            data.translation = data.body
+            data.keywords =  str(','.join(req['keywords'][0:3]))
+            data.translation_time = str(req['time'])
+            end = timer()
+            data.request_time = str(end-start)
         
         data.msg_len = len(data.body)
     
