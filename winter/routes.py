@@ -321,16 +321,18 @@ def control(phase, subphase):
         # Collect Notes
         notes = notes = winter.models.Notes.query.filter(winter.models.Notes.uid == uid).first()
         notes = notes.notes if notes is not None else ""
-
-        return render_template(
-            "transcript.html",
-            uid=uid,
-            username=username,
-            room=room,
-            posts=posts,
-            notes=notes,
-            next=site["next"]
-        )
+        try: 
+            return render_template(
+                "transcript.html",
+                uid=uid,
+                username=username,
+                room=room,
+                posts=posts,
+                notes=notes,
+                next=site["next"]
+            )
+        except:
+            return render_template("error.html")
 
 
 @socketio.on('join')
