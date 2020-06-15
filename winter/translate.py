@@ -18,7 +18,7 @@ def get_keywords(data):
 
 def get_translation(data):
     logging.critical('REQUESTING TRANSLATION FOR: %s', data.body)
-    req = requests.get('http://mt-server:8000/translate', params={"sentence": data.body}).json()
+    req = requests.get('http://mt-server:8000/translate', params={"sentence": "\"" + data.body + "\""}).json()
     logging.critical('TRANSLATION RESULTS: %s', req)
     return req
 
@@ -34,7 +34,7 @@ def translate_db():
             logging.critical('DATA TO TRANSLATE: %s UID: %s', data, data.uid)
             start = timer()
             req = get_translation(data)
-            data.translation = req['translation']
+            data.translation = req['translation'][1:-1]
             data.keywords =  str(','.join(req['keywords'][0:3]))
             data.translation_time = str(req['time'])
             end = timer()
