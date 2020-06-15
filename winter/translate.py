@@ -12,14 +12,14 @@ import urllib
 logger = logging.getLogger()
 def get_keywords(data):
     logging.critical('REQUESTING KEYWORDS FOR: %s', data.body)
-    req = requests.get('http://mt-server:8000/keywords', params={"sentence": data.body}).json()
+    req = requests.get('http://mt-server:8000/keywords', params={"sentence": "\"" + data.body + "\"" }).json()
     logging.critical('KEYWORD RESULTS: %s', req)
     return req
 
 
 def get_translation(data):
     logging.critical('REQUESTING TRANSLATION FOR: %s', data.body)
-    req = requests.get('http://mt-server:8000/translate', params={"sentence": data.body}).json()
+    req = requests.get('http://mt-server:8000/translate', params={"sentence": "\"" + data.body + "\""}).json()
     logging.critical('TRANSLATION RESULTS: %s', req)
     return req
 
@@ -56,5 +56,5 @@ def translate_db():
         db.session.commit()
 
     #TODO: CHANGE THIS BACK FOR DEPLOY
-    logging.critical('START NEW EVERY X SECONDS')
+    # logging.critical('START NEW EVERY X SECONDS')
     threading.Timer(5, translate_db).start()
