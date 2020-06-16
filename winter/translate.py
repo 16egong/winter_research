@@ -7,9 +7,10 @@ from timeit import default_timer as timer
 from winter import db
 import logging
 import urllib
-
+import config
 
 logger = logging.getLogger()
+
 def get_keywords(data):
     logging.critical('REQUESTING KEYWORDS FOR: %s', data.body)
     req = requests.get('http://mt-server:8000/keywords', params={"sentence": "\"" + data.body + "\"" }).json()
@@ -25,36 +26,37 @@ def get_translation(data):
 
 
 def translate_db():
-    # posts = winter.models.Posts.query.filter(winter.models.Posts.translation == None).order_by(asc(winter.models.Posts.timestamp)).all()
+    if config.TYPE != "control":
+        # grab posts that have empty translation from rooms 12 and 34 (small chat group)
+        posts = winter.models.Posts.query.filter(
+                winter.models.Posts.translation == None,
+                or_(winter.models.Posts.room == 12, winter.models.Posts.room == 34)) \
+            .order_by(asc(winter.models.Posts.timestamp)).all()
 
-    posts = winter.models.Posts.query.filter(
-            winter.models.Posts.translation == None) \
-        .order_by(asc(winter.models.Posts.timestamp)).all()
-
-    for data in posts:
-        if data.uid == 1 or data.uid == 2:
-            logging.critical('DATA TO TRANSLATE: %s UID: %s', data, data.uid)
-            start = timer()
-            req = get_translation(data)
-            data.translation = req['translation'][1:-1]
-            data.keywords =  str(','.join(req['keywords'][0:3]))
-            data.translation_time = str(req['time'])
-            end = timer()
-            data.request_time = str(end-start)
-        else:
-            logging.critical('KEYWORDS: %s ', data.keywords)
-            start = timer()
-            req = get_keywords(data)
-            data.translation = data.body
-            data.keywords =  str(','.join(req['keywords'][0:3]))
-            data.translation_time = str(req['time'])
-            end = timer()
-            data.request_time = str(end-start)
+        for data in posts:
+            if data.uid == 1 or data.uid == 2:
+                logging.critical('DATA TO TRANSLATE: %s UID: %s', data, data.uid)
+                start = timer()
+                req = get_translation(data)
+                data.translation = req['translation'][1:-1]
+                data.keywords =  str(','.join(req['keywords'][0:3]))
+                data.translation_time = str(req['time'])
+                end = timer()
+                data.request_time = str(end-start)
+            else:
+                logging.critical('KEYWORDS: %s ', data.keywords)
+                start = timer()
+                req = get_keywords(data)
+                data.translation = data.body
+                data.keywords =  str(','.join(req['keywords'][0:3]))
+                data.translation_time = str(req['time'])
+                end = timer()
+                data.request_time = str(end-start)
+            
+            data.msg_len = len(data.body)
         
-        data.msg_len = len(data.body)
-    
-        db.session.commit()
+            db.session.commit()
 
-    #TODO: CHANGE THIS BACK FOR DEPLOY
-    # logging.critical('START NEW EVERY X SECONDS')
-    threading.Timer(5, translate_db).start()
+        # logging.critical('START NEW EVERY X SECONDS')
+        #TODO: CHANGE THIS BACK FOR DEPLOY
+        threading.Timer(5, translate_db).start()

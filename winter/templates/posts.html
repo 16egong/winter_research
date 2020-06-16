@@ -14,6 +14,7 @@
                 {% else %}
                 <div class="message receiver">
                 {% endif %}
+                    {% if trial_type == 'keys' %}
                     <div class="key-card">
                         {% for keyword in p.keywords.split(',') %}
                             {% if keyword | length > 0 %}
@@ -22,6 +23,7 @@
                                 </div>
                             {% endif %}
                         {% endfor %}
+                    {% endif %}
                     </div>
                     <!-- Message bubble start-->
                     <div class="message-bubble">
