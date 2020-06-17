@@ -75,8 +75,12 @@ def get_sitemap():
                 "type": "survey",
                 "english_instructions": url_for("static", filename=f"docs/{config.TYPE}/phase_1.6_EN_instructions.pdf"),
                 "mandarin_instructions": url_for("static", filename=f"docs/{config.TYPE}/phase_1.6_CN_instructions.pdf"),
-                "english_survey": "https://umdsurvey.umd.edu/jfe/form/SV_26k2aVRuhtyVZsN", 
-                "mandarin_survey": "https://umdsurvey.umd.edu/jfe/form/SV_baBQC9W2E36bSmh",
+                "english_survey_control": "https://umdsurvey.umd.edu/jfe/form/SV_26k2aVRuhtyVZsN", 
+                "mandarin_survey_control": "https://umdsurvey.umd.edu/jfe/form/SV_baBQC9W2E36bSmh",
+                "english_survey_keys": "https://umdsurvey.umd.edu/jfe/form/SV_26k2aVRuhtyVZsN", 
+                "mandarin_survey_keys": "https://umdsurvey.umd.edu/jfe/form/SV_baBQC9W2E36bSmh",
+                "english_survey_no_keys": "https://umdsurvey.umd.edu/jfe/form/SV_26k2aVRuhtyVZsN", 
+                "mandarin_survey_no_keys": "https://umdsurvey.umd.edu/jfe/form/SV_baBQC9W2E36bSmh",
                 "next": url_for("control", phase=2, subphase=0),
             },
             "2.0": {
@@ -165,8 +169,12 @@ def get_sitemap():
                 "type": "survey",
                 "english_instructions": url_for("static", filename=f"docs/{config.TYPE}/phase_3.3_EN_instructions.pdf"),
                 "mandarin_instructions": url_for("static", filename=f"docs/{config.TYPE}/phase_3.3_CN_instructions.pdf"),
-                "english_survey": "https://umdsurvey.umd.edu/jfe/form/SV_6Xa1crDLB9zX5MV",
-                "mandarin_survey": "https://umdsurvey.umd.edu/jfe/form/SV_0PwG3vLkEaTz0s5 ",
+                "english_survey_control": "https://umdsurvey.umd.edu/jfe/form/SV_22Y0KXn6kgwZimN",
+                "mandarin_survey_control": "https://umdsurvey.umd.edu/jfe/form/SV_cAeRuGTx4FRLj1z",
+                "english_survey_keys": "https://umdsurvey.umd.edu/jfe/form/SV_6Xa1crDLB9zX5MV",
+                "mandarin_survey_keys": "https://umdsurvey.umd.edu/jfe/form/SV_0PwG3vLkEaTz0s5",
+                "english_survey_no_keys": "https://umdsurvey.umd.edu/jfe/form/SV_6Xa1crDLB9zX5MV",
+                "mandarin_survey_no_keys": "https://umdsurvey.umd.edu/jfe/form/SV_0PwG3vLkEaTz0s5",
                 "next": url_for("control", phase=4, subphase=0),
             },
             "4.0": {
@@ -209,8 +217,12 @@ def get_sitemap():
                 "type": "survey",
                 "english_instructions": url_for("static", filename=f"docs/{config.TYPE}/phase_5.0_EN_instructions.pdf"),
                 "mandarin_instructions": url_for("static", filename=f"docs/{config.TYPE}/phase_5.0_CN_instructions.pdf"),
-                "english_survey": "https://umdsurvey.umd.edu/jfe/form/SV_0xFKrg41yjC3H5r",
-                "mandarin_survey": "https://umdsurvey.umd.edu/jfe/form/SV_3s0GDBme8QIVj4F",
+                "english_survey_control": "https://umdsurvey.umd.edu/jfe/form/SV_0xFKrg41yjC3H5r",
+                "mandarin_survey_control": "https://umdsurvey.umd.edu/jfe/form/SV_3s0GDBme8QIVj4F",
+                "english_survey_keys": "https://umdsurvey.umd.edu/jfe/form/SV_0xFKrg41yjC3H5r",
+                "mandarin_survey_keys": "https://umdsurvey.umd.edu/jfe/form/SV_3s0GDBme8QIVj4F",
+                "english_survey_no_keys": "https://umdsurvey.umd.edu/jfe/form/SV_0xFKrg41yjC3H5r",
+                "mandarin_survey_no_keys": "https://umdsurvey.umd.edu/jfe/form/SV_3s0GDBme8QIVj4F",
                 "next": None,
             },
         }
@@ -271,7 +283,7 @@ def control(phase, subphase):
             uid=uid, 
             username=username, 
             instructions=site[language+"_instructions"],
-            survey=site[language+"_survey"], 
+            survey=site[language+"_survey_"+config.TYPE], 
             next=site["next"]
         )
     elif site["type"] == "chat":
@@ -333,7 +345,7 @@ def control(phase, subphase):
                 next=site["next"]
             )
         except:
-            return render_template("error.html")
+            return render_template("wait.html")
 
 
 @socketio.on('join')

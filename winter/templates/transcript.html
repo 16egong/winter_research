@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Transcript of Mandarin Group</title>
+        <title>Phase III: Chatlog Review</title>
         
         <!-- Custome css for pages in general -->
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/global.css') }}">
@@ -39,7 +39,21 @@
             <!-- Left side start-->
             <section class="left-side">
                 <section id="qualifications">
-                    <p><b>Preferred Qualificationsfor Candidate Evaluation:</b></p>
+                    {% if uid == 1 or uid ==2 or uid == 12 %}
+                    <p><b>候选人评定标准：</b></p>
+                    <p>招聘委员会对候选人的评定应遵循以下标准:</p>
+                    <ul>
+                        <li>优异的课业表现：<br/>
+                            合格的候选人应在其求学阶段取得过<b>优异</b>的课堂成绩。</li>
+                        <li>与定量研究相关的科研经历: <br/>
+                            合格的候选人应具有熟练运用 
+                            <b>统计学</b>或者<b>数学方法</b>完成<b>大数据分析</b>的能力。</li>
+                        <li>与团队协作相关的工作经历： <br/>
+                            合格的候选人应具有参与<b>跨部门或者跨机构公司项目</b>的工作经历。</li>
+                    </ul>
+                    {% else %}
+                    <p><b>Preferred Qualifications for Candidate Evaluation:</b></p>
+                    <p>Members in the Search Committee should follow three criteria to evaluate each candidate: </p>
                     <ul>
                         <li>Excellent coursework performance:  <br/>
                             Qualified candidates should receive <b>top</b> grades in theireducation programs.</li>
@@ -49,6 +63,7 @@
                         <li>Rich industrial experience in diverse teams:  <br/>
                             Qualified candidates should have sufficient experience of working in <b>cross-department or multi-institutional industrial teams/projects.</b></li>
                     </ul>
+                    {% endif %}
                 </section>
                 {% include 'posts.html' %}
             </section>
