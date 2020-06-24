@@ -172,7 +172,7 @@ def get_sitemap():
                 "english_survey_control": "https://umdsurvey.umd.edu/jfe/form/SV_22Y0KXn6kgwZimN",
                 "mandarin_survey_control": "https://umdsurvey.umd.edu/jfe/form/SV_cAeRuGTx4FRLj1z",
                 "english_survey_keys": "https://umdsurvey.umd.edu/jfe/form/SV_6Xa1crDLB9zX5MV",
-                "mandarin_survey_keys": "https://umdsurvey.umd.edu/jfe/form/SV_0kXNiJlBE7AY8jH",
+                "mandarin_survey_keys": "https://umdsurvey.umd.edu/jfe/form/SV_5pbhFMH0SeVPKXH",
                 "english_survey_no_keys": "https://umdsurvey.umd.edu/jfe/form/SV_3PozGMeHxcy3kyh",
                 "mandarin_survey_no_keys": "https://umdsurvey.umd.edu/jfe/form/SV_0PwG3vLkEaTz0s5",
                 "next": url_for("control", phase=4, subphase=0),
