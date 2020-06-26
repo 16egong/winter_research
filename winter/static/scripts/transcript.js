@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
+    $('#note-textbox').attr('placeholder', 'The CV items will not be available once you finish this discussion.' + '\n' +  'Please take notes on candidates here; your notes will always be accessible.');
     set_timer(10)
 })
 

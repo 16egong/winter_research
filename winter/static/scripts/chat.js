@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         return false;
     };
+    $('#note-textbox').attr('placeholder', 'The CV items will not be available once you finish this discussion.' + '\n' +  'Please take notes on candidates here; your notes will always be accessible.');
 })
 
 function showPage(page_num) {
