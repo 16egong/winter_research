@@ -10,10 +10,8 @@
         <!-- Custom css for chat pages -->
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/chat.css') }}">
 
-        {% if chat %}
-        <!-- SocketIO JS -->
+        <!-- SocketIO AJAX JS -->
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
-        {% endif %}
 
         <!-- AJAX -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -21,14 +19,21 @@
         <!-- Custom Chat JS-->
         <script src="{{url_for('static', filename='scripts/chat.js')}}"></script>
 
+        {% if chat %}
+        <!-- Custom Messenger JS-->
+        <script src="{{url_for('static', filename='scripts/messenger.js')}}"></script>
+        {% endif %}
+        
         <!-- Custom Notes JS -->
         <script type="text/javascript" src="{{ url_for('static', filename='scripts/notes.js') }}"></script>
 
         <!-- Custom Messenger CSS -->
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/messenger.css') }}">
         
+        {% if chat %}
         <!-- Custom Socketio JS-->
-        <script src="{{url_for('static', filename='scripts/socketio.js')}}"></script>    
+        <script src="{{url_for('static', filename='scripts/socketio.js')}}"></script>
+        {% endif %}    
 
         
         
@@ -41,6 +46,7 @@
             const notesurl = `{{url_for("save_notes")}}`;
             const recordurl = `{{url_for("save_record")}}`;
             var room = `{{room}}`;
+            const chat = `{{chat}}`;
         </script>
     </head>
 
@@ -101,7 +107,6 @@
                 <section id="notes">
                     <header>Note Taking</header>
                     <textarea id="note-textbox" >{{ notes }}</textarea>
-                    <!-- The CV items will not be available once you finish this discussion. \n Please take notes on candidates here; your notes will always be accessible. -->
                 </section>
                 <!-- Notes end -->
                 {% if chat %}

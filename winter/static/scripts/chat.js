@@ -1,10 +1,5 @@
 // TODO Uncomment for deploy
 document.addEventListener('DOMContentLoaded', () => {
-    const pasteBox = document.getElementById("user-message");
-    pasteBox.onpaste = e => {
-        e.preventDefault();
-        return false;
-    };
     $('#note-textbox').attr('placeholder', 'The CV items will not be available once you finish this discussion.' + '\n' +  'Please take notes on candidates here; your notes will always be accessible.');
 })
 
