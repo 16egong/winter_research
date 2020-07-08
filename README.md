@@ -19,17 +19,13 @@ cd winter_research
 TRIAL_NUM = 2
 TYPE = "control"
 ```
-Switch to the **keys** branch if you are running the translation + keyword trials
+Switch to the **combined** branch to run control, keys, no_keys trials
 ```bash
 git status
 ```
 Make sure there are no changes to commit, if there are, either remove them or commit them
 ```bash
-git checkout keys
-```
-Swith to the **no_keys** branch if running just translation
-```bash
-git checkout no_keys
+git checkout combined
 ```
 
 ## Docker
@@ -48,7 +44,7 @@ docker-compose up
 docker-compose down
 ```
 
-Check the permissions of the database and potentially change them 
+(Optional) Check the permissions of the database and potentially change them 
 ```bash
 chmod 764 trial_1_0.db
 ```
